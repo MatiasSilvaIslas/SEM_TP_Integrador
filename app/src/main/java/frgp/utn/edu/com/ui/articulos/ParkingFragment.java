@@ -15,13 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-//import frgp.utn.edu.com.parking.AdminSQLiteOpenHelper;
-//import frgp.utn.edu.com.parking.Parking;
-//import frgp.utn.edu.com.parking.ParkingAdapter;
-//import frgp.utn.edu.com.parking.ParkingDialogAlert;
-//import frgp.utn.edu.com.parking.PutExtraConst;
-//import frgp.utn.edu.com.parking.User;
-//import frgp.utn.edu.com.parking.databinding.FragmentParkingBinding;
 
 import java.util.ArrayList;
 

@@ -8,10 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import android.widget.Toast;
+import frgp.utn.edu.com.entidad.Articulo;
 
 public class DataMainActivity {
 
@@ -23,7 +23,7 @@ public class DataMainActivity {
         context = ct;
     }
 
-    public void fetchData() {
+    /*public void fetchData() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             ArrayList<Articulo> listaArticulo = new ArrayList<>();
@@ -234,6 +234,6 @@ public class DataMainActivity {
         }
 
         return existe;
-    }
+    }*/
 
 }

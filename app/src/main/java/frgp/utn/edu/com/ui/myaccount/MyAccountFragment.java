@@ -13,11 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-//import frgp.utn.edu.com.MainActivity;
-//import  frgp.utn.edu.com.PutExtraConst;
-//import  frgp.utn.edu.com.R;
-//import frgp.utn.edu.com.User;
-//import frgp.utn.edu.com.databinding.FragmentMyaccountBinding;
 
 
 public class MyAccountFragment extends Fragment {

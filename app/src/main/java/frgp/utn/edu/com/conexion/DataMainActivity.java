@@ -12,10 +12,6 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import android.widget.Toast;
-import frgp.utn.edu.com.tabcontrol.adapter.ArticuloAdapter;
-import frgp.utn.edu.com.tabcontrol.clases.Articulo;
-import frgp.utn.edu.com.tabcontrol.clases.Categoria;
-
 
 public class DataMainActivity {
 

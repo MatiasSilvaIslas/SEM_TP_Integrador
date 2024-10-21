@@ -12,7 +12,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText txtUsuario, txtpassword;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /*EditText txtUsuario, txtpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtUsuario = findViewById(R.id.txtUsuario);
         txtpassword = findViewById(R.id.txtpassword);
-    }
+    }*/
 
 //    public void RegisterActivity(View view) {
 //        setContentView(R.layout.register_user);

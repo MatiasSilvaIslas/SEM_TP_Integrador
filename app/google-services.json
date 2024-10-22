@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "632223926873",
+    "project_id": "tpseminario-d3d79",
+    "storage_bucket": "tpseminario-d3d79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632223926873:android:3e9bed3099868989e6ff48",
+        "android_client_info": {
+          "package_name": "frgp.utn.edu.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlNXkuSuqMean_nJg0A2wEYmjiOA9dAao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -48,8 +48,8 @@ public class LoginRegisterFragment extends Fragment {
 
         emailEditText = view.findViewById(R.id.fragment_loginregister_email);
         passwordEditText = view.findViewById(R.id.fragment_loginregister_password);
-        loginButton = view.findViewById(R.id.fragment_loginregister_login);
-        registerButton = view.findViewById(R.id.fragment_loginregister_register);
+        /*loginButton = view.findViewById(R.id.fragment_loginregister_login);
+        registerButton = view.findViewById(R.id.fragment_loginregister_register);*/
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#2196F3</color> <!-- Azul material design -->
     <color name="blue_primary">#0E64D2</color>
+    <color name="grey">#a9a3aa</color>
 </resources>

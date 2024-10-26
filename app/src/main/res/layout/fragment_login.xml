@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".MainActivity">
 
     <!-- Título Principal -->
@@ -98,7 +99,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Olvidé mi contraseña"
-        android:textColor="@color/blue"
+        android:textColor="@color/blue_primary"
+        android:textStyle="bold"
         android:textSize="14sp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/password_layout"
@@ -106,23 +108,25 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Botón de Ingresar -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Ingresar"
-        android:backgroundTint="@color/blue_primary"
-        app:layout_constraintTop_toBottomOf="@id/tv_forgot_password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        style="@style/Widget.MaterialComponents.Button" />
 
     <!-- Texto para Registro -->
 
     <!-- Enlace de Registro -->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/blue_primary"
+        android:text= "Ingresar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
 
     <TextView
         android:id="@+id/tv_register_prompt"
@@ -142,11 +146,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registro"
-        android:textColor="@color/blue"
+        android:textColor="@color/blue_primary"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toEndOf="@+id/tv_register_prompt"
-        tools:layout_editor_absoluteY="442dp" />
+        tools:layout_editor_absoluteY="445dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,32 +75,29 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Texto interactivo para redirigir al login -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/fragment_loginregister_siguiente"
+
+    <TextView
+        android:id="@+id/textViewNavigate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/white"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="16dp"
         android:text="Siguiente"
-        android:textColor="@color/blue"
-        app:cornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_loginregister_password_layout"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textColor="@color/blue_primary"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="293dp"
+        tools:layout_editor_absoluteY="263dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/fragment_loginregister_siguiente"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp">
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="367dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -112,10 +109,10 @@
             android:id="@+id/fragment_loginregister_ingresar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:text="Ingresar"
-            android:textStyle="bold"
             android:textColor="@color/blue_primary"
-            android:layout_marginStart="4dp" />
+            android:textStyle="bold" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

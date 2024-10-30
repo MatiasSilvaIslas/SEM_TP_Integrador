@@ -1,24 +1,27 @@
 package frgp.utn.edu.com.ui.articulos;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import frgp.utn.edu.com.R;
+
+public class ArticuloFragment extends Fragment {
 
 
-import java.util.ArrayList;
 
-public class ParkingFragment extends Fragment {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_articulos,container,false);
+       // initViews(view);
+        return view;
+    }
+
+
 
 //    private GridView gvParking;
 //    private FragmentParkingBinding binding;

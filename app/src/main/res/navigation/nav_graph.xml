@@ -13,7 +13,7 @@
     </fragment>
     <fragment
             android:id="@+id/loggedInFragment"
-            android:name="frgp.utn.edu.com.ui.articulos.ParkingFragment"
+            android:name="frgp.utn.edu.com.ui.articulos.ArticuloFragment"
             android:label="LoggedInFragment" >
         <action
                 android:id="@+id/action_loggedInFragment_to_loginRegisterFragment"

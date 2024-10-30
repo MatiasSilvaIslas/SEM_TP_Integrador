@@ -5,7 +5,7 @@
 
     <fragment
             android:id="@+id/loginRegisterFragment"
-            android:name="frgp.utn.edu.com.ui.Login.LoginRegisterFragment"
+            android:name="frgp.utn.edu.com.ui.Login.LoginFragment"
             android:label="LoginRegisterFragment" >
         <action
                 android:id="@+id/action_loginRegisterFragment_to_loggedInFragment"
@@ -19,4 +19,5 @@
                 android:id="@+id/action_loggedInFragment_to_loginRegisterFragment"
                 app:destination="@id/loginRegisterFragment" />
     </fragment>
+
 </navigation>

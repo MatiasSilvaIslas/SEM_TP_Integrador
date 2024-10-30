@@ -1,176 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".RegistroFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        tools:context=".ui.Login.RegisterFragment">
 
     <!-- Título Registro -->
     <TextView
-        android:id="@+id/tv_registro_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registro"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp" />
+            android:id="@+id/tv_registro_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registro"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp" />
 
     <!-- Subtítulo -->
     <TextView
-        android:id="@+id/tv_registro_subtitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Ahora, ingresaremos los datos de tu perfil"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_registro_titulo" />
+            android:id="@+id/tv_registro_subtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Ahora, ingresaremos los datos de tu perfil"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_registro_titulo" />
 
     <!-- Nombre -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_nombre"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_registro_subtitulo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp">
+            android:id="@+id/layout_nombre"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_registro_subtitulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_nombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingresa tu nombre" />
+                android:id="@+id/et_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingresa tu nombre" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Apellido -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_apellido"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_nombre"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp">
+            android:id="@+id/layout_apellido"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/layout_nombre"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_apellido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingresa tu apellido" />
+                android:id="@+id/et_apellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingresa tu apellido" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Fecha de Nacimiento (Spinner) -->
     <Spinner
-        android:id="@+id/spinner_fecha_nacimiento"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/spinner_outline"
-        app:layout_constraintTop_toBottomOf="@id/layout_apellido"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:prompt="Selecciona tu fecha de nacimiento" />
+            android:id="@+id/spinner_fecha_nacimiento"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/spinner_outline"
+            app:layout_constraintTop_toBottomOf="@id/layout_apellido"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+             />
+<!--    android:prompt="Selecciona tu fecha de nacimiento"-->
 
     <!-- Género (Spinner) -->
     <Spinner
-        android:id="@+id/spinner_genero"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/spinner_outline"
-        app:layout_constraintTop_toBottomOf="@id/spinner_fecha_nacimiento"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:prompt="Selecciona tu género" />
-
+            android:id="@+id/spinner_genero"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/spinner_outline"
+            app:layout_constraintTop_toBottomOf="@id/spinner_fecha_nacimiento"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+             />
+<!--android:prompt="Selecciona tu género"-->
     <!-- Provincia (Spinner) -->
     <Spinner
-        android:id="@+id/spinner_provincia"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/spinner_outline"
-        app:layout_constraintTop_toBottomOf="@id/spinner_genero"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:prompt="Selecciona tu provincia" />
+            android:id="@+id/spinner_provincia"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/spinner_outline"
+            app:layout_constraintTop_toBottomOf="@id/spinner_genero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+             />
+<!--    android:prompt="Selecciona tu provincia"-->
 
     <!-- Localidad (Spinner) -->
     <Spinner
-        android:id="@+id/spinner_localidad"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/spinner_outline"
-        app:layout_constraintTop_toBottomOf="@id/spinner_provincia"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:prompt="Selecciona tu localidad" />
+            android:id="@+id/spinner_localidad"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/spinner_outline"
+            app:layout_constraintTop_toBottomOf="@id/spinner_provincia"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+             />
+<!--    android:prompt="Selecciona tu localidad"-->
 
     <!-- Botón Registrar -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_registrar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Registrar"
-        android:backgroundTint="@color/blue_primary"
-        android:textColor="@color/white"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:cornerRadius="8dp"
-        app:layout_constraintTop_toBottomOf="@id/spinner_localidad"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            android:id="@+id/btn_registrar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Registrar"
+            android:backgroundTint="@color/blue_primary"
+            android:textColor="@color/white"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:cornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/spinner_localidad"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Texto e Hipervínculo para Ingresar -->
 
     <TextView
-        android:id="@+id/tv_tienes_cuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="20dp"
-        android:text="Tenes una cuenta?"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_registrar" />
+            android:id="@+id/tv_tienes_cuenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="20dp"
+            android:text="Tenes una cuenta?"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_registrar" />
 
     <TextView
-        android:id="@+id/tv_ingresar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="20dp"
-        android:text="Ingresar"
-        android:textColor="@color/blue_primary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_tienes_cuenta"
-        app:layout_constraintTop_toBottomOf="@id/btn_registrar" />
+            android:id="@+id/tv_ingresar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="20dp"
+            android:text="Ingresar"
+            android:textColor="@color/blue_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/tv_tienes_cuenta"
+            app:layout_constraintTop_toBottomOf="@id/btn_registrar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

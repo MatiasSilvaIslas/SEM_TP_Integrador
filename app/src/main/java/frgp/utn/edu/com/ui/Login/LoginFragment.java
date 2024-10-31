@@ -1,5 +1,6 @@
 package frgp.utn.edu.com.ui.Login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseUser;
+import frgp.utn.edu.com.MainMenuActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.utils.PutConst;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class LoginFragment extends Fragment {
@@ -60,6 +63,7 @@ public class LoginFragment extends Fragment {
                 String password = passwordEditText.getText().toString();
                 if (!email.isEmpty() && !password.isEmpty()) {
                     loginRegisterViewModel.login(email, password);
+
                 } else {
                     Toast.makeText(getContext(), "Email Address and Password Must Be Entered", Toast.LENGTH_SHORT).show();
                 }

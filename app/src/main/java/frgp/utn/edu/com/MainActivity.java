@@ -1,17 +1,61 @@
 package frgp.utn.edu.com;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import frgp.utn.edu.com.R;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.fragment_electrocarga);
+        //setContentView(R.layout.activity_edit_profile);
+
+        // Ejemplo: configuración de ícono dinámico para un electrodoméstico
+        ImageView imageElectrodomestico = findViewById(R.id.image_electrodomestico);
+        TextView nombreElectrodomestico = findViewById(R.id.text_nombre);
+
+        // Cambiar icono según el nombre del electrodoméstico
+        String nombre = nombreElectrodomestico.getText().toString().toLowerCase();
+        switch (nombre) {
+            case "refrigerador":
+                imageElectrodomestico.setImageResource(R.drawable.ic_refrigerador);
+                break;
+            case "heladera":
+                imageElectrodomestico.setImageResource(R.drawable.ic_heladera);
+                break;
+            case "lavarropa":
+                imageElectrodomestico.setImageResource(R.drawable.ic_lavarropa);
+                break;
+            case "televisor":
+                imageElectrodomestico.setImageResource(R.drawable.ic_televisor);
+                break;
+            default:
+                imageElectrodomestico.setImageResource(R.drawable.ic_default);
+                break;
+        }
     }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_electrocarga, container, false);
+
+        ImageView imageElectrodomestico = view.findViewById(R.id.image_electrodomestico);
+        TextView nombreElectrodomestico = view.findViewById(R.id.text_nombre);
+
+        return view;
+    }
+
+}
+
+
 
     /*EditText txtUsuario, txtpassword;
 
@@ -119,4 +163,3 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //        db.close();
 //    }
-}

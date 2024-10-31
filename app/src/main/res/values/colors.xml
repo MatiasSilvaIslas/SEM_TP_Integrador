@@ -5,4 +5,5 @@
     <color name="blue">#2196F3</color> <!-- Azul material design -->
     <color name="blue_primary">#0E64D2</color>
     <color name="grey">#a9a3aa</color>
+    <color name="light_blue">#4c8cdc</color>
 </resources>

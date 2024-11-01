@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- Declaración de EditarElectrodomesticoActivity -->
+        <activity android:name=".EditarElectrodomesticoActivity" />
+        <!-- Declaración de EditarElectrodomesticoActivity con ruta completa -->
+        <activity android:name=".ui.electrodomesticos.EditarElectrodomesticoActivity" />
     </application>
 
 </manifest>

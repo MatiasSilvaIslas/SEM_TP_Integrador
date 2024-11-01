@@ -2,6 +2,8 @@ package frgp.utn.edu.com;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +19,9 @@ import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.electrodomesticos.EditarElectrodomesticoActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+   // private ActivityResultLauncher<Intent> editarElectrodomesticoLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +59,31 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Registrar clicado", Toast.LENGTH_SHORT).show();
             // Puedes iniciar una nueva actividad o fragmento si lo deseas
         });
+// Acción para el botón Editar
+        Toast.makeText(MainActivity.this, "Editar clicado", Toast.LENGTH_SHORT).show();
 
-        // Configuración del botón Editar
         Button buttonEdit = findViewById(R.id.button_edit);
         buttonEdit.setOnClickListener(v -> {
+            // Datos de ejemplo para editar (estos deberían ser dinámicos en una implementación real)
+           // String nombre = "LAvarropas";
+            String potencia = "500W";
+
             // Acción para el botón Editar
             Toast.makeText(MainActivity.this, "Editar clicado", Toast.LENGTH_SHORT).show();
-            // Iniciar la actividad para editar el electrodoméstico
+
+            // Iniciar la actividad para editar el electrodoméstico con datos
             Intent intent = new Intent(MainActivity.this, EditarElectrodomesticoActivity.class);
+
+            // Datos de prueba
+         //   intent.putExtra("nombre", "Electrodoméstico de prueba");
+         //   intent.putExtra("potencia", "500W");
+
+            intent.putExtra("nombre", nombre);
+            intent.putExtra("potencia", potencia);
+
             startActivity(intent);
         });
+
 
         // Configuración del botón Eliminar
         Button buttonDelete = findViewById(R.id.button_delete);

@@ -1,5 +1,6 @@
 package frgp.utn.edu.com;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.electrodomesticos.EditarElectrodomesticoActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -42,6 +46,33 @@ public class MainActivity extends AppCompatActivity {
                 imageElectrodomestico.setImageResource(R.drawable.ic_default);
                 break;
         }
+
+        // Configuración del botón Registrar
+        Button buttonRegister = findViewById(R.id.button_register);
+        buttonRegister.setOnClickListener(v -> {
+            // Acción para el botón Registrar
+            Toast.makeText(MainActivity.this, "Registrar clicado", Toast.LENGTH_SHORT).show();
+            // Puedes iniciar una nueva actividad o fragmento si lo deseas
+        });
+
+        // Configuración del botón Editar
+        Button buttonEdit = findViewById(R.id.button_edit);
+        buttonEdit.setOnClickListener(v -> {
+            // Acción para el botón Editar
+            Toast.makeText(MainActivity.this, "Editar clicado", Toast.LENGTH_SHORT).show();
+            // Iniciar la actividad para editar el electrodoméstico
+            Intent intent = new Intent(MainActivity.this, EditarElectrodomesticoActivity.class);
+            startActivity(intent);
+        });
+
+        // Configuración del botón Eliminar
+        Button buttonDelete = findViewById(R.id.button_delete);
+        buttonDelete.setOnClickListener(v -> {
+            // Acción para el botón Eliminar
+            Toast.makeText(MainActivity.this, "Eliminar clicado", Toast.LENGTH_SHORT).show();
+            // Aquí puedes agregar lógica adicional para confirmar la eliminación
+        });
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         return view;
     }
+
 
 }
 

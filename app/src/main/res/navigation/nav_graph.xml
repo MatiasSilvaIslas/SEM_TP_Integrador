@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-            app:startDestination="@id/loginRegisterFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
 
     <fragment
-            android:id="@+id/loginRegisterFragment"
-            android:name="frgp.utn.edu.com.ui.Login.LoginFragment"
-            android:label="LoginRegisterFragment" >
+        android:id="@+id/loginFragment"
+        android:name="frgp.utn.edu.com.ui.Login.LoginFragment"
+        android:label="LoginFragment">
         <action
-                android:id="@+id/action_loginRegisterFragment_to_loggedInFragment"
-                app:destination="@id/loggedInFragment" />
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_loggedInFragment"
+            app:destination="@id/loggedInFragment" />
     </fragment>
+
     <fragment
-            android:id="@+id/loggedInFragment"
-            android:name="frgp.utn.edu.com.ui.articulos.ArticuloFragment"
-            android:label="LoggedInFragment" >
+        android:id="@+id/registerFragment"
+        android:name="frgp.utn.edu.com.ui.Login.RegisterFragment"
+        android:label="RegisterFragment">
         <action
-                android:id="@+id/action_loggedInFragment_to_loginRegisterFragment"
-                app:destination="@id/loginRegisterFragment" />
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/loggedInFragment"
+        android:name="frgp.utn.edu.com.ui.articulos.ArticuloFragment"
+        android:label="LoggedInFragment">
+        <action
+            android:id="@+id/action_loggedInFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+
 
 </navigation>

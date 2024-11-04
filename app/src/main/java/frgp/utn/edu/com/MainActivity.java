@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
    // private ActivityResultLauncher<Intent> editarElectrodomesticoLauncher;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 // Acción para el botón Editar
         Toast.makeText(MainActivity.this, "Editar clicado", Toast.LENGTH_SHORT).show();
 
-        Button buttonEdit = findViewById(R.id.button_edit);
+        ImageButton buttonEdit = findViewById(R.id.button_edit);
         buttonEdit.setOnClickListener(v -> {
             // Datos de ejemplo para editar (estos deberían ser dinámicos en una implementación real)
            // String nombre = "LAvarropas";
@@ -86,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Configuración del botón Eliminar
-        Button buttonDelete = findViewById(R.id.button_delete);
+        ImageButton  buttonDelete = findViewById(R.id.button_delete);
         buttonDelete.setOnClickListener(v -> {
             // Acción para el botón Eliminar
             Toast.makeText(MainActivity.this, "Eliminar clicado", Toast.LENGTH_SHORT).show();
@@ -109,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    /*EditText txtUsuario, txtpassword;
+    EditText txtUsuario, txtpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtUsuario = findViewById(R.id.txtUsuario);
         txtpassword = findViewById(R.id.txtpassword);
-    }*/
+    }
 
 //    public void RegisterActivity(View view) {
 //        setContentView(R.layout.register_user);
@@ -214,4 +222,5 @@ public class MainActivity extends AppCompatActivity {
 //            Toast.makeText(this, "Debes llenar todos lo campos", Toast.LENGTH_SHORT).show();
 //        }
 //        db.close();
-//    }
+ */
+   }

@@ -7,6 +7,7 @@
     android:padding="16dp"
     android:background="#ffffff"
     tools:context=".MainActivity"
+    android:id="@+id/login_register"
     >
 <!--tools:context="."-->
     <!-- Título de Registro -->
@@ -14,7 +15,7 @@
         android:id="@+id/registro_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Registro"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -75,6 +76,25 @@
             android:padding="12dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_loginregister_password_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:endIconMode="password_toggle"
+        app:layout_constraintTop_toBottomOf="@id/fragment_loginregister_password_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_loginregister_password_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Repetir contraseña"
+            android:inputType="textPassword"
+            android:padding="12dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <!-- Texto interactivo para redirigir al login -->
 
 
@@ -93,9 +113,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/loginbtnvw"
+        android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -106,7 +127,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loginregister_password_layout"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loginregister_password_layout1"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -118,7 +139,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.366"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginbtnvw" />
+        app:layout_constraintTop_toBottomOf="@+id/next_button" />
 
     <Button
         android:id="@+id/fragment_registervw"
@@ -133,6 +154,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.717"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginbtnvw" />
+        app:layout_constraintTop_toBottomOf="@+id/next_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

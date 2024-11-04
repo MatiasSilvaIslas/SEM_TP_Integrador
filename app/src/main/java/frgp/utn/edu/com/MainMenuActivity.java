@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import frgp.utn.edu.com.databinding.ActivityMainMenuBinding;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -14,10 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import frgp.utn.edu.com.entidad.Usuario;
 
-
 public class MainMenuActivity extends AppCompatActivity {
-
-    public Usuario user;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainMenuBinding binding;
@@ -30,9 +28,11 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMainMenu.toolbar);
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
+        // Configuración de los fragmentos del menú
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_parking, R.id.nav_myaccount)
                 .setOpenableLayout(drawer)
@@ -42,32 +42,22 @@ public class MainMenuActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        TextView tvNameUser = navigationView.getHeaderView(0).findViewById(R.id.tvNameUser);
-        TextView tvEmailUser = navigationView.getHeaderView(0).findViewById(R.id.tvEmailUser);
-
-        //user = (Usuario) getIntent().getSerializableExtra(PutExtraConst.UserKey);
-        tvNameUser.setText(user.getNombre());
-        tvEmailUser.setText(user.getEmail());
-
-        /*
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                int id = menuItem.getItemId();
-
-                if (id == R.id.nav_myaccount)
-                {
-
-                }
-
-                return true;
-            }
-        });*/
+        // Verificar si el usuario está autenticado al iniciar la aplicación
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            // Redirigir al LoginFragment si no hay usuario autenticado
+            navController.navigate(R.id.Fragmentlogin);
+        }
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    // Método para mostrar el menú después del inicio de sesión
+    public void showNavigationDrawer() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
+        navController.navigate(R.id.nav_parking);  // Fragmento inicial después del login
     }
 }

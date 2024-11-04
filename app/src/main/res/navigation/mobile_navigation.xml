@@ -8,13 +8,13 @@
 
     <fragment
             android:id="@+id/nav_parking"
-            android:name="frgp.utn.edu.com.parking.ui.parking.ParkingFragment"
-            android:label="@string/menu_parking"
-            tools:layout="@layout/fragment_parking" />
+            android:name="frgp.utn.edu.com.ui.articulos.ArticuloFragment"
+            android:label="@string/menu_articulos"
+            tools:layout="@layout/fragment_articulos" />
 
     <fragment
             android:id="@+id/nav_myaccount"
-            android:name="frgp.utn.edu.com.parking.ui.myaccount.MyAccountFragment"
-            android:label="@string/menu_myaccount"
-            tools:layout="@layout/fragment_myaccount" />
+            android:name="frgp.utn.edu.com.ui.myaccount.MyAccountFragment"
+            android:label="@string/menu_cuenta"
+            tools:layout="@layout/activity_mi_perfil" />
 </navigation>

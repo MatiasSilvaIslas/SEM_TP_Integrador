@@ -7,6 +7,7 @@
 
     <style name="Theme.TP_Seminario" parent="Base.Theme.TP_Seminario"/>-->
     <style name="Theme.TP_Seminario" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="drawerArrowStyle">@style/DrawerIcon</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_primary</item>
         <item name="colorPrimaryVariant">@color/blue</item>
@@ -21,7 +22,7 @@
     </style>
 
     <style name="Theme.TP_Seminario.NoActionBar">
-        <item name="windowActionBar">false</item>
+        <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>
 

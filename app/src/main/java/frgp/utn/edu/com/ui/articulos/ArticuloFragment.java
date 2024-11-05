@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import frgp.utn.edu.com.R;
 
-public class ArticuloFragment extends Fragment {
 
+public class ArticuloFragment extends Fragment {
 
 
     @Nullable
@@ -17,7 +17,8 @@ public class ArticuloFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_articulos,container,false);
-       // initViews(view);
+
+        // initViews(view);
         return view;
     }
 

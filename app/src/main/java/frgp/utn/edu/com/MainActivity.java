@@ -1,32 +1,68 @@
 package frgp.utn.edu.com;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
+import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import com.google.android.material.navigation.NavigationView;
+import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 
-import androidx.appcompat.app.AppCompatActivity;
-import frgp.utn.edu.com.R;
-import frgp.utn.edu.com.ui.electrodomesticos.EditarElectrodomesticoActivity;
+public class MainActivity extends AppCompatActivity implements OnMainMenuNavigatorListener {
 
-public class MainActivity extends AppCompatActivity {
 
-   // private ActivityResultLauncher<Intent> editarElectrodomesticoLauncher;
+    private DrawerLayout drawerLayout;
+    private NavController navController;
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
+
+        // Configura el AppBarConfiguration con los IDs de destino principales
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.loginFragment)
+                .setOpenableLayout(drawerLayout)
+                .build();
+
+        // Configura la barra de acciones para funcionar con NavController y DrawerLayout
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Configura el listener para cerrar el Drawer después de seleccionar un elemento
+        navigationView.setNavigationItemSelectedListener(item -> {
+            boolean handled = NavigationUI.onNavDestinationSelected(item, navController);
+            if (handled) {
+                drawerLayout.closeDrawers();  // Cierra el Drawer después de seleccionar un elemento
+            }
+            return handled;
+        });
+
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
+    }
+    @Override
+    public void setnavigateToMainMenu(boolean navigate) {
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.getMenu().findItem(R.id.navigation_view).setVisible(navigate);
     }
 
     /*

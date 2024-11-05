@@ -2,7 +2,7 @@ package frgp.utn.edu.com;
 
 
 import android.os.Bundle;
-import android.widget.TextView;
+
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,7 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import frgp.utn.edu.com.entidad.Usuario;
+
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setSupportActionBar(binding.appBarMainMenu.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        NavigationView navigationView = binding.navigationView;
 
         // Configuración de los fragmentos del menú
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -52,6 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
+        //return navController.navigateUp() || super.onSupportNavigateUp();
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 

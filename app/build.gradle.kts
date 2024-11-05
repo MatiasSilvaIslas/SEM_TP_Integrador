@@ -48,6 +48,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
     implementation ("androidx.appcompat:appcompat:1.4.0")
+    implementation("mysql:mysql-connector-java:8.0.33")
     /*implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-messaging")

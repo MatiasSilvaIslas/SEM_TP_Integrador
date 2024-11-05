@@ -1,6 +1,7 @@
 package frgp.utn.edu.com.ui.Login;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,15 +34,17 @@ public class RegisterFragment extends Fragment {
 
         loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
 
-        loginRegisterViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
+        /*loginRegisterViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
-                    //Navigation.findNavController(getView()).navigate(R.id.action_loginRegisterFragment_to_loggedInFragment);
+                    // Navegar a fragment_loginregister2.xml al detectar que el usuario está registrado
+                    Navigation.findNavController(getView()).navigate(R.id.action_registerFragment_to_loginRegisterFragment2);
                 }
             }
-        });
+        });*/
     }
+
 
     @Nullable
     @Override
@@ -54,6 +58,7 @@ public class RegisterFragment extends Fragment {
         authAppRepository = new AuthAppRepository(requireActivity().getApplication()); // Inicializa aquí
         nextButton = v.findViewById(R.id.next_button);
         nextButton.setOnClickListener(view -> validateInputs());
+
     }
 
     private void validateInputs() {
@@ -71,8 +76,20 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        authAppRepository.register(email, password);
-        Toast.makeText(getContext(), "Registrado correctamente", Toast.LENGTH_SHORT).show();
+        authAppRepository.register(email, password, new RegistrationCallback() {
+            @Override
+            public void onSuccess() {
+                goToRegister2();
+                Log.d("Register", "Registration successful");
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+                Log.e("Register", "Registration failed: " + errorMessage);
+            }
+        });
+
     }
 
     private boolean isValidEmail(String email) {
@@ -109,6 +126,11 @@ public class RegisterFragment extends Fragment {
         LoginFragment fragment = new LoginFragment();
         ft.replace(R.id.activity_main_navHostFragment,fragment,LoginFragment.TAG);
         ft.commit();
+    }
+
+    private void goToRegister2() {
+        NavController navController = Navigation.findNavController(getView());
+        navController.navigate(R.id.action_registerFragment_to_loginRegisterFragment2);
     }
 
 

@@ -11,6 +11,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import frgp.utn.edu.com.ui.Login.RegistrationCallback;
+
 public class AuthAppRepository {
     private Application application;
 
@@ -45,24 +47,26 @@ public class AuthAppRepository {
                 });
     }
 
-    public void register(String email, String password) {
+    public void register(String email, String password, RegistrationCallback callback) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             userLiveData.postValue(firebaseAuth.getCurrentUser());
+                            callback.onSuccess();
                         } else {
                             Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            callback.onFailure(task.getException().getMessage());
                         }
                     }
                 });
     }
 
+
     public void logOut() {
         firebaseAuth.signOut();
-        loggedOutLiveData.postValue(true);
-    }
+        loggedOutLiveData.postValue(true);    }
 
     public MutableLiveData<FirebaseUser> getUserLiveData() {
         return userLiveData;

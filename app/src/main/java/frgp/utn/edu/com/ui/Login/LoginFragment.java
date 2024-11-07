@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
         //<((OnMainMenuNavigatorListener) getActivity()).setnavigateToMainMenu(false);
         //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
-        initViews(view); // Inicializa las vistas
+        initViews(view);
         return view;
     }
 

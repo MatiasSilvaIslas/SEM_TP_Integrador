@@ -27,73 +27,83 @@ public class RegisterFragment extends Fragment {
     private AuthAppRepository authAppRepository;
     private LoginRegisterViewModel loginRegisterViewModel;
     private Button nextButton;
+    private String email;
     public static final String TAG = RegisterFragment.class.getSimpleName();
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
-
-        /*loginRegisterViewModel.getUserLiveData().observe(this, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null) {
-                    // Navegar a fragment_loginregister2.xml al detectar que el usuario está registrado
-                    Navigation.findNavController(getView()).navigate(R.id.action_registerFragment_to_loginRegisterFragment2);
-                }
-            }
-        });*/
-    }
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_loginregister,container,false);
+        View view = inflater.inflate(R.layout.fragment_loginregister, container, false);
         initViews(view);
         return view;
     }
-    private void initViews(View v) {
-        authAppRepository = new AuthAppRepository(requireActivity().getApplication()); // Inicializa aquí
-        nextButton = v.findViewById(R.id.next_button);
-        nextButton.setOnClickListener(view -> validateInputs());
 
+    private void initViews(View v) {
+        authAppRepository = new AuthAppRepository(requireActivity().getApplication());
+        nextButton = v.findViewById(R.id.next_button);
+        nextButton.setOnClickListener(view -> registerUserIfValid());
     }
 
-    private void validateInputs() {
-        String email = ((EditText) getView().findViewById(R.id.fragment_loginregister_email)).getText().toString().trim();
-        String password = ((EditText) getView().findViewById(R.id.fragment_loginregister_password)).getText().toString().trim();
-        String repeatPassword = ((EditText) getView().findViewById(R.id.fragment_loginregister_password_repeat)).getText().toString().trim();
+    private void registerUserIfValid() {
+        email = getEmailInput();
+        String password = getPasswordInput();
+        String repeatPassword = getRepeatPasswordInput();
 
+        // Validar los datos
+        if (validateInputs(email, password, repeatPassword)) {
+            // Si la validación es exitosa, proceder con el registro
+            registerUser(email, password);
+        }
+    }
+
+    private boolean validateInputs(String email, String password, String repeatPassword) {
+        // Validar email
         if (!isValidEmail(email)) {
-            Toast.makeText(getContext(), "El correo debe tener el formato mail@dominio.com", Toast.LENGTH_SHORT).show();
-            return;
+            showToast("El correo debe tener el formato mail@dominio.com");
+            return false;
         }
 
+        // Validar contraseñas
         if (!arePasswordsValid(password, repeatPassword)) {
-            Toast.makeText(getContext(), "Las contraseñas no son iguales o no cumplen el formato requerido", Toast.LENGTH_SHORT).show();
-            return;
+            showToast("Las contraseñas no son iguales o no cumplen el formato requerido");
+            return false;
         }
 
+        return true;
+    }
+
+    private String getEmailInput() {
+        return ((EditText) getView().findViewById(R.id.fragment_loginregister_email)).getText().toString().trim();
+    }
+
+    private String getPasswordInput() {
+        return ((EditText) getView().findViewById(R.id.fragment_loginregister_password)).getText().toString().trim();
+    }
+
+    private String getRepeatPasswordInput() {
+        return ((EditText) getView().findViewById(R.id.fragment_loginregister_password_repeat)).getText().toString().trim();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void registerUser(String email, String password) {
         authAppRepository.register(email, password, new RegistrationCallback() {
             @Override
             public void onSuccess() {
-                goToRegister2();
+                goToRegister2(email);
                 Log.d("Register", "Registration successful");
             }
 
             @Override
             public void onFailure(String errorMessage) {
-
                 Log.e("Register", "Registration failed: " + errorMessage);
             }
         });
-
     }
 
     private boolean isValidEmail(String email) {
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(emailPattern);
     }
 
@@ -105,19 +115,8 @@ public class RegisterFragment extends Fragment {
 
         // Validar la complejidad de la contraseña
         String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-        if (!password.matches(passwordPattern)) {
-            // La contraseña no cumple con los requisitos
-            return false;
-        }
-
-        // La contraseña debe contener al menos 8 caracteres
-        if (password.length() < 8) {
-            return false;
-        }
-
-        return true;
+        return password.matches(passwordPattern);
     }
-
 
 
     private void goToLogin(){
@@ -128,10 +127,13 @@ public class RegisterFragment extends Fragment {
         ft.commit();
     }
 
-    private void goToRegister2() {
+    private void goToRegister2(String email) {
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
         NavController navController = Navigation.findNavController(getView());
-        navController.navigate(R.id.action_registerFragment_to_loginRegisterFragment2);
+        navController.navigate(R.id.action_registerFragment_to_loginRegisterFragment2, bundle);
     }
+
 
 
 }

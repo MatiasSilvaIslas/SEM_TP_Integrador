@@ -1,33 +1,34 @@
 package frgp.utn.edu.com;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
+import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import com.google.android.material.navigation.NavigationView;
+import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 
-import androidx.appcompat.app.AppCompatActivity;
-import frgp.utn.edu.com.R;
-import frgp.utn.edu.com.ui.electrodomesticos.EditarElectrodomesticoActivity;
+public class MainActivity extends AppCompatActivity{
 
-public class MainActivity extends AppCompatActivity {
 
-   // private ActivityResultLauncher<Intent> editarElectrodomesticoLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+
     }
+
+
+
 
     /*
     @Override

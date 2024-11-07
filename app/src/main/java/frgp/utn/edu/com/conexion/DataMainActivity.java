@@ -23,7 +23,7 @@ public class DataMainActivity {
         context = ct;
     }
 
-    /*public void fetchData() {
+    public void fetchData() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             ArrayList<Articulo> listaArticulo = new ArrayList<>();
@@ -40,7 +40,7 @@ public class DataMainActivity {
                     Articulo.setId(rs.getInt("id"));
                     Articulo.setNombre(rs.getString("nombre"));
                     Articulo.setStock(rs.getInt("stock"));
-                    Articulo.setCategoria(obtenerCategoriasById(rs.getInt("idCategoria")));
+                    //Articulo.setCategoria(obtenerCategoriasById(rs.getInt("idCategoria")));
                     listaArticulo.add(Articulo);
                 }
 
@@ -55,9 +55,9 @@ public class DataMainActivity {
 
             new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
 
-                ArticuloAdapter adapter = new ArticuloAdapter(context, listaArticulo);
+                /*ArticuloAdapter adapter = new ArticuloAdapter(context, listaArticulo);
                 lvArticulo.setAdapter(adapter);
-                Toast.makeText(context, "Conexion exitosa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Conexion exitosa", Toast.LENGTH_SHORT).show();*/
             });
         });
     }
@@ -102,7 +102,7 @@ public class DataMainActivity {
         });
     }
 
-    public ArrayList<Categoria> obtenerCategorias() {
+    /*public ArrayList<Categoria> obtenerCategorias() {
         ArrayList<Categoria> categorias = new ArrayList<>();
 
         try {
@@ -185,7 +185,7 @@ public class DataMainActivity {
         }
 
         return articulo;
-    }
+    }*/
 
     public boolean modificarArticulo(int id, String nombre, int stock, int categoriaId) {
         boolean success = false;
@@ -234,6 +234,6 @@ public class DataMainActivity {
         }
 
         return existe;
-    }*/
+    }
 
 }

@@ -124,7 +124,7 @@ public class RegisterFragment extends Fragment {
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         LoginFragment fragment = new LoginFragment();
-        ft.replace(R.id.activity_main_navHostFragment,fragment,LoginFragment.TAG);
+        //ft.replace(R.id.activity_main_navHostFragment,fragment,LoginFragment.TAG);
         ft.commit();
     }
 

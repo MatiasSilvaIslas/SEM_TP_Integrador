@@ -1,5 +1,6 @@
 package frgp.utn.edu.com.ui.Login;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseUser;
+import frgp.utn.edu.com.MainMenuActivity;
 import frgp.utn.edu.com.R;
+
+import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class LoginFragment extends Fragment {
@@ -23,6 +28,15 @@ public class LoginFragment extends Fragment {
     private Button loginButton, registerButton;
     public static final String TAG = LoginFragment.class.getSimpleName();
     private LoginRegisterViewModel loginRegisterViewModel;
+    private MainMenuActivity listener;
+    private NavController navController;
+
+    public LoginFragment() {
+        // Required empty public constructor
+    }
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +57,9 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        //<((OnMainMenuNavigatorListener) getActivity()).setnavigateToMainMenu(false);
+        //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+
         initViews(view); // Inicializa las vistas
         return view;
     }
@@ -53,6 +70,8 @@ public class LoginFragment extends Fragment {
         loginButton = view.findViewById(R.id.btn_login);
         registerButton = view.findViewById(R.id.btn_registrar);
 
+
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +79,7 @@ public class LoginFragment extends Fragment {
                 String password = passwordEditText.getText().toString();
                 if (!email.isEmpty() && !password.isEmpty()) {
                     loginRegisterViewModel.login(email, password);
+
                 } else {
                     Toast.makeText(getContext(), "Email Address and Password Must Be Entered", Toast.LENGTH_SHORT).show();
                 }

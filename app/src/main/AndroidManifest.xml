@@ -26,6 +26,8 @@
         <activity android:name=".EditarElectrodomesticoActivity" />
         <!-- Declaración de EditarElectrodomesticoActivity con ruta completa -->
         <activity android:name=".ui.electrodomesticos.EditarElectrodomesticoActivity" />
+        <activity android:name=".ui.usuario.PantallaPrincipalActivity" />
+
     </application>
 
 </manifest>

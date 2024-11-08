@@ -28,15 +28,6 @@
             app:destination="@id/login_register2" />
     </fragment>
 
-    <fragment
-        android:id="@+id/login_register2"
-        android:name="frgp.utn.edu.com.ui.usuario.AltaDatosPersonalesFragment"
-        android:label="Datos Personales">
-        <action
-            android:id="@+id/action_loginRegisterFragment2_to_loggedInFragment"
-            app:destination="@id/fragment_loggedin" />
-    </fragment>
-
 
     <fragment
         android:id="@+id/loggedInFragment"
@@ -46,5 +37,16 @@
             android:id="@+id/action_loggedInFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/login_register2"
+        android:name="frgp.utn.edu.com.ui.usuario.AltaDatosPersonalesFragment"
+        android:label="Datos Personales">
+
+        <action
+            android:id="@+id/action_loginRegisterFragment2_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
 
 </navigation>

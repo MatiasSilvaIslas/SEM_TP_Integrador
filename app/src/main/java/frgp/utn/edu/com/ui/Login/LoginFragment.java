@@ -1,6 +1,7 @@
 package frgp.utn.edu.com.ui.Login;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import frgp.utn.edu.com.MainMenuActivity;
 import frgp.utn.edu.com.R;
 
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
+import frgp.utn.edu.com.ui.usuario.PantallaPrincipalActivity;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class LoginFragment extends Fragment {
@@ -32,11 +34,7 @@ public class LoginFragment extends Fragment {
     private NavController navController;
 
     public LoginFragment() {
-        // Required empty public constructor
     }
-
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +45,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
-                    Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_loggedInFragment);
+                    pasarASiguientePantalla();
                 }
             }
         });
@@ -86,7 +84,6 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        // Configura el click listener para el botón de registro
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,8 +93,11 @@ public class LoginFragment extends Fragment {
     }
 
     private void goToRegister() {
-        // Navega al RegisterFragment
         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_registerFragment);
     }
 
+    private void pasarASiguientePantalla() {
+        Intent intent = new Intent(getActivity(), PantallaPrincipalActivity.class);
+        startActivity(intent);
+    }
 }

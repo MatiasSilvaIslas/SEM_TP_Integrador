@@ -15,7 +15,7 @@ import frgp.utn.edu.com.entidad.Articulo;
 
 public class DataMainActivity {
 
-    private ListView lvArticulo;
+   /* private ListView lvArticulo;
     private Context context;
 
     public DataMainActivity(ListView lv, Context ct) {
@@ -31,7 +31,7 @@ public class DataMainActivity {
             try {
 
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT * FROM articulo");
 
@@ -55,9 +55,9 @@ public class DataMainActivity {
 
             new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
 
-                /*ArticuloAdapter adapter = new ArticuloAdapter(context, listaArticulo);
+                ArticuloAdapter adapter = new ArticuloAdapter(context, listaArticulo);
                 lvArticulo.setAdapter(adapter);
-                Toast.makeText(context, "Conexion exitosa", Toast.LENGTH_SHORT).show();*/
+                Toast.makeText(context, "Conexion exitosa", Toast.LENGTH_SHORT).show();
             });
         });
     }
@@ -185,7 +185,7 @@ public class DataMainActivity {
         }
 
         return articulo;
-    }*/
+    }
 
     public boolean modificarArticulo(int id, String nombre, int stock, int categoriaId) {
         boolean success = false;
@@ -235,5 +235,5 @@ public class DataMainActivity {
 
         return existe;
     }
-
+*/
 }

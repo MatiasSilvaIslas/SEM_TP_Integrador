@@ -20,14 +20,13 @@ public class DataUsuario {
         context = ct;
     }
 
-    public void agregarUsuario(Usuario usuario) {
+    public void agregarUsuario(Usuario usuario, Callback callback) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             boolean success = false;
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-
                 Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,8 +54,14 @@ public class DataUsuario {
                 new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
                     Toast.makeText(context, "Error al agregar usuario", Toast.LENGTH_SHORT).show();
                 });
-                return;
             }
+
+            boolean finalSuccess = success;
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onComplete(finalSuccess));
         });
     }
+    public interface Callback {
+        void onComplete(boolean success);
+    }
+
 }

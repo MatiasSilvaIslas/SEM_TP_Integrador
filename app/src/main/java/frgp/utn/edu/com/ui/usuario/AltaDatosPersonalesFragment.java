@@ -1,6 +1,7 @@
 package frgp.utn.edu.com.ui.usuario;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -189,8 +191,20 @@ public class AltaDatosPersonalesFragment extends Fragment {
 
     private void agregarUsuario(Usuario usuario) {
         DataUsuario dataUsuario = new DataUsuario(requireContext());
-        dataUsuario.agregarUsuario(usuario);
-
-        Toast.makeText(requireContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+        dataUsuario.agregarUsuario(usuario, success -> {
+            if (success) {
+                Toast.makeText(requireContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                // Aquí agregamos la lógica para cambiar a la siguiente pantalla
+                pasarASiguientePantalla();
+            } else {
+                Toast.makeText(requireContext(), "Error al registrar usuario.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    private void pasarASiguientePantalla() {
+        Intent intent = new Intent(getActivity(), PantallaPrincipalActivity.class);
+        startActivity(intent);
+    }
+
 }

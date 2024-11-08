@@ -31,7 +31,7 @@ public class DataMainActivity {
             try {
 
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT * FROM articulo");
 
@@ -69,7 +69,7 @@ public class DataMainActivity {
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
 
                 String query = "INSERT INTO articulo (id, nombre, stock, idCategoria) VALUES (?, ?, ?, ?)";
                 PreparedStatement pst = con.prepareStatement(query);
@@ -192,7 +192,7 @@ public class DataMainActivity {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+            Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
 
             String query = "UPDATE articulo SET nombre = ?, stock = ?, idCategoria = ? WHERE id = ?";
             PreparedStatement pst = con.prepareStatement(query);
@@ -219,7 +219,7 @@ public class DataMainActivity {
         String query = "SELECT id FROM articulo WHERE id = ?";
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            try (Connection con = DriverManager.getConnection(DataDB.urlMySQL, DataDB.user, DataDB.pass);
+            try (Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
                  PreparedStatement pst = con.prepareStatement(query)) {
 
                 pst.setInt(1, id);

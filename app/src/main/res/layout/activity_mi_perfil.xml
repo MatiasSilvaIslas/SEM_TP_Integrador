@@ -22,7 +22,7 @@ android:background="@android:color/white">
         android:src="@drawable/ic_user"
         android:contentDescription="User Icon"
         android:padding="8dp"
-        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         android:layout_gravity="start" />
 
     <!-- Icono de notificación a la derecha -->
@@ -33,7 +33,7 @@ android:background="@android:color/white">
         android:src="@drawable/ic_notification"
         android:contentDescription="Notification Icon"
         android:padding="8dp"
-        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         android:layout_gravity="end" />
 </androidx.appcompat.widget.Toolbar>
 
@@ -52,7 +52,7 @@ android:background="@android:color/white">
 
 <!-- Botón Mi Perfil -->
 <com.google.android.material.button.MaterialButton
-    android:id="@+id/btnProfile"
+    android:id="@+id/btnModificarPerfil"
     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -67,11 +67,11 @@ android:background="@android:color/white">
 
 <!-- Botón Gestionar Electrodomésticos -->
 <com.google.android.material.button.MaterialButton
-    android:id="@+id/btnManageAppliances"
+    android:id="@+id/btnModificarCredenciales"
     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/btnProfile"
+    android:layout_below="@id/btnModificarPerfil"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="16dp"
     android:layout_marginStart="24dp"

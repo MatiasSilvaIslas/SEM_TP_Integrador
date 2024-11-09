@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.repository.AuthAppRepository;
+import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class RegisterFragment extends Fragment {
@@ -91,6 +92,7 @@ public class RegisterFragment extends Fragment {
         authAppRepository.register(email, password, new RegistrationCallback() {
             @Override
             public void onSuccess() {
+                SessionManager.saveUserEmail(getContext(), email);
                 goToRegister2(email);
                 Log.d("Register", "Registration successful");
             }

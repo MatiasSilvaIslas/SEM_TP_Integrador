@@ -1,140 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+ xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- Toolbar con iconos de usuario y notificaciones -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+    <!-- Título Registro -->
+    <TextView
+        android:id="@+id/tv_registro_titulo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/light_blue"
-        app:titleTextColor="@android:color/white">
+        android:text="Editar datos "
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
 
-        <!-- Icono de usuario a la izquierda -->
-        <ImageView
-            android:id="@+id/icon_user"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_user"
-            android:contentDescription="User Icon"
-            android:padding="8dp"
-            app:tint="@android:color/white"
-            android:layout_gravity="start" />
-
-        <!-- Icono de notificación a la derecha -->
-        <ImageView
-            android:id="@+id/icon_notification"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_notification"
-            android:contentDescription="Notification Icon"
-            android:padding="8dp"
-            android:layout_gravity="end"
-            app:tint="@android:color/white" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <!-- Contenedor principal, ubicado debajo del Toolbar -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Subtítulo -->
+    <TextView
+        android:id="@+id/tv_registro_subtitulo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_below="@id/toolbar">
+        android:layout_marginTop="16dp"
+        android:text="Aqui puedes editar tus datos personales"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_registro_titulo" />
 
-        <!-- Campo Nombre -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Datos del perfil"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+    <!-- Nombre -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_nombre"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_registro_subtitulo">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_nombre_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="#000000"
-            android:hint="Nombre"
-            android:minHeight="48dp"
-            android:text="Pepito"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey" />
+            android:hint="Ingresa tu nombre"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Campo Apellido -->
-        <EditText
+    <!-- Apellido -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_apellido"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_nombre">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_apellido_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="#000000"
-            android:hint="Apellido"
-            android:minHeight="48dp"
-            android:text="Flores"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey" />
+            android:hint="Ingresa tu apellido"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Campo Fecha de Nacimiento -->
-        <EditText
+    <!-- Fecha de Nacimiento (DatePicker) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_fecha_nacimiento"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_apellido">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_fecha_nacimiento_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="#000000"
-            android:hint="Fecha de Nacimiento"
-            android:inputType="date"
-            android:minHeight="48dp"
-            android:text="15/04/1996"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey" />
+            android:hint="Selecciona tu fecha de nacimiento"
+            android:inputType="none"
+            android:focusable="false" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Selector de Género -->
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:entries="@array/gender_array"
-            android:minHeight="48dp" />
+    <Spinner
+        android:id="@+id/spinner_genero_edit"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/spinner_outline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_fecha_nacimiento" />
 
-        <!-- Selector de Provincia -->
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:entries="@array/province_array"
-            android:minHeight="48dp" />
+    <!-- Provincia (Spinner) -->
+    <Spinner
+        android:id="@+id/spinner_provincia_edit"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/spinner_outline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_genero_edit" />
 
-        <!-- Selector de Ciudad -->
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:entries="@array/city_array"
-            android:minHeight="48dp" />
+    <!-- Localidad (Spinner) -->
+    <Spinner
+        android:id="@+id/spinner_localidad_edit"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/spinner_outline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_provincia_edit" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="#007AFF"
-            android:text="Actualizar perfil"
-            android:textColor="#FFFFFF" />
+    <!-- Botón Registrar -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_guardar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/blue_primary"
+        android:text="Guardar"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_localidad_edit" />
 
-    </LinearLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

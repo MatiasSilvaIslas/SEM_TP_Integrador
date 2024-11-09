@@ -6,10 +6,13 @@ import android.widget.Toast;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import frgp.utn.edu.com.entidad.Localidad;
+import frgp.utn.edu.com.entidad.Provincia;
 import frgp.utn.edu.com.entidad.Usuario;
 
 public class DataUsuario {
@@ -63,5 +66,67 @@ public class DataUsuario {
     public interface Callback {
         void onComplete(boolean success);
     }
+
+    public Usuario obtenerUsuarioPorEmail(String email, CallbackUsuario callback) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            Usuario usuario = null;
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                String query = "SELECT u.ID_usuario, u.genero, u.email_usuario, u.nombre_usuario, u.apellido_usuario, u.fecha_nac, " +
+                        "p.codProvincia , p.provincia AS provincia_descripcion, p.estado AS provincia_estado, " +
+                        "l.codLocalidad, l.localidad AS localidad_descripcion, l.estado AS localidad_estado " +
+                        "FROM Usuarios u " +
+                        "INNER JOIN Provincias p ON u.Id_provincia = p.codProvincia " +
+                        "INNER JOIN Localidades l ON u.Id_localidad = l.codLocalidad " +
+                        "WHERE u.email_usuario = ?";
+
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setString(1, email);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setIdUsuario(rs.getInt("ID_usuario"));
+                    usuario.setGenero(rs.getString("genero"));
+                    usuario.setEmail(rs.getString("email_usuario"));
+                    usuario.setNombre_usuario(rs.getString("nombre_usuario"));
+                    usuario.setApellido_usuario(rs.getString("apellido_usuario"));
+                    usuario.setFecha_nac(rs.getDate("fecha_nac"));
+
+                    Provincia provincia = new Provincia();
+                    provincia.setId_provincia(rs.getInt("CodProvincia"));
+                    provincia.setDescripcion(rs.getString("provincia_descripcion"));
+                    provincia.setEstado(rs.getBoolean("provincia_estado"));
+                    usuario.setProvincia(provincia);
+
+                    // Mapeo de la localidad
+                    Localidad localidad = new Localidad();
+                    localidad.setId_localidad(rs.getInt("codLocalidad"));
+                    localidad.setDescripcion(rs.getString("localidad_descripcion"));
+                    localidad.setEstado(rs.getBoolean("localidad_estado"));
+                    usuario.setLocalidad(localidad);
+                }
+
+                rs.close();
+                pst.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Usuario finalUsuario = usuario;
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onComplete(finalUsuario));
+        });
+        return usuario;
+    }
+
+    public interface CallbackUsuario {
+        void onComplete(Usuario usuario);
+    }
+
 
 }

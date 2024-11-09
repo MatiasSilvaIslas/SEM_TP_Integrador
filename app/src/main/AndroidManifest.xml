@@ -22,11 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- Declaración de EditarElectrodomesticoActivity -->
         <activity android:name=".EditarElectrodomesticoActivity" />
-        <!-- Declaración de EditarElectrodomesticoActivity con ruta completa -->
         <activity android:name=".ui.electrodomesticos.EditarElectrodomesticoActivity" />
         <activity android:name=".ui.usuario.PantallaPrincipalActivity" />
+        <activity android:name=".ui.usuario.EditarPerfilActivity"
+            android:autofillHints=""
+        />
+        <activity android:name=".ui.usuario.MiPerfilActivity" />
+        <activity android:name=".ui.usuario.EditarCredencialesActivity" />
 
     </application>
 

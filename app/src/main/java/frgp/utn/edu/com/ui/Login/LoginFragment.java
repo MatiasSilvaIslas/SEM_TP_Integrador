@@ -22,6 +22,7 @@ import frgp.utn.edu.com.R;
 
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 import frgp.utn.edu.com.ui.usuario.PantallaPrincipalActivity;
+import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class LoginFragment extends Fragment {
@@ -45,6 +46,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
+                    SessionManager.saveUserEmail(getContext(), firebaseUser.getEmail());
                     pasarASiguientePantalla();
                 }
             }
@@ -55,8 +57,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        //<((OnMainMenuNavigatorListener) getActivity()).setnavigateToMainMenu(false);
-        //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
         initViews(view);
         return view;

@@ -3,13 +3,13 @@ package frgp.utn.edu.com.entidad;
 public class Localidad {
     private int id_localidad;
     private int id_provincia;
-    private String desripcion;
+    private String descripcion;
     private boolean estado;
 
     public Localidad(int id_localidad, int id_provincia, String desripcion, boolean estado) {
         this.id_localidad = id_localidad;
         this.id_provincia = id_provincia;
-        this.desripcion = desripcion;
+        this.descripcion = desripcion;
         this.estado = estado;
     }
 
@@ -32,12 +32,12 @@ public class Localidad {
         this.id_provincia = id_provincia;
     }
 
-    public String getDesripcion() {
-        return desripcion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDesripcion(String desripcion) {
-        this.desripcion = desripcion;
+    public void setDescripcion(String desripcion) {
+        this.descripcion = desripcion;
     }
 
     public boolean isEstado() {
@@ -50,6 +50,6 @@ public class Localidad {
 
     @Override
     public String toString() {
-        return  desripcion;
+        return  descripcion;
     }
 }

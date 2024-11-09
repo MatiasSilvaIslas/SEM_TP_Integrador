@@ -26,6 +26,14 @@ public class Usuario {
         this.localidad = localidad;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public String getGenero() {
         return genero;
     }

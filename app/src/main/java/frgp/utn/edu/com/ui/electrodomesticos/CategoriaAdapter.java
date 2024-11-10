@@ -6,12 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.entidad.Categoria;
 
@@ -87,7 +84,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
                     imageCategoria.setImageResource(R.drawable.ic_aire_acondicionado);
                     imageCategoria.setContentDescription("Climatización");
                     break;
-                case "Electrónica, Audio y Video":
+                case "Electrónica":
                     imageCategoria.setImageResource(R.drawable.ic_pc);
                     imageCategoria.setContentDescription("Electrónica, Audio y Video");
                     break;

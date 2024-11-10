@@ -94,8 +94,10 @@
             android:layout_height="wrap_content"
             android:hint="Selecciona tu fecha de nacimiento"
             android:inputType="none"
-            android:focusable="false" />
+            android:focusable="true"
+            android:clickable="true" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <Spinner
         android:id="@+id/spinner_genero_edit"

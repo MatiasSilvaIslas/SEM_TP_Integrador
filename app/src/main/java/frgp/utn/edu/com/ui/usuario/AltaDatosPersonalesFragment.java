@@ -125,7 +125,6 @@ public class AltaDatosPersonalesFragment extends Fragment {
                 year, month, day
         );
 
-        // Limitar la selección de fecha a la actual
         datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
         datePickerDialog.show();
     }
@@ -194,7 +193,6 @@ public class AltaDatosPersonalesFragment extends Fragment {
         dataUsuario.agregarUsuario(usuario, success -> {
             if (success) {
                 Toast.makeText(requireContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
-                // Aquí agregamos la lógica para cambiar a la siguiente pantalla
                 pasarASiguientePantalla();
             } else {
                 Toast.makeText(requireContext(), "Error al registrar usuario.", Toast.LENGTH_SHORT).show();

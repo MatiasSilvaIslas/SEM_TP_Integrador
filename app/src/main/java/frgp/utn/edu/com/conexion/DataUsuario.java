@@ -40,7 +40,7 @@ public class DataUsuario {
 
                 PreparedStatement pst = con.prepareStatement(query);
                 pst.setInt(1, usuario.getProvincia().getId_provincia());
-                pst.setInt(2, usuario.getLocalidad().getId_provincia());
+                pst.setInt(2, usuario.getLocalidad().getId_localidad());
                 pst.setString(3, usuario.getGenero());
                 pst.setString(4, usuario.getEmail());
                 pst.setString(5, usuario.getNombre_usuario());
@@ -66,6 +66,57 @@ public class DataUsuario {
     public interface Callback {
         void onComplete(boolean success);
     }
+
+    public void updateUsuario(Usuario usuario, Callback callback) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            boolean success = false;
+
+            try {
+                // Establecer el controlador de la base de datos y conexión
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                // Formatear la fecha de nacimiento
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaFormateada = sdf.format(usuario.getFecha_nac());
+
+                // Consulta SQL para actualizar los datos del usuario
+                String query = "UPDATE Usuarios SET " +
+                        "ID_provincia = ?, ID_localidad = ?, genero = ?, " +
+                        "nombre_usuario = ?, apellido_usuario = ?, fecha_nac = ? " +
+                        "WHERE email_usuario = ?"; // Usamos el email como criterio para identificar al usuario
+
+                // Preparar la consulta con los valores del usuario
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setInt(1, usuario.getProvincia().getId_provincia());
+                pst.setInt(2, usuario.getLocalidad().getId_localidad());
+                pst.setString(3, usuario.getGenero());
+                pst.setString(4, usuario.getNombre_usuario());
+                pst.setString(5, usuario.getApellido_usuario());
+                pst.setString(6, fechaFormateada);
+                pst.setString(7, usuario.getEmail()); // Usamos el email para identificar al usuario en la base de datos
+
+                // Ejecutar la actualización
+                int rowsAffected = pst.executeUpdate();
+                success = rowsAffected > 0; // Si las filas afectadas son más de 0, la actualización fue exitosa
+
+                pst.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Si ocurre un error, mostrar un mensaje en el hilo principal
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    Toast.makeText(context, "Error al actualizar usuario", Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            // Notificar el resultado al callback en el hilo principal
+            boolean finalSuccess = success;
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onComplete(finalSuccess));
+        });
+    }
+
 
     public Usuario obtenerUsuarioPorEmail(String email, CallbackUsuario callback) {
         ExecutorService executor = Executors.newSingleThreadExecutor();

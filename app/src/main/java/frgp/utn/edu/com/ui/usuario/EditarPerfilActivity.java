@@ -86,7 +86,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                     }
                 }, year, month, dayOfMonth);
 
-        datePickerDialog.getDatePicker().setMinDate(todayInMillis);
+        datePickerDialog.getDatePicker().setMaxDate(todayInMillis);
 
         datePickerDialog.show();
     }

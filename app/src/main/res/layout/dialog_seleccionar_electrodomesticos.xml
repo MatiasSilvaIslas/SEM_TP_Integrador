@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/textTituloElectrodomesticos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecciona Electrodomésticos"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- RecyclerView para mostrar electrodomésticos con campos para horas y cantidad -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerElectrodomesticos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
+    <!-- Botón para confirmar selección -->
+    <Button
+        android:id="@+id/btnConfirmarSeleccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirmar Selección"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

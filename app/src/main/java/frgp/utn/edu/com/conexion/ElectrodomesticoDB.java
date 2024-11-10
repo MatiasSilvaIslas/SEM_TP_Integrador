@@ -1,55 +1,112 @@
 package frgp.utn.edu.com.conexion;
 
+import android.os.AsyncTask;
 import android.content.Context;
+import android.util.Log;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.sql.Connection;
 
 import frgp.utn.edu.com.entidad.Categoria;
 import frgp.utn.edu.com.entidad.Electrodomestico;
 
 public class ElectrodomesticoDB {
+
     private Context context;
 
     public ElectrodomesticoDB(Context context) {
         this.context = context;
     }
 
-    public ArrayList<Electrodomestico> obtenerElectrodomesticos() {
-        ArrayList<Electrodomestico> electrodomesticos = new ArrayList<>();
+    public void obtenerElectrodomesticosAsync(int categoriaId, ElectrodomesticoCallback callback) {
+        // Ejecutar la consulta en segundo plano
+        new ObtenerElectrodomesticosTask(categoriaId, callback).execute();
+    }
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+    // AsyncTask para obtener los electrodomésticos
+    private static class ObtenerElectrodomesticosTask extends AsyncTask<Void, Void, ArrayList<Electrodomestico>> {
 
-            String query = "SELECT e.id_electrodomestico, e.nombre, e.potencia_promedio_watts, e.consumo_hora_wh, c.id_categoria, c.nombre AS categoria_nombre " +
-                    "FROM Electrodomestico AS e " +
-                    "INNER JOIN Categoria AS c ON e.id_categoria = c.id_categoria";
-            PreparedStatement pst = con.prepareStatement(query);
-            ResultSet rs = pst.executeQuery();
+        private int categoriaId;
+        private ElectrodomesticoCallback callback;
 
-            while (rs.next()) {
-                int id_electrodomestico = rs.getInt("id_electrodomestico");
-                String nombre = rs.getString("nombre");
-                int potenciaPromedioWatts = rs.getInt("potencia_promedio_watts");
-                int consumoHoraWh = rs.getInt("consumo_hora_wh");
-
-                int id_categoria = rs.getInt("id_categoria");
-                String categoriaNombre = rs.getString("categoria_nombre");
-                Categoria categoria = new Categoria(id_categoria, categoriaNombre);
-
-                electrodomesticos.add(new Electrodomestico(id_electrodomestico, nombre, potenciaPromedioWatts, consumoHoraWh, categoria));
-            }
-
-            rs.close();
-            pst.close();
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        public ObtenerElectrodomesticosTask(int categoriaId, ElectrodomesticoCallback callback) {
+            this.categoriaId = categoriaId;
+            this.callback = callback;
         }
-        return electrodomesticos;
+
+        @Override
+        protected ArrayList<Electrodomestico> doInBackground(Void... voids) {
+            ArrayList<Electrodomestico> electrodomesticos = new ArrayList<>();
+            try {
+                // Cargar el driver JDBC
+                Class.forName("com.mysql.jdbc.Driver");
+
+                // Establecer conexión con la base de datos
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                // Consulta SQL para obtener los electrodomésticos según la categoría
+                String query = "SELECT id_electrodomestico, nombre, potencia_promedio_watts, consumo_hora_wh, id_categoria FROM Electrodomestico WHERE id_categoria = ?";
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setInt(1, categoriaId); // Usar el id de la categoría
+                ResultSet rs = pst.executeQuery();
+
+                // Procesar los resultados
+                while (rs.next()) {
+                    int id_electrodomestico = rs.getInt("id_electrodomestico");
+                    String nombre = rs.getString("nombre");
+                    int potencia = rs.getInt("potencia_promedio_watts");
+                    int consumoHoraWh = rs.getInt("consumo_hora_wh");
+                    int categoriaId = rs.getInt("id_categoria");
+
+                    // Aquí asumimos que tienes un método para obtener la categoría asociada al ID
+                    // Puede ser una consulta adicional a la base de datos o un objeto previamente cargado
+                    Categoria categoria = obtenerCategoriaPorId(categoriaId, con);
+
+                    electrodomesticos.add(new Electrodomestico(id_electrodomestico, nombre, potencia, consumoHoraWh, categoria));
+                }
+
+                // Cerrar recursos
+                rs.close();
+                pst.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return electrodomesticos;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Electrodomestico> electrodomesticos) {
+            super.onPostExecute(electrodomesticos);
+            // Llamar al callback con los resultados
+            callback.onElectrodomesticosObtenidos(electrodomesticos);
+        }
+
+        private Categoria obtenerCategoriaPorId(int categoriaId, Connection con) {
+            Categoria categoria = null;
+            try {
+                String query = "SELECT id_categoria, nombre FROM Categoria WHERE id_categoria = ?";
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setInt(1, categoriaId);
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    categoria = new Categoria(rs.getInt("id_categoria"), rs.getString("nombre"));
+                }
+
+                rs.close();
+                pst.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return categoria;
+        }
+    }
+
+    public interface ElectrodomesticoCallback {
+        void onElectrodomesticosObtenidos(ArrayList<Electrodomestico> electrodomesticos);
     }
 }

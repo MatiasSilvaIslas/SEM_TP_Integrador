@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:paddingBottom="16dp" />
 
-    <!-- RecyclerView para mostrar categorías -->
+    <!-- RecyclerView para mostrar categorías en formato de grilla -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerCategorias"
         android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package frgp.utn.edu.com.ui.electrodomesticos;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,13 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
 
     @Override
     public void onBindViewHolder(@NonNull CategoriaViewHolder holder, int position) {
+        // Obtener la categoría en la posición actual
         Categoria categoria = categoriaList.get(position);
+
+        // Verificar con un Log si se está obteniendo correctamente
+        Log.d("CategoriaAdapter", "Categoria: " + categoria.getNombre());  // Esto es lo que debes agregar
+
+        // Enlazar la categoría con el ViewHolder
         holder.bind(categoria);
     }
 
@@ -87,9 +94,9 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Cate
                     imageCategoria.setImageResource(R.drawable.ic_aire_acondicionado);
                     imageCategoria.setContentDescription("Climatización");
                     break;
-                case "Electrónica, Audio y Video":
+                case "Electrónica":
                     imageCategoria.setImageResource(R.drawable.ic_pc);
-                    imageCategoria.setContentDescription("Electrónica, Audio y Video");
+                    imageCategoria.setContentDescription("Electrónica");
                     break;
                 case "Cuidado Personal":
                     imageCategoria.setImageResource(R.drawable.ic_secadora);

@@ -1,20 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp">
 
+    <!-- CheckBox -->
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp" />
 
-    <TextView
-        android:id="@+id/textNombre"
-        android:layout_width="wrap_content"
+    <!-- Contenedor para nombre del electrodoméstico, spinner de cantidad, horas y días -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nombre del electrodoméstico" />
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <!-- Nombre del electrodoméstico -->
+        <TextView
+            android:id="@+id/textNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del electrodoméstico"
+            android:layout_marginBottom="8dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="16sp"
+            android:layout_gravity="start" />
+
+        <!-- Contenedor para "Cantidad" y su Spinner en una fila -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- Texto "Cantidad" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Spinner de cantidad (1-10) -->
+            <Spinner
+                android:id="@+id/spinnerCantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <!-- Contenedor para "Horas" y su Spinner en una fila -->
+        <LinearLayout
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Texto "Horas" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_vertical"
+                android:text="Horas" />
+
+            <!-- Spinner de horas de uso (1-24) -->
+            <Spinner
+                android:id="@+id/spinnerHoras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <!-- Contenedor para "Días" y su Spinner en una fila -->
+        <LinearLayout
+            android:layout_width="183dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Texto "Días" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_vertical"
+                android:text="Días" />
+
+            <!-- Spinner de días de uso (1-7) -->
+            <Spinner
+                android:id="@+id/spinnerDias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

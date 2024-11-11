@@ -61,7 +61,7 @@ public class ElectrodomesticoDB {
                     int consumoHoraWh = rs.getInt("consumo_hora_wh");
                     int categoriaId = rs.getInt("id_categoria");
 
-                    // Aquí asumimos que tienes un método para obtener la categoría asociada al ID
+                    // Aquí asumimos que está el método para obtener la categoría asociada al ID
                     // Puede ser una consulta adicional a la base de datos o un objeto previamente cargado
                     Categoria categoria = obtenerCategoriaPorId(categoriaId, con);
 

@@ -1,12 +1,14 @@
 package frgp.utn.edu.com;
 
-
 import android.os.Bundle;
+import android.util.Log;
 
 
 import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import frgp.utn.edu.com.databinding.ActivityMainBinding;
 import frgp.utn.edu.com.databinding.ActivityMainMenuBinding;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,21 +18,22 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 
-
 public class MainMenuActivity extends AppCompatActivity  implements OnMainMenuNavigatorListener {
-
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainMenuBinding binding;
     private DrawerLayout drawerLayout;
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
-
 
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -60,15 +63,19 @@ public class MainMenuActivity extends AppCompatActivity  implements OnMainMenuNa
             // Redirigir al LoginFragment si no hay usuario autenticado
             navController.navigate(R.id.Fragmentlogin);
         }
+
+        Log.d("MainMenuActivity","oncreate-log");
     }
 
     @Override
     public boolean onSupportNavigateUp() {
+        Log.d("MainMenuActivity","onSupportNavigateUp-log");
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 
     @Override
     public void setnavigateToMainMenu(boolean navigate) {
+        Log.d("MainMenuActivity","setnavigateToMainMenu-log");
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.getMenu().findItem(R.id.navigation_view).setVisible(navigate);
     }
@@ -81,6 +88,7 @@ public class MainMenuActivity extends AppCompatActivity  implements OnMainMenuNa
 
     // Método para mostrar el menú después del inicio de sesión
     public void showNavigationDrawer() {
+        Log.d("MainMenuActivity","showNavigationDrawer-log");
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu);
         navController.navigate(R.id.nav_parking);  // Fragmento inicial después del login
     }

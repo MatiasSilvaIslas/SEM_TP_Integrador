@@ -1,6 +1,7 @@
 package frgp.utn.edu.com;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,12 +11,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
+
+import frgp.utn.edu.com.databinding.ActivityMainBinding;
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 
 public class MainActivity extends AppCompatActivity{
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity{
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
+        Log.d("MainActivity","oncreate-log");
 
     }
 

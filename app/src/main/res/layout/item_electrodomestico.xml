@@ -81,18 +81,18 @@
 
         <!-- Contenedor para "Días" y su Spinner en una fila -->
         <LinearLayout
-            android:layout_width="183dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <!-- Texto "Días" -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:text="Días"
                 android:gravity="center_vertical"
-                android:text="Días" />
+                android:layout_marginEnd="8dp" />
 
             <!-- Spinner de días de uso (1-7) -->
             <Spinner

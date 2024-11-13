@@ -37,13 +37,13 @@ public class ArticuloFragment extends Fragment {
     }
     public void  initViews(View view)
     {
-        btnAgregarArticulo = view.findViewById(R.id.btn_articulos);
+        /*btnAgregarArticulo = view.findViewById(R.id.btn_articulos);
         btnAgregarArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).openDrawer();
             }
-        });
+        });*/
     }
 
 

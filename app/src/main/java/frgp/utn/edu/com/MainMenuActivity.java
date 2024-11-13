@@ -32,7 +32,7 @@ public class MainMenuActivity extends AppCompatActivity  implements OnMainMenuNa
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layoutlast);
         NavigationView navigationView = findViewById(R.id.navigation_view);
 
         NavHostFragment navHostFragment =

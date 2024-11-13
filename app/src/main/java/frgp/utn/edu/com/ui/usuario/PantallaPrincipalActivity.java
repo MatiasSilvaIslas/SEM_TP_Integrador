@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosActivity;
+import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoActivity;
 
 public class PantallaPrincipalActivity extends AppCompatActivity {
     @Override
@@ -35,5 +36,16 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Navegar a CalculoConsumoActivity
+        Button btnCalculateConsumption = findViewById(R.id.btnCalculateConsumption);
+        btnCalculateConsumption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PantallaPrincipalActivity.this, CalculoConsumoActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

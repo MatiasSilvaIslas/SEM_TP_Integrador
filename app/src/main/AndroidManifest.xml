@@ -31,6 +31,7 @@
         <activity android:name=".ui.usuario.MiPerfilActivity" />
         <activity android:name=".ui.usuario.EditarCredencialesActivity" />
         <activity android:name=".ui.electrodomesticos.ABMLElectrodomesticosActivity"/>
+        <activity android:name=".ui.electrodomesticos.CalculoConsumoActivity"/>
 
     </application>
 

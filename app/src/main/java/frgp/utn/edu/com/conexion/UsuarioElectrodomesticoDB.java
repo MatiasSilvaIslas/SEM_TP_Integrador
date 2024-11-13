@@ -6,6 +6,7 @@ import android.widget.Toast;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,7 +21,7 @@ public class UsuarioElectrodomesticoDB {
         this.context = context;
     }
 
-    public void insertarElectrodomesticos(int usuarioId, ArrayList<UsuarioElectrodomestico> seleccionados, InsertarElectrodomesticosCallback callback) {
+    public void actualizarOInsertarElectrodomesticos(int usuarioId, ArrayList<UsuarioElectrodomestico> seleccionados, InsertarElectrodomesticosCallback callback) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             boolean success = true;
@@ -31,28 +32,49 @@ public class UsuarioElectrodomesticoDB {
                 // Establecer conexión con la base de datos
                 Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
 
-                // Preparar la consulta para insertar los electrodomésticos
-                String query = "INSERT INTO UsuarioElectrodomestico (usuario_id, electrodomestico_id, cantidad, horas, dias) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement pst = con.prepareStatement(query);
+                // Consultar si el electrodoméstico ya está guardado para el usuario
+                String querySelect = "SELECT * FROM UsuarioElectrodomestico WHERE usuario_id = ? AND electrodomestico_id = ?";
+                PreparedStatement pstSelect = con.prepareStatement(querySelect);
 
-                // Insertar cada electrodoméstico seleccionado
+                // Preparar la consulta para insertar o actualizar los electrodomésticos
+                String queryInsert = "INSERT INTO UsuarioElectrodomestico (usuario_id, electrodomestico_id, cantidad, horas, dias) VALUES (?, ?, ?, ?, ?)";
+                String queryUpdate = "UPDATE UsuarioElectrodomestico SET cantidad = ?, horas = ?, dias = ? WHERE usuario_id = ? AND electrodomestico_id = ?";
+
                 for (UsuarioElectrodomestico usuarioElectrodomestico : seleccionados) {
-                    pst.setInt(1, usuarioId);
-                    pst.setInt(2, usuarioElectrodomestico.getElectrodomesticoId());
-                    pst.setInt(3, usuarioElectrodomestico.getCantidad());
-                    pst.setInt(4, usuarioElectrodomestico.getHoras());
-                    pst.setInt(5, usuarioElectrodomestico.getDias());
-                    pst.addBatch();
+                    pstSelect.setInt(1, usuarioId);
+                    pstSelect.setInt(2, usuarioElectrodomestico.getElectrodomesticoId());
+
+                    ResultSet rs = pstSelect.executeQuery();
+
+                    // Si ya existe, actualiza
+                    if (rs.next()) {
+                        PreparedStatement pstUpdate = con.prepareStatement(queryUpdate);
+                        pstUpdate.setInt(1, usuarioElectrodomestico.getCantidad());
+                        pstUpdate.setInt(2, usuarioElectrodomestico.getHoras());
+                        pstUpdate.setInt(3, usuarioElectrodomestico.getDias());
+                        pstUpdate.setInt(4, usuarioId);
+                        pstUpdate.setInt(5, usuarioElectrodomestico.getElectrodomesticoId());
+                        pstUpdate.executeUpdate();
+                        pstUpdate.close();
+                    } else {
+                        // Si no existe, inserta
+                        PreparedStatement pstInsert = con.prepareStatement(queryInsert);
+                        pstInsert.setInt(1, usuarioId);
+                        pstInsert.setInt(2, usuarioElectrodomestico.getElectrodomesticoId());
+                        pstInsert.setInt(3, usuarioElectrodomestico.getCantidad());
+                        pstInsert.setInt(4, usuarioElectrodomestico.getHoras());
+                        pstInsert.setInt(5, usuarioElectrodomestico.getDias());
+                        pstInsert.executeUpdate();
+                        pstInsert.close();
+                    }
                 }
 
-                pst.executeBatch();
-                pst.close();
                 con.close();
             } catch (Exception e) {
                 success = false;
                 e.printStackTrace();
                 new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
-                    Toast.makeText(context, "Error al insertar electrodomésticos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error al insertar o actualizar electrodomésticos", Toast.LENGTH_SHORT).show();
                 });
             }
 
@@ -61,8 +83,52 @@ public class UsuarioElectrodomesticoDB {
         });
     }
 
+    public void obtenerElectrodomesticosGuardadosPorCategoria(int usuarioId, int categoriaId, ObtenerElectrodomesticosCallback callback) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            ArrayList<UsuarioElectrodomestico> lista = new ArrayList<>();
+            try {
+                // Conectar a la base de datos y obtener los electrodomésticos guardados
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+                String query = "SELECT * \n" +
+                        "FROM UsuarioElectrodomestico a\n" +
+                        "INNER JOIN Electrodomestico e ON a.electrodomestico_id = e.id_electrodomestico\n" +
+                        "INNER JOIN Categoria c ON e.id_categoria = c.id_categoria\n" +
+                        "WHERE c.id_categoria = ? AND a.usuario_id = ?"; // Corregir el orden de los parámetros
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setInt(1, categoriaId);  // Establecer el parámetro categoría en la posición 1
+                pst.setInt(2, usuarioId);    // Establecer el parámetro usuario en la posición 2
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int cantidad = rs.getInt("cantidad");
+                    int horas = rs.getInt("horas");
+                    int dias = rs.getInt("dias");
+                    UsuarioElectrodomestico usuarioElectrodomestico = new UsuarioElectrodomestico(id, usuarioId, rs.getInt("electrodomestico_id"), cantidad, horas, dias);
+                    lista.add(usuarioElectrodomestico);
+                }
+                rs.close();
+                pst.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Llamar al callback con la lista de electrodomésticos obtenidos
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onElectrodomesticosObtenidos(lista));
+        });
+    }
+
+
+
     // Interfaz para el callback de inserción
     public interface InsertarElectrodomesticosCallback {
         void onElectrodomesticosInsertados(boolean success);
     }
+
+    public interface ObtenerElectrodomesticosCallback {
+        void onElectrodomesticosObtenidos(ArrayList<UsuarioElectrodomestico> electrodomesticos);
+    }
+
 }

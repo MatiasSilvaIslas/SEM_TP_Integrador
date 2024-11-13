@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.Map;
 
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.entidad.Electrodomestico;
+import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
 
 public class ElectrodomesticoAdapter extends RecyclerView.Adapter<ElectrodomesticoAdapter.ViewHolder> {
 
@@ -24,16 +28,20 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
     private ArrayList<Electrodomestico> electrodomesticos;
     private ArrayList<Electrodomestico> seleccionados;
     private Map<Integer, int[]> configuraciones;
+    private ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados; // Guardados de los usuarios
 
-    public ElectrodomesticoAdapter(Context context, ArrayList<Electrodomestico> electrodomesticos) {
+    // Constructor que acepta ambas listas
+    public ElectrodomesticoAdapter(Context context, ArrayList<Electrodomestico> electrodomesticos, ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados) {
         this.context = context;
         this.electrodomesticos = electrodomesticos;
         this.seleccionados = new ArrayList<>();
         this.configuraciones = new HashMap<>();
+        this.electrodomesticosGuardados = electrodomesticosGuardados;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_electrodomestico, parent, false);
         return new ViewHolder(view);
     }
@@ -42,30 +50,73 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
     public void onBindViewHolder(ViewHolder holder, int position) {
         Electrodomestico electrodomestico = electrodomesticos.get(position);
         holder.textNombre.setText(electrodomestico.getNombre());
+
         holder.checkBox.setChecked(seleccionados.contains(electrodomestico));
 
-        // Configuración inicial de Spinners
         setupSpinner(holder.spinnerCantidad, getCantidadOptions());
         setupSpinner(holder.spinnerHoras, getHorasOptions());
         setupSpinner(holder.spinnerDias, getDiasOptions());
 
-        // Recuperar selección previa si existe
-        if (configuraciones.containsKey(electrodomestico.getId_electrodomestico())) {
-            int[] config = configuraciones.get(electrodomestico.getId_electrodomestico());
-            holder.spinnerCantidad.setSelection(config[0]);
-            holder.spinnerHoras.setSelection(config[1]);
-            holder.spinnerDias.setSelection(config[2]);
+        // Recuperar configuración guardada y ajustar índices
+        UsuarioElectrodomestico usuarioElectrodomestico = obtenerDatosGuardados(electrodomestico.getId_electrodomestico());
+        if (usuarioElectrodomestico != null) {
+            holder.checkBox.setChecked(true); // Marcar el CheckBox si se encuentra guardado
+            holder.spinnerCantidad.setSelection(usuarioElectrodomestico.getCantidad() - 1);
+            holder.spinnerHoras.setSelection(usuarioElectrodomestico.getHoras() - 1);
+            holder.spinnerDias.setSelection(usuarioElectrodomestico.getDias() - 1);
+
+            // Agregar a `seleccionados` si está guardado
+            if (!seleccionados.contains(electrodomestico)) {
+                seleccionados.add(electrodomestico);
+            }
         }
 
-        // Guardar cambios de configuración
+        // Listener del CheckBox para seleccionar o deseleccionar
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                seleccionados.add(electrodomestico);
-                guardarConfiguracion(electrodomestico, holder);
+                if (!seleccionados.contains(electrodomestico)) {
+                    seleccionados.add(electrodomestico);
+                }
             } else {
                 seleccionados.remove(electrodomestico);
-                configuraciones.remove(electrodomestico.getId_electrodomestico());
             }
+        });
+
+        // Listeners para los Spinners
+        holder.spinnerCantidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                if (holder.checkBox.isChecked()) {
+                    guardarConfiguracion(electrodomestico, holder);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+        holder.spinnerHoras.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                if (holder.checkBox.isChecked()) {
+                    guardarConfiguracion(electrodomestico, holder);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+        holder.spinnerDias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                if (holder.checkBox.isChecked()) {
+                    guardarConfiguracion(electrodomestico, holder);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 
@@ -124,5 +175,15 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
             spinnerHoras = itemView.findViewById(R.id.spinnerHoras);
             spinnerDias = itemView.findViewById(R.id.spinnerDias);
         }
+    }
+
+    // Método para obtener los datos guardados de un electrodoméstico específico
+    private UsuarioElectrodomestico obtenerDatosGuardados(int electrodomesticoId) {
+        for (UsuarioElectrodomestico ue : electrodomesticosGuardados) {
+            if (ue.getElectrodomesticoId() == electrodomesticoId) {
+                return ue;
+            }
+        }
+        return null; // Si no se encuentran datos guardados
     }
 }

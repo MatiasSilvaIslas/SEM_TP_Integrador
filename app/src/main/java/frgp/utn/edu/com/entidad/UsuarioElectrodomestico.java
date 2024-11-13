@@ -2,6 +2,7 @@ package frgp.utn.edu.com.entidad;
 
 public class UsuarioElectrodomestico {
 
+    private int id;
     private int usuarioId;
     private int electrodomesticoId;
     private int cantidad;
@@ -9,6 +10,15 @@ public class UsuarioElectrodomestico {
     private int dias;
 
     public UsuarioElectrodomestico(int usuarioId, int electrodomesticoId, int cantidad, int horas, int dias) {
+        this.usuarioId = usuarioId;
+        this.electrodomesticoId = electrodomesticoId;
+        this.cantidad = cantidad;
+        this.horas = horas;
+        this.dias = dias;
+    }
+
+    public UsuarioElectrodomestico(int id, int usuarioId, int electrodomesticoId, int cantidad, int horas, int dias) {
+        this.id = id;
         this.usuarioId = usuarioId;
         this.electrodomesticoId = electrodomesticoId;
         this.cantidad = cantidad;

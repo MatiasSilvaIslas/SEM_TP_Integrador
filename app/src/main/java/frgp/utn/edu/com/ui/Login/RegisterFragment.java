@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -39,10 +41,28 @@ public class RegisterFragment extends Fragment {
     }
 
     private void initViews(View v) {
+        // Inicialización del repositorio y botones
         authAppRepository = new AuthAppRepository(requireActivity().getApplication());
         nextButton = v.findViewById(R.id.next_button);
         nextButton.setOnClickListener(view -> registerUserIfValid());
+
+        // Inicializar el ícono de ayuda
+        ImageView passwordHelpIcon = v.findViewById(R.id.password_help_icon);
+
+        // Configurar el comportamiento para mostrar/ocultar el mensaje de ayuda
+        passwordHelpIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Crear y mostrar un AlertDialog con los requisitos de la contraseña
+                new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                        .setTitle("Requisitos de la contraseña")
+                        .setMessage("La contraseña debe tener al menos:\n- 8 caracteres\n- 1 letra mayúscula\n- 1 letra minúscula\n- 1 número\n- 1 símbolo especial")
+                        .setPositiveButton("Entendido", null)
+                        .show();
+            }
+        });
     }
+
 
     private void registerUserIfValid() {
         email = getEmailInput();

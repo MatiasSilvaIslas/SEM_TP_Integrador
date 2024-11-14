@@ -11,11 +11,11 @@ import frgp.utn.edu.com.R;
 
 
 public class PantallaPrincipalFragment extends Fragment {
-
+    Toolbar toolbar;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_pantalla_principal,container,false);
-
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         initViews(view);
         return view;
     }

@@ -22,13 +22,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
+import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
 import frgp.utn.edu.com.ui.articulos.ArticuloFragment;
 import frgp.utn.edu.com.ui.usuario.PantallaPrincipalFragment;
 import org.jetbrains.annotations.NotNull;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMainMenuNavigatorListener {
 
     private final int FIRST_FRAGMENT = 0;
     private final int SECOND_FRAGMENT = 1;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle drawerToggle;
 
 
-
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +56,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_viewf);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Sets the first item on drawer as selected
-        navigationView.getMenu().getItem(FIRST_FRAGMENT).setChecked(true);
+        //disable drawer
 
-        // Switch to that fragment
-    //    initFragment();
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        navigationView.getMenu().getItem(FIRST_FRAGMENT).setChecked(false);
+
         switchFragment(FIRST_FRAGMENT);
+
 
     }
     @Override
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
         drawer.closeDrawer(GravityCompat.START);
+
     }
 
     private void restoreDrawer() {
@@ -166,5 +169,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    public void setnavigateToMainMenu(boolean navigate) {
+        if (!navigate){
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
 
-   }
+    }
+}

@@ -2,7 +2,8 @@
     <string name="app_name">TP_Seminario</string>
     <string name="menu_articulos">Artículos</string>
     <string name="menu_cuenta">Mi cuenta</string>
-
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     <!-- Opciones para el género -->
     <string-array name="gender_array">
         <item>Masculino</item>

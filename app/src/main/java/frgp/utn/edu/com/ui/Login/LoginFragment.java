@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -106,6 +107,8 @@ public class LoginFragment extends Fragment {
         //pantallaprincipalfragment
         /*NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(R.id.fragment_pantalla_principal);*/
+        ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+
 
         FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

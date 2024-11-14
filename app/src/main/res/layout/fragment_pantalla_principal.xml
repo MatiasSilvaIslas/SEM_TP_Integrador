@@ -8,6 +8,7 @@
 
 >
 
+
     <!-- Toolbar con iconos de usuario y notificaciones -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

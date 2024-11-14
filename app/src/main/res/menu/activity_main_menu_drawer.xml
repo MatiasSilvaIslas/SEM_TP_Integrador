@@ -18,4 +18,27 @@
                 android:title="Cuenta"
         />
     </group>
+    <item android:title="Sub items">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+
+                        android:icon="@android:drawable/ic_input_add"
+
+                        android:title="Sub item 1" />
+
+                <item
+
+                        android:icon="@drawable/ic_add"
+
+                        android:title="Sub item 2" />
+
+            </group>
+
+        </menu>
+
+    </item>
 </menu>

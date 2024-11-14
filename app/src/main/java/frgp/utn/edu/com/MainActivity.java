@@ -1,21 +1,46 @@
 package frgp.utn.edu.com;
 
+
+
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.navigation.NavigationView;
+import frgp.utn.edu.com.ui.Login.LoginFragment;
+import frgp.utn.edu.com.ui.articulos.ArticuloFragment;
+import frgp.utn.edu.com.ui.usuario.PantallaPrincipalFragment;
+import org.jetbrains.annotations.NotNull;
 
-import frgp.utn.edu.com.databinding.ActivityMainBinding;
-import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final int FIRST_FRAGMENT = 0;
+    private final int SECOND_FRAGMENT = 1;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+
+    // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
+
+    private ActionBarDrawerToggle drawerToggle;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,205 +48,123 @@ public class MainActivity extends AppCompatActivity{
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
         Log.d("MainActivity","oncreate-log");
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_viewf);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Sets the first item on drawer as selected
+        navigationView.getMenu().getItem(FIRST_FRAGMENT).setChecked(true);
+
+        // Switch to that fragment
+    //    initFragment();
+        switchFragment(FIRST_FRAGMENT);
+
+    }
+    @Override
+    public void setSupportActionBar(@Nullable Toolbar toolbar) {
+        super.setSupportActionBar(toolbar);
+        // Whenever we change the action bar, we must restore the default behaviour of the drawer
+        restoreDrawer();
     }
 
+    /*private void initFragment(){
+        // abrir login fragment, main activity tiene un framelayout y login es un fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frgment_frame, new LoginFragment());
+        fragmentTransaction.commit();
+    }*/
 
 
 
-    /*
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_electrocarga);
-        //setContentView(R.layout.activity_edit_profile);
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
-        // Ejemplo: configuración de ícono dinámico para un electrodoméstico
-        ImageView imageElectrodomestico = findViewById(R.id.image_electrodomestico);
-        TextView nombreElectrodomestico = findViewById(R.id.text_nombre);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handler the drawer toggle press
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
 
-        // Cambiar icono según el nombre del electrodoméstico
-        String nombre = nombreElectrodomestico.getText().toString().toLowerCase();
-        switch (nombre) {
-            case "refrigerador":
-                imageElectrodomestico.setImageResource(R.drawable.ic_refrigerador);
-                break;
-            case "heladera":
-                imageElectrodomestico.setImageResource(R.drawable.ic_heladera);
-                break;
-            case "lavarropa":
-                imageElectrodomestico.setImageResource(R.drawable.ic_lavarropa);
-                break;
-            case "televisor":
-                imageElectrodomestico.setImageResource(R.drawable.ic_televisor);
-                break;
-            default:
-                imageElectrodomestico.setImageResource(R.drawable.ic_default);
-                break;
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_articulos) {
+            switchFragment(FIRST_FRAGMENT);
+        } else if (id == R.id.nav_parking) {
+            switchFragment(SECOND_FRAGMENT);
         }
 
-        // Configuración del botón Registrar
-        Button buttonRegister = findViewById(R.id.button_register);
-        buttonRegister.setOnClickListener(v -> {
-            // Acción para el botón Registrar
-            Toast.makeText(MainActivity.this, "Registrar clicado", Toast.LENGTH_SHORT).show();
-            // Puedes iniciar una nueva actividad o fragmento si lo deseas
-        });
-// Acción para el botón Editar
-        Toast.makeText(MainActivity.this, "Editar clicado", Toast.LENGTH_SHORT).show();
-
-        ImageButton buttonEdit = findViewById(R.id.button_edit);
-        buttonEdit.setOnClickListener(v -> {
-            // Datos de ejemplo para editar (estos deberían ser dinámicos en una implementación real)
-           // String nombre = "LAvarropas";
-            String potencia = "500W";
-
-            // Acción para el botón Editar
-            Toast.makeText(MainActivity.this, "Editar clicado", Toast.LENGTH_SHORT).show();
-
-            // Iniciar la actividad para editar el electrodoméstico con datos
-            Intent intent = new Intent(MainActivity.this, EditarElectrodomesticoActivity.class);
-
-            // Datos de prueba
-         //   intent.putExtra("nombre", "Electrodoméstico de prueba");
-         //   intent.putExtra("potencia", "500W");
-
-            intent.putExtra("nombre", nombre);
-            intent.putExtra("potencia", potencia);
-
-            startActivity(intent);
-        });
-
-
-        // Configuración del botón Eliminar
-        ImageButton  buttonDelete = findViewById(R.id.button_delete);
-        buttonDelete.setOnClickListener(v -> {
-            // Acción para el botón Eliminar
-            Toast.makeText(MainActivity.this, "Eliminar clicado", Toast.LENGTH_SHORT).show();
-            // Aquí puedes agregar lógica adicional para confirmar la eliminación
-        });
-
-    }
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_electrocarga, container, false);
-
-        ImageView imageElectrodomestico = view.findViewById(R.id.image_electrodomestico);
-        TextView nombreElectrodomestico = view.findViewById(R.id.text_nombre);
-
-        return view;
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 
-}
 
+    private void switchFragment(int fragment){
+        Fragment newFragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
+        switch (fragment){
+            case FIRST_FRAGMENT:
+                newFragment = new LoginFragment();
+                break;
+            case SECOND_FRAGMENT:
+                newFragment = new ArticuloFragment();
+                break;
+            default:
+                newFragment = new LoginFragment();
+        }
 
-    EditText txtUsuario, txtpassword;
+        fragmentManager.beginTransaction().replace(R.id.frgment_frame, newFragment).commit();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
-
-        txtUsuario = findViewById(R.id.txtUsuario);
-        txtpassword = findViewById(R.id.txtpassword);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
+        drawer.closeDrawer(GravityCompat.START);
     }
 
-//    public void RegisterActivity(View view) {
-//        setContentView(R.layout.register_user);
-//    }
-//
-//    public void LoginActivity(View view) {
-//        setContentView(R.layout.activity_main);
-//    }
-//
-//    public void HomeApp() {
-//        setContentView(R.layout.home_app);
-//    }
-//
-//    public void Registrar(View view) {;
-//        EditText et_name = (EditText) findViewById(R.id.editTextName);
-//        EditText et_email = (EditText) findViewById(R.id.editTextEmail);
-//        EditText et_pass = (EditText) findViewById(R.id.editTextPass);
-//        EditText et_pass2 = (EditText) findViewById(R.id.editTextPass2);
-//
-//        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "administracion", null, 1);
-//        SQLiteDatabase db = admin.getWritableDatabase();
-//
-//        String name = et_name.getText().toString();
-//        String email = et_email.getText().toString();
-//        String pass = et_pass.getText().toString();
-//        String pass2 = et_pass2.getText().toString();
-//
-//        if (!name.isEmpty() && !email.isEmpty() && !pass.isEmpty() && !pass2.isEmpty()) {
-//            if (pass.equals(pass2)) {
-//                Cursor fila = db.rawQuery
-//                        ("select * from users where name = '" + name + "'", null);
-//
-//                if (fila.moveToFirst()) {
-//                    Toast.makeText(this, "El nombre de usuario no esta disponible", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    ContentValues registro = new ContentValues();
-//                    registro.put("name", name);
-//                    registro.put("email", email);
-//                    registro.put("pass", pass);
-//
-//                    db.insert("users", null, registro);
-//
-//                    Toast.makeText(this, "Datos guardados", Toast.LENGTH_SHORT).show();
-//                    et_name.setText("");
-//                    et_email.setText("");
-//                    et_pass.setText("");
-//                    et_pass2.setText("");
-//                    LoginActivity(view);
-//                }
-//            } else {
-//                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        } else {
-//            Toast.makeText(this, "Debe completar los campos", Toast.LENGTH_SHORT).show();
-//        }
-//        db.close();
-//    }
-//
-//    public void validarContrseña(String pass, User user) {
-//        if (pass.equals(user.getPassword())) {
-//            Toast.makeText(this, "Contraseña correcta", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(this, MainMenuActivity.class);
-//            intent.putExtra(PutExtraConst.UserKey, user);
-//            startActivity(intent);
-//            return;
-//        } else {
-//            Toast.makeText(this, "Contraseña incorrecta: " , Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    public void BuscarUser(View view) {
-//
-//        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "administracion", null, 1);
-//        SQLiteDatabase db = admin.getWritableDatabase();
-//
-//        String name = txtUsuario.getText().toString();
-//        String pass = txtpassword.getText().toString();
-//
-//        if (!name.isEmpty() && !pass.isEmpty()) {
-//            Cursor fila = db.rawQuery
-//                    ("select name,email,pass from users where name = '" + name + "'", null);
-//
-//            if (fila.moveToFirst()) {
-//                User user = new User (fila.getString(0),fila.getString(1),fila.getString(2));
-//                validarContrseña(pass, user);
-//            } else {
-//                Toast.makeText(this, "No existe el usuario, debe registrarse", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        } else {
-//            Toast.makeText(this, "Debes llenar todos lo campos", Toast.LENGTH_SHORT).show();
-//        }
-//        db.close();
- */
+    private void restoreDrawer() {
+        // Restores the behaviour of action bar and ActionBarDrawerToggle
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.nav_header_title,
+                R.string.nav_header_subtitle
+        );
+
+        // Synchronize the state of the drawer indicator with the DrawerLayout
+        mDrawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerToggle.syncState();
+            }
+        });
+
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+    }
+
+
+
    }

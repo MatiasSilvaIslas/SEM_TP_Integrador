@@ -13,7 +13,7 @@
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_loginFragment_to_loggedInFragment"
-            app:destination="@id/loggedInFragment" />
+            app:destination="@id/login_to_main" />
     </fragment>
 
     <fragment
@@ -29,14 +29,14 @@
     </fragment>
 
 
-    <fragment
+ <!--   <fragment
         android:id="@+id/loggedInFragment"
         android:name="frgp.utn.edu.com.ui.articulos.ArticuloFragment"
         android:label="Logged In">
         <action
             android:id="@+id/action_loggedInFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-    </fragment>
+    </fragment>-->
 
     <fragment
         android:id="@+id/login_register2"
@@ -46,6 +46,14 @@
         <action
             android:id="@+id/action_loginRegisterFragment2_to_registerFragment"
             app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_to_main"
+        android:name="frgp.utn.edu.com.ui.usuario.PantallaPrincipalFragment"
+        android:label="Articulos">
+        <action
+            android:id="@+id/action_login_to_main"
+            app:destination="@id/fragment_pantalla_principal" />
     </fragment>
 
 

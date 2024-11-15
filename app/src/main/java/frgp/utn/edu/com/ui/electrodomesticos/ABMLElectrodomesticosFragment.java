@@ -1,12 +1,17 @@
 package frgp.utn.edu.com.ui.electrodomesticos;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -23,7 +28,7 @@ import frgp.utn.edu.com.utils.SessionManager;
 
 import java.util.ArrayList;
 
-public class ABMLElectrodomesticosFragment extends AppCompatActivity {
+public class ABMLElectrodomesticosFragment extends Fragment {
 
     private ElectrodomesticoAdapter electrodomesticoAdapter;
     private RecyclerView recyclerElectrodomesticos;
@@ -31,21 +36,23 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
     private CategoriaAdapter categoriaAdapter;
     private CategoriaDB categoriaDB;
     private ElectrodomesticoDB electrodomesticoDB;
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_abml_electrodomesticos);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_abml_electrodomesticos, container, false);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+       // initViews(view);
+        //view.setContentView(R.layout.fragment_abml_electrodomesticos);
 
         // Inicialización del RecyclerView
-        recyclerCategorias = findViewById(R.id.recyclerCategorias);
+        recyclerCategorias = view.findViewById(R.id.recyclerCategorias);
 
         // Configurar el RecyclerView para usar GridLayoutManager con 2 columnas
-        recyclerCategorias.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerCategorias.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         // Inicialización de las clases de base de datos
-        electrodomesticoDB = new ElectrodomesticoDB(this);
-        categoriaDB = new CategoriaDB(this);
+        electrodomesticoDB = new ElectrodomesticoDB(getActivity());
+        categoriaDB = new CategoriaDB(getActivity());
 
         // Obtener las categorías de la base de datos de manera asincrónica
         categoriaDB.obtenerCategoriasAsync(new CategoriaDB.CategoriaCallback() {
@@ -66,12 +73,15 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
                 }
             }
         });
+        return view;
     }
+
+
 
     private void mostrarElectrodomesticosDialog(Categoria categoria) {
         // Inflar el layout del BottomSheet
         View view = getLayoutInflater().inflate(R.layout.dialog_seleccionar_electrodomesticos, null);
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(view);
 
         // Configurar el título del dialog
@@ -80,7 +90,7 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
 
         // Inicializar el RecyclerView dentro del BottomSheet
         RecyclerView dialogRecyclerElectrodomesticos = view.findViewById(R.id.recyclerElectrodomesticos);
-        dialogRecyclerElectrodomesticos.setLayoutManager(new GridLayoutManager(this, 1));
+        dialogRecyclerElectrodomesticos.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
         // Configurar el botón de confirmación
         Button btnConfirmarSeleccion = view.findViewById(R.id.btnConfirmarSeleccion);
@@ -95,12 +105,12 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
                     @Override
                     public void onIdUsuarioObtenido(int idUsuario) {
                         if (idUsuario != -1) {
-                            UsuarioElectrodomesticoDB db = new UsuarioElectrodomesticoDB(ABMLElectrodomesticosFragment.this);
+                            UsuarioElectrodomesticoDB db = new UsuarioElectrodomesticoDB(getActivity());
                             db.obtenerElectrodomesticosGuardadosPorCategoria(idUsuario, categoria.getId_categoria(), new UsuarioElectrodomesticoDB.ObtenerElectrodomesticosCallback() {
                                 @Override
                                 public void onElectrodomesticosObtenidos(ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados) {
                                     // Crear el adaptador para los electrodomésticos obtenidos y las configuraciones guardadas
-                                    electrodomesticoAdapter = new ElectrodomesticoAdapter(ABMLElectrodomesticosFragment.this, electrodomesticos, electrodomesticosGuardados);
+                                    electrodomesticoAdapter = new ElectrodomesticoAdapter(getActivity(), electrodomesticos, electrodomesticosGuardados);
 
                                     // Asignar el adaptador al RecyclerView dentro del BottomSheet
                                     dialogRecyclerElectrodomesticos.setAdapter(electrodomesticoAdapter);
@@ -108,7 +118,7 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
                             });
                         } else {
                             // Manejo de error si no se obtuvo el id del usuario
-                            Toast.makeText(ABMLElectrodomesticosFragment.this, "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -122,7 +132,7 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
                         @Override
                         public void onIdUsuarioObtenido(int idUsuario) {
                             if (idUsuario != -1) {
-                                UsuarioElectrodomesticoDB usuarioElectrodomesticoDB = new UsuarioElectrodomesticoDB(ABMLElectrodomesticosFragment.this);
+                                UsuarioElectrodomesticoDB usuarioElectrodomesticoDB = new UsuarioElectrodomesticoDB(getActivity());
 
                                 for (int position = 0; position < seleccionados.size(); position++) {
                                     Electrodomestico electrodomestico = seleccionados.get(position);
@@ -145,14 +155,14 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
                                 // Llamada a actualizarOInsertarElectrodomesticos con todos los elementos seleccionados
                                 usuarioElectrodomesticoDB.actualizarOInsertarElectrodomesticos(idUsuario, usuarioElectrodomesticos, success -> {
                                     if (success) {
-                                        Toast.makeText(ABMLElectrodomesticosFragment.this, "Selección guardada correctamente", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "Selección guardada correctamente", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(ABMLElectrodomesticosFragment.this, "Error al guardar la selección", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "Error al guardar la selección", Toast.LENGTH_SHORT).show();
                                     }
                                     dialog.dismiss();
                                 });
                             } else {
-                                Toast.makeText(ABMLElectrodomesticosFragment.this, "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -188,28 +198,28 @@ public class ABMLElectrodomesticosFragment extends AppCompatActivity {
             @Override
             public void onIdUsuarioObtenido(int idUsuario) {
                 if (idUsuario != -1) {
-                    UsuarioElectrodomesticoDB db = new UsuarioElectrodomesticoDB(ABMLElectrodomesticosFragment.this);
+                    UsuarioElectrodomesticoDB db = new UsuarioElectrodomesticoDB(getActivity());
                     db.actualizarOInsertarElectrodomesticos(idUsuario, usuarioElectrodomesticos, new UsuarioElectrodomesticoDB.InsertarElectrodomesticosCallback() {
                         @Override
                         public void onElectrodomesticosInsertados(boolean success) {
                             if (success) {
-                                Toast.makeText(ABMLElectrodomesticosFragment.this, "Electrodomésticos guardados correctamente", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Electrodomésticos guardados correctamente", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(ABMLElectrodomesticosFragment.this, "Error al guardar los electrodomésticos", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error al guardar los electrodomésticos", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(ABMLElectrodomesticosFragment.this, "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void obtenerUsuarioId(CallbackUsuarioId callback) {
-        String userEmail = SessionManager.getUserEmail(this);
+        String userEmail = SessionManager.getUserEmail(getActivity());
 
-        DataUsuario dataUsuario = new DataUsuario(this);
+        DataUsuario dataUsuario = new DataUsuario(getActivity());
         dataUsuario.obtenerUsuarioPorEmail(userEmail, new DataUsuario.CallbackUsuario() {
             @Override
             public void onComplete(Usuario usuario) {

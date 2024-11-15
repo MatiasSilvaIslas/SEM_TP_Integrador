@@ -1,4 +1,4 @@
-package frgp.utn.edu.com.ui.electrodomesticos;
+package frgp.utn.edu.com.ui.back;
 
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +22,8 @@ import frgp.utn.edu.com.conexion.CategoriaDB;
 import frgp.utn.edu.com.conexion.ElectrodomesticoDB;
 import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
+import frgp.utn.edu.com.ui.electrodomesticos.CategoriaAdapter;
+import frgp.utn.edu.com.ui.electrodomesticos.ElectrodomesticoAdapter;
 import frgp.utn.edu.com.utils.SessionManager;
 
 import java.util.ArrayList;

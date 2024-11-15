@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 
 
@@ -53,8 +54,11 @@ public class PantallaPrincipalFragment extends Fragment {
         btnManageAppliances.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(PantallaPrincipalFragment.this, ABMLElectrodomesticosActivity.class);
-               // startActivity(intent);
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new ABMLElectrodomesticosFragment());
+                fragmentTransaction.commit();
             }
         });
 

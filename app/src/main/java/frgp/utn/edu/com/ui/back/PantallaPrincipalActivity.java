@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import frgp.utn.edu.com.R;
-import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosActivity;
 

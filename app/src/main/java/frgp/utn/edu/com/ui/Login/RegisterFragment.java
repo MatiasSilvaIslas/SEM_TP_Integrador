@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +22,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.repository.AuthAppRepository;
 import frgp.utn.edu.com.utils.SessionManager;
@@ -143,17 +145,23 @@ public class RegisterFragment extends Fragment {
 
     private void goToLogin(){
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        LoginFragment fragment = new LoginFragment();
-        //ft.replace(R.id.activity_main_navHostFragment,fragment,LoginFragment.TAG);
-        ft.commit();
+        ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frgment_frame, new LoginFragment());
+        fragmentTransaction.commit();
     }
 
     private void goToRegister2(String email) {
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
-        NavController navController = Navigation.findNavController(getView());
-        navController.navigate(R.id.action_registerFragment_to_loginRegisterFragment2, bundle);
+//      NavController navController = Navigation.findNavController(getView());
+//        navController.navigate(R.id.action_registerFragment_to_loginRegisterFragment2, bundle);
+        ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frgment_frame, new LoginRegisterFragment2());
+        fragmentTransaction.commit();
     }
 
 

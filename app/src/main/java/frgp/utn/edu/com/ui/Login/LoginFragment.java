@@ -22,6 +22,7 @@ import frgp.utn.edu.com.MainActivity;
 
 import frgp.utn.edu.com.R;
 
+import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
@@ -94,7 +95,11 @@ public class LoginFragment extends Fragment {
     }
 
     private void goToRegister() {
-        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_registerFragment);
+        ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frgment_frame, new RegisterFragment());
+        fragmentTransaction.commit();
     }
 
     private void pasarASiguientePantalla() {

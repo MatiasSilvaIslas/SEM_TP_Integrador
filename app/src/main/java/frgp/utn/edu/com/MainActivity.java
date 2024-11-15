@@ -26,6 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
 
+import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
 import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
@@ -111,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switchFragment(4);
         } else if (item.toString().equals("Cerrar sesion")){
             switchFragment(5);
+        } else if (item.toString().equals("Consejos de Uso")){
+            switchFragment(6);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
@@ -141,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getApplication());
                 loginRegisterViewModel.logout();
                 newFragment = new LoginFragment();
+                break;
+            case 6:
+                newFragment = new ConsejosFragment();
                 break;
             default:
                 newFragment = new LoginFragment();

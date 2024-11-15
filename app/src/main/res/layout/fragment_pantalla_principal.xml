@@ -24,8 +24,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_user"
-        android:contentDescription="User Icon"
-        android:padding="8dp"
+            android:contentDescription="User Icon"
+            android:padding="8dp"
             android:layout_gravity="start"
             app:tint="@android:color/white" />
 
@@ -35,8 +35,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_notification"
-        android:contentDescription="Notification Icon"
-        android:padding="8dp"
+            android:contentDescription="Notification Icon"
+            android:padding="8dp"
             android:layout_gravity="end"
             app:tint="@android:color/white" />
     </androidx.appcompat.widget.Toolbar>
@@ -123,9 +123,9 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:src="@drawable/ic_help"
-    android:contentDescription="Help Icon"
-    app:backgroundTint="@android:color/white"
-    app:tint="@color/black" />
+        android:contentDescription="Help Icon"
+        app:backgroundTint="@android:color/white"
+        app:tint="@color/black" />
     <!-- Botón Conejos de uso Eficiente -->
     <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCosejosf"

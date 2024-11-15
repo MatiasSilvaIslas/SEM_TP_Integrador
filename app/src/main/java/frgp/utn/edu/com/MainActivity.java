@@ -28,7 +28,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
-import frgp.utn.edu.com.ui.articulos.ArticuloFragment;
+
 import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
 import frgp.utn.edu.com.ui.usuario.PantallaPrincipalFragment;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;

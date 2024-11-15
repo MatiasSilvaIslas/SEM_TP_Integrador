@@ -7,16 +7,21 @@
 >
 
     <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_principal"
+                android:icon="@android:drawable/btn_star"
+                android:title="Principal"
 
+        />
         <item
                 android:id="@+id/nav_articulos"
-                android:icon="@android:drawable/btn_star"
+                android:icon="@android:drawable/sym_action_call"
                 android:title="Articulos"
 
         />
         <item
                 android:id="@+id/nav_reportes"
-                android:icon="@android:drawable/btn_star"
+                android:icon="@android:drawable/stat_sys_download"
                 android:title="Reportes"
 
         />

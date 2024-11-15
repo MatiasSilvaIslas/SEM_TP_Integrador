@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import frgp.utn.edu.com.MainActivity;
@@ -27,11 +28,12 @@ public class MyAccountFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        MyAccountViewModel galleryViewModel = new ViewModelProvider(this).get(MyAccountViewModel.class);
+
+
 
         binding = FragmentMyaccountBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         Button logout = (Button)view.findViewById(R.id.btnLogout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -141,7 +141,7 @@
 
     <!-- Botón Registrar -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_registrar"
+        android:id="@+id/btn_registrarfg2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

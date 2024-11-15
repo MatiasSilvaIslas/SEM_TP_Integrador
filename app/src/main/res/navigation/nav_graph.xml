@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/login_to_main"
-        android:name="frgp.utn.edu.com.ui.usuario.PantallaPrincipalFragment"
+        android:name="frgp.utn.edu.com.ui.home.PantallaPrincipalFragment"
         android:label="Articulos">
         <action
             android:id="@+id/action_login_to_main"

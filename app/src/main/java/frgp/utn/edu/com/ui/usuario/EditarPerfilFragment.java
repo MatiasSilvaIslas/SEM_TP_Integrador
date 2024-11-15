@@ -1,23 +1,28 @@
 package frgp.utn.edu.com.ui.usuario;
 
-import frgp.utn.edu.com.entidad.Usuario;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.view.ViewGroup;
+import android.widget.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputEditText;
+import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.conexion.DataUsuario;
+import frgp.utn.edu.com.conexion.LocalidadDB;
+import frgp.utn.edu.com.conexion.ProvinciaDB;
+import frgp.utn.edu.com.entidad.Localidad;
+import frgp.utn.edu.com.entidad.Provincia;
+import frgp.utn.edu.com.entidad.Usuario;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalActivity;
+import frgp.utn.edu.com.utils.InputFilterLetters;
+import frgp.utn.edu.com.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,17 +31,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import frgp.utn.edu.com.R;
-import frgp.utn.edu.com.conexion.DataUsuario;
-import frgp.utn.edu.com.conexion.LocalidadDB;
-import frgp.utn.edu.com.conexion.ProvinciaDB;
-import frgp.utn.edu.com.entidad.Localidad;
-import frgp.utn.edu.com.entidad.Provincia;
-import frgp.utn.edu.com.ui.home.PantallaPrincipalActivity;
-import frgp.utn.edu.com.utils.InputFilterLetters;
-import frgp.utn.edu.com.utils.SessionManager;
-
-public class EditarPerfilActivity extends AppCompatActivity {
+public class EditarPerfilFragment extends Fragment {
     private Usuario usuario;
     private EditText etNombre;
     private EditText etApellido;
@@ -53,21 +48,17 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private List<Localidad> listaLocalidades;
     private String userEmail;
 
-    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+        initViews(view);
+        return view;
+    }
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
 
-        userEmail = SessionManager.getUserEmail(this);
-
-        initViews();
-        setupSpinners();
-
-        cargarDatosUsuario();
-
-        etFechaNacimiento = findViewById(R.id.et_fecha_nacimiento_edit);
-        etFechaNacimiento.setOnClickListener(v -> showDatePickerDialog());
-    }
+    }*/
 
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
@@ -77,7 +68,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
         long todayInMillis = calendar.getTimeInMillis();
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -92,14 +83,14 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
 
-    private void initViews() {
-        etNombre = findViewById(R.id.et_nombre_edit);
-        etApellido = findViewById(R.id.et_apellido_edit);
-        etFechaNacimiento = findViewById(R.id.et_fecha_nacimiento_edit);
-        spinnerProvincia = findViewById(R.id.spinner_provincia_edit);
-        spinnerLocalidad = findViewById(R.id.spinner_localidad_edit);
-        spinnerGenero = findViewById(R.id.spinner_genero_edit);
-        btnActualizar = findViewById(R.id.btn_guardar);
+    private void initViews(View view) {
+        etNombre = view.findViewById(R.id.et_nombre_edit);
+        etApellido = view.findViewById(R.id.et_apellido_edit);
+        etFechaNacimiento =view. findViewById(R.id.et_fecha_nacimiento_edit);
+        spinnerProvincia = view.findViewById(R.id.spinner_provincia_edit);
+        spinnerLocalidad = view.findViewById(R.id.spinner_localidad_edit);
+        spinnerGenero = view.findViewById(R.id.spinner_genero_edit);
+        btnActualizar = view.findViewById(R.id.btn_guardar);
 
         InputFilterLetters inputFilterLetters = new InputFilterLetters();
         etNombre.setFilters(new InputFilter[]{inputFilterLetters});
@@ -111,7 +102,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private void setupSpinners() {
         // Configurar Spinner de Género
         ArrayAdapter<CharSequence> adapterGenero = ArrayAdapter.createFromResource(
-                this,
+                getActivity(),
                 R.array.gender_array,
                 android.R.layout.simple_spinner_item
         );
@@ -140,12 +131,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private void cargarProvincias() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            ProvinciaDB provinciaDB = new ProvinciaDB(this);
+            ProvinciaDB provinciaDB = new ProvinciaDB(getActivity());
             listaProvincias = provinciaDB.obtenerProvincias();
 
-            runOnUiThread(() -> {
+            getActivity().runOnUiThread(() -> {
                 if (listaProvincias != null && !listaProvincias.isEmpty()) {
-                    ArrayAdapter<Provincia> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaProvincias);
+                    ArrayAdapter<Provincia> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, listaProvincias);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerProvincia.setAdapter(adapter);
 
@@ -157,7 +148,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                         cargarLocalidades(listaProvincias.get(0).getId_provincia()); // Cargar localidades si no había provincia seleccionada previamente
                     }
                 } else {
-                    Toast.makeText(this, "No se encontraron provincias.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "No se encontraron provincias.", Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -166,12 +157,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private void cargarLocalidades(int idProvincia) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            LocalidadDB localidadDB = new LocalidadDB(this);
+            LocalidadDB localidadDB = new LocalidadDB(getActivity());
             listaLocalidades = localidadDB.obtenerLocalidades(idProvincia);
 
-            runOnUiThread(() -> {
+            getActivity().runOnUiThread(() -> {
                 if (listaLocalidades != null && !listaLocalidades.isEmpty()) {
-                    ArrayAdapter<Localidad> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaLocalidades);
+                    ArrayAdapter<Localidad> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, listaLocalidades);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerLocalidad.setAdapter(adapter);
 
@@ -179,17 +170,17 @@ public class EditarPerfilActivity extends AppCompatActivity {
                     if (usuario != null) {
                         setSpinnerLocalidad(usuario.getLocalidad());  // Ya puedes acceder a usuario aquí
                     } else {
-                        Toast.makeText(this, "Usuario no cargado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Usuario no cargado correctamente", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "No se encontraron localidades para esta provincia.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "No se encontraron localidades para esta provincia.", Toast.LENGTH_SHORT).show();
                 }
             });
         });
     }
 
     private void cargarDatosUsuario() {
-        DataUsuario dataUsuario = new DataUsuario(this);
+        DataUsuario dataUsuario = new DataUsuario(getActivity());
         dataUsuario.obtenerUsuarioPorEmail(userEmail, usuario -> {
             if (usuario != null) {
                 this.usuario = usuario;  // Asigna el objeto usuario a la variable global
@@ -201,7 +192,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
 
                 ArrayAdapter<CharSequence> adapterGenero = ArrayAdapter.createFromResource(
-                        this,
+                        getActivity(),
                         R.array.gender_array,
                         android.R.layout.simple_spinner_item
                 );
@@ -213,7 +204,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                 setSpinnerProvincia(usuario.getProvincia());
                 setSpinnerLocalidad(usuario.getLocalidad()); // Ya puedes usar usuario aquí
             } else {
-                Toast.makeText(this, "Error al cargar los datos del usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Error al cargar los datos del usuario", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -238,7 +229,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                 }
             }
         } else {
-            Toast.makeText(this, "La lista de localidades no está disponible.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "La lista de localidades no está disponible.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -257,27 +248,27 @@ public class EditarPerfilActivity extends AppCompatActivity {
         usuario.setLocalidad(localidadSeleccionada);
         usuario.setFecha_nac(fechaNacimiento);
         if (nombre.isEmpty() || apellido.isEmpty() || provinciaSeleccionada == null || localidadSeleccionada == null) {
-            Toast.makeText(this, "Por favor complete todos los campos.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Por favor complete todos los campos.", Toast.LENGTH_SHORT).show();
         } else {
             actualizarUsuario(usuario);
         }
     }
 
     private void actualizarUsuario(Usuario usuario) {
-        DataUsuario dataUsuario = new DataUsuario(getApplicationContext());
+        DataUsuario dataUsuario = new DataUsuario(getActivity());
         dataUsuario.updateUsuario(usuario, success -> {
             if (success) {
-                Toast.makeText(getApplicationContext(), "Usuario modificado correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Usuario modificado correctamente", Toast.LENGTH_SHORT).show();
                 pasarASiguientePantalla();
             } else {
-                Toast.makeText(getApplicationContext(), "Error al modificar usuario.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Error al modificar usuario.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void pasarASiguientePantalla() {
-        Intent intent = new Intent(EditarPerfilActivity.this, PantallaPrincipalActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(thi, PantallaPrincipalActivity.class);
+       // startActivity(intent);
     }
 
     private Date convertirStringADate(String fechaString) {
@@ -286,7 +277,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             return sdf.parse(fechaString);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Error al formatear la fecha", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Error al formatear la fecha", Toast.LENGTH_SHORT).show();
             return null;
         }
     }

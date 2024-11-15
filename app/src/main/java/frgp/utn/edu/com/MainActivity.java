@@ -22,17 +22,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
 
 import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
-import frgp.utn.edu.com.ui.usuario.PantallaPrincipalFragment;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
-import org.jetbrains.annotations.NotNull;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMainMenuNavigatorListener {

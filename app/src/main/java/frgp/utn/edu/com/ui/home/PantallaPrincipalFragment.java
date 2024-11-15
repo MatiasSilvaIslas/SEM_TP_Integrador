@@ -1,14 +1,16 @@
-package frgp.utn.edu.com.ui.usuario;
+package frgp.utn.edu.com.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
 import android.widget.Toolbar;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 
 
 public class PantallaPrincipalFragment extends Fragment {
@@ -20,6 +22,7 @@ public class PantallaPrincipalFragment extends Fragment {
         initViews(view);
         return view;
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.activity_main_menu_drawer, menu);
@@ -37,8 +40,12 @@ public class PantallaPrincipalFragment extends Fragment {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(PantallaPrincipalFragment.this, MiPerfilActivity.class);
-                //startActivity(intent);
+
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new fragmentMiPerfil());
+                fragmentTransaction.commit();
             }
         });
 

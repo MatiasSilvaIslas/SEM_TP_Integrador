@@ -25,7 +25,7 @@
         </activity>
         <activity android:name=".EditarElectrodomesticoActivity" />
         <activity android:name=".ui.electrodomesticos.EditarElectrodomesticoActivity" />
-        <activity android:name=".ui.usuario.PantallaPrincipalActivity" />
+        <activity android:name=".ui.home.PantallaPrincipalActivity" />
         <activity android:name=".ui.usuario.EditarPerfilActivity"
             android:autofillHints=""
         />

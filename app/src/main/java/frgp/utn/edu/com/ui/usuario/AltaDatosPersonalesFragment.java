@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,6 +31,7 @@ import frgp.utn.edu.com.conexion.ProvinciaDB;
 import frgp.utn.edu.com.entidad.Localidad;
 import frgp.utn.edu.com.entidad.Provincia;
 import frgp.utn.edu.com.entidad.Usuario;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalActivity;
 import frgp.utn.edu.com.utils.InputFilterLetters;
 
 public class AltaDatosPersonalesFragment extends Fragment {

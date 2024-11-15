@@ -20,20 +20,32 @@ public class CalculoConsumoFragment extends Fragment {
     private TextView textConsumoEstimado;
     private ElectrodomesticoDB electrodomesticoDB;
     private ArrayList<Electrodomestico> listaElectrodomesticos;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflar la vista
         View view = inflater.inflate(R.layout.fragment_calculo_consumo, container, false);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+
+        // Configurar Toolbar
+        //Toolbar toolbar = view.findViewById(R.id.toolbar);
+        //if (toolbar != null) {
+       //    ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+       // }
+
+        // Inicializar vistas
+        spinnerElectrodomesticos = view.findViewById(R.id.spinnerElectrodomesticos);
         editHorasUso = view.findViewById(R.id.editHorasUso);
-        editDiasUso =view.findViewById(R.id.editDiasUso);
+        editDiasUso = view.findViewById(R.id.editDiasUso);
         textConsumoEstimado = view.findViewById(R.id.textConsumoEstimado);
         Button btnCalcular = view.findViewById(R.id.btnCalcular);
 
-        // Cargar electrodomésticos
+        // Inicializar base de datos y cargar electrodomésticos
         electrodomesticoDB = new ElectrodomesticoDB(getContext());
         electrodomesticoDB.obtenerElectrodomesticosAsync(1, electrodomesticos -> {
             listaElectrodomesticos = electrodomesticos;
+
+            // Configurar el adaptador del Spinner
             ArrayAdapter<Electrodomestico> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, electrodomesticos);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerElectrodomesticos.setAdapter(adapter);
@@ -41,10 +53,16 @@ public class CalculoConsumoFragment extends Fragment {
 
         // Configurar botón de cálculo
         btnCalcular.setOnClickListener(v -> {
-            // Obtener electrodoméstico seleccionado
+            // Validar que el Spinner tenga un elemento seleccionado
+            if (spinnerElectrodomesticos.getSelectedItem() == null) {
+                Toast.makeText(getContext(), "Selecciona un electrodoméstico", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Obtener el electrodoméstico seleccionado
             Electrodomestico selected = (Electrodomestico) spinnerElectrodomesticos.getSelectedItem();
 
-            // Verificar si los campos están vacíos antes de convertirlos
+            // Verificar si los campos están vacíos
             String horasText = editHorasUso.getText().toString().trim();
             String diasText = editDiasUso.getText().toString().trim();
 
@@ -54,6 +72,7 @@ public class CalculoConsumoFragment extends Fragment {
             }
 
             try {
+                // Convertir valores a enteros
                 int horasPorDia = Integer.parseInt(horasText);
                 int dias = Integer.parseInt(diasText);
 
@@ -67,6 +86,6 @@ public class CalculoConsumoFragment extends Fragment {
 
         return view;
     }
-
 }
+
 

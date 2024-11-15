@@ -13,6 +13,7 @@ import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
+import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
@@ -71,8 +72,11 @@ public class PantallaPrincipalFragment extends Fragment {
         btnCalculateConsumption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(PantallaPrincipalFragment.this, CalculoConsumoActivity.class);
-                startActivity(intent);*/
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new CalculoConsumoFragment());
+                fragmentTransaction.commit();
             }
         });
         Button btnCosejos = view.findViewById(R.id.btnCosejosf);

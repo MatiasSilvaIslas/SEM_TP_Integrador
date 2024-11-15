@@ -33,7 +33,7 @@
         <activity android:name=".ui.usuario.EditarCredencialesActivity"
             tools:ignore="Instantiatable" />
         <activity android:name=".ui.back.ABMLElectrodomesticosActivity"/>
-        <activity android:name=".ui.electrodomesticos.CalculoConsumoActivity"/>
+        <activity android:name=".ui.back.CalculoConsumoActivity"/>
         <activity android:name=".ui.soporte.ContactoSoporteActivity" />
 
     </application>

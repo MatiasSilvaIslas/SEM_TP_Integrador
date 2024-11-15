@@ -5,17 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    tools:context="frgp.utn.edu.com.ui.back.CalculoConsumoActivity">
+                android:id="@+id/fragment_consumo"
+    tools:context="frgp.utn.edu.com.ui.back.CalculoConsumoActivity"
+
+>
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_blue"
-        android:title="Consumo Eléctrico"
-        android:titleTextColor="#FFFFFF"
-        />
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue"
+
+            app:titleTextColor="@android:color/white">
+
+        <!-- Icono de usuario a la izquierda -->
+        <ImageView
+                android:id="@+id/icon_user"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_user"
+                android:contentDescription="User Icon"
+                android:padding="8dp"
+                android:layout_gravity="start"
+                app:tint="@android:color/white" />
+
+        <!-- Icono de notificación a la derecha -->
+        <ImageView
+                android:id="@+id/icon_notification"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_notification"
+                android:contentDescription="Notification Icon"
+                android:padding="8dp"
+                android:layout_gravity="end"
+                app:tint="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
 
     <!-- Contenedor Principal -->
     <LinearLayout

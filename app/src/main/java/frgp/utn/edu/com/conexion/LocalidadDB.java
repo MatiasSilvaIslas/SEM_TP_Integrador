@@ -44,4 +44,30 @@ public class LocalidadDB {
         }
         return localidades;
     }
+    public Localidad obtenerLocalidad(String localidad) {
+        Localidad localidades = new Localidad();
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+            //busca una localidad
+            String query = "SELECT * FROM Localidades WHERE localidad = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, localidad);
+            ResultSet rs = pst.executeQuery();
+
+                int id = rs.getInt("codLocalidad");
+                String descripcion = rs.getString("localidad");
+                int id_provincia = rs.getInt("codProvincia");
+                boolean estado = rs.getBoolean("estado");
+                localidades = new Localidad(id,id_provincia,descripcion,estado);
+
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return localidades;
+    }
 }

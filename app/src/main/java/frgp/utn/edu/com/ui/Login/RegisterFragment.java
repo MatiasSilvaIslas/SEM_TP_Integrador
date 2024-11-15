@@ -31,7 +31,7 @@ import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 public class RegisterFragment extends Fragment {
     private AuthAppRepository authAppRepository;
     private LoginRegisterViewModel loginRegisterViewModel;
-    private Button nextButton;
+    private Button nextButton, ingresoButton;
     private String email;
     public static final String TAG = RegisterFragment.class.getSimpleName();
     @Nullable
@@ -47,7 +47,8 @@ public class RegisterFragment extends Fragment {
         authAppRepository = new AuthAppRepository(requireActivity().getApplication());
         nextButton = v.findViewById(R.id.next_button);
         nextButton.setOnClickListener(view -> registerUserIfValid());
-
+        ingresoButton = v.findViewById(R.id.fragment_registervw);
+        ingresoButton.setOnClickListener(view -> goToLogin());
         // Inicializar el ícono de ayuda
         ImageView passwordHelpIcon = v.findViewById(R.id.password_help_icon);
 
@@ -155,6 +156,7 @@ public class RegisterFragment extends Fragment {
     private void goToRegister2(String email) {
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
+        bundle.putString("password", getPasswordInput());
 //      NavController navController = Navigation.findNavController(getView());
 //        navController.navigate(R.id.action_registerFragment_to_loginRegisterFragment2, bundle);
         ((MainActivity) getActivity() ).setnavigateToMainMenu(true);

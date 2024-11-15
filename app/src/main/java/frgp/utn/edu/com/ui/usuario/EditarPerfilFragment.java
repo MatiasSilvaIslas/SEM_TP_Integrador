@@ -1,7 +1,6 @@
 package frgp.utn.edu.com.ui.usuario;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -20,9 +19,7 @@ import frgp.utn.edu.com.conexion.ProvinciaDB;
 import frgp.utn.edu.com.entidad.Localidad;
 import frgp.utn.edu.com.entidad.Provincia;
 import frgp.utn.edu.com.entidad.Usuario;
-import frgp.utn.edu.com.ui.home.PantallaPrincipalActivity;
 import frgp.utn.edu.com.utils.InputFilterLetters;
-import frgp.utn.edu.com.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,6 +49,12 @@ public class EditarPerfilFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         initViews(view);
+        setupSpinners();
+
+        cargarDatosUsuario();
+
+        etFechaNacimiento = view.findViewById(R.id.et_fecha_nacimiento_edit);
+        etFechaNacimiento.setOnClickListener(v -> showDatePickerDialog());
         return view;
     }
     /*@Override

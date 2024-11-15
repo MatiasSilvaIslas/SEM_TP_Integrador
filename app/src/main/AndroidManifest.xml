@@ -25,11 +25,11 @@
         </activity>
         <activity android:name=".EditarElectrodomesticoActivity" />
         <activity android:name=".ui.electrodomesticos.EditarElectrodomesticoActivity" />
-        <activity android:name=".ui.home.PantallaPrincipalActivity" />
-        <activity android:name=".ui.usuario.EditarPerfilActivity"
+        <activity android:name=".ui.back.PantallaPrincipalActivity" />
+        <activity android:name=".ui.back.EditarPerfilActivity"
             android:autofillHints=""
         />
-        <activity android:name=".ui.usuario.MiPerfilActivity" />
+        <activity android:name=".ui.back.MiPerfilActivity" />
         <activity android:name=".ui.usuario.EditarCredencialesActivity"
             tools:ignore="Instantiatable" />
         <activity android:name=".ui.electrodomesticos.ABMLElectrodomesticosActivity"/>

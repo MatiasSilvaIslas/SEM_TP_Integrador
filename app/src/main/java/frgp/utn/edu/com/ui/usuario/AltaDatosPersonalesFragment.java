@@ -31,7 +31,7 @@ import frgp.utn.edu.com.conexion.ProvinciaDB;
 import frgp.utn.edu.com.entidad.Localidad;
 import frgp.utn.edu.com.entidad.Provincia;
 import frgp.utn.edu.com.entidad.Usuario;
-import frgp.utn.edu.com.ui.home.PantallaPrincipalActivity;
+import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
 import frgp.utn.edu.com.utils.InputFilterLetters;
 
 public class AltaDatosPersonalesFragment extends Fragment {

@@ -1,4 +1,4 @@
-package frgp.utn.edu.com.ui.usuario;
+package frgp.utn.edu.com.ui.back;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.usuario.EditarCredencialesActivity;
 
 public class MiPerfilActivity extends AppCompatActivity {
     private Button btnModificarPerfil;

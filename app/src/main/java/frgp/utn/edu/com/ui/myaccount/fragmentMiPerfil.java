@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.usuario.EditarCredencialesActivity;
-import frgp.utn.edu.com.ui.usuario.EditarPerfilActivity;
 import frgp.utn.edu.com.ui.usuario.EditarPerfilFragment;
 
 

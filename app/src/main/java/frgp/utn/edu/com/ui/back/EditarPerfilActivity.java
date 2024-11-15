@@ -1,4 +1,4 @@
-package frgp.utn.edu.com.ui.usuario;
+package frgp.utn.edu.com.ui.back;
 
 import frgp.utn.edu.com.entidad.Usuario;
 
@@ -32,7 +32,6 @@ import frgp.utn.edu.com.conexion.LocalidadDB;
 import frgp.utn.edu.com.conexion.ProvinciaDB;
 import frgp.utn.edu.com.entidad.Localidad;
 import frgp.utn.edu.com.entidad.Provincia;
-import frgp.utn.edu.com.ui.home.PantallaPrincipalActivity;
 import frgp.utn.edu.com.utils.InputFilterLetters;
 import frgp.utn.edu.com.utils.SessionManager;
 

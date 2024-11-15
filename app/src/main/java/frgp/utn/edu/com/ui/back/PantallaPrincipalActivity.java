@@ -1,4 +1,4 @@
-package frgp.utn.edu.com.ui.home;
+package frgp.utn.edu.com.ui.back;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosActivity;
-import frgp.utn.edu.com.ui.usuario.MiPerfilActivity;
 
 public class PantallaPrincipalActivity extends AppCompatActivity {
     @Override

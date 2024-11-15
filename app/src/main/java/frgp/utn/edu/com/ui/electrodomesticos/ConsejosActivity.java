@@ -16,7 +16,7 @@ public class ConsejosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_consejos);
+        setContentView(R.layout.fragment_consejos);
 
 
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
 import android.widget.Toolbar;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import frgp.utn.edu.com.R;
@@ -19,19 +20,14 @@ public class PantallaPrincipalFragment extends Fragment {
         initViews(view);
         return view;
     }
-    /*@Override
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.activity_main_menu_drawer, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }*/
+    }
 
-    /*@Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
-        // Notify that this fragment changed the options menu
-        setHasOptionsMenu(true);
-    }*/
+
 
     public void initViews(View view)
     {

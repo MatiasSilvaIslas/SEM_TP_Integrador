@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import frgp.utn.edu.com.R;
@@ -24,6 +25,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(PantallaPrincipalActivity.this, "Perfil", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(PantallaPrincipalActivity.this, MiPerfilActivity.class);
                 startActivity(intent);
             }

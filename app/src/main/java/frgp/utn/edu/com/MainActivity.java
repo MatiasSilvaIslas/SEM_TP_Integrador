@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -106,10 +107,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Toast.makeText(this, "Item: " + id, Toast.LENGTH_SHORT).show();
 
         if (id == R.id.nav_articulos) {
             switchFragment(FIRST_FRAGMENT);
-        } else if (id == R.id.nav_parking) {
+        } else if (id == R.id.nav_myaccount) {
             switchFragment(SECOND_FRAGMENT);
         }
 

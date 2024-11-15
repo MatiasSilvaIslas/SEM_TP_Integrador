@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TP_Seminario</string>
     <string name="menu_articulos">Artículos</string>
+    <string name="btnCosejos">Consejos de uso Eficiente</string>
     <string name="menu_cuenta">Mi cuenta</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -40,4 +41,16 @@
     <string name="descripcion_categoria_pc">Electrónica, Audio y Video</string>
     <string name="descripcion_categoria_secadora">Cuidado Personal</string>
     <string name="descripcion_categoria_calefon">Agua</string>
+    <string name="icono_sustentable">Icono sustentable</string>
+    <string name="lamp_bajo_consumo">Usá lámparas LED y mantenelas limpias (cuando están sucias o en mal estado, pierden hasta un 50% de luminosidad). \n Utilizá sensores de movimiento y/o temporizadores para espacios comunes.</string>
+    <string name="heladera">Abrí la heladera la menor cantidad de tiempo posible y, cuando no la uses, asegurate de dejarla bien cerrada. Ubicala por lo menos a 15 centímetros de fuentes de calor, paredes o muebles.</string>
+    <string name="lavarropas">Lavá la mayor cantidad de ropa con el programa económico. Si podés, usá siempre agua fría ya que la caliente consume un 80% más de energía.</string>
+    <string name="plancha">Juntá la mayor cantidad de ropa; tené presente que la plancha consume menos electricidad cuanto más tiempo seguido la usás.</string>
+    <string name="aire_ac">Poné el aire acondicionado a 24° C en verano y a 20° C en invierno. Recordá que la temperatura programada se mantiene por más tiempo con las puertas y ventanas cerradas. Al menos cada seis meses, limpiá los filtros del equipo.</string>
+    <string name="computadora">Apagá la computadora cuando termines de usarla. El consumo en modo Espera equivale hasta un 70% del consumo en modo Encendido.</string>
+    <string name="user">user</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="consejo_titulo">Consejos de uso eficiente</string>
+    <string name="aire_acondicionado">aire_acondicionado</string>
+    <string name="computadora_pc">Computadora</string>
 </resources>

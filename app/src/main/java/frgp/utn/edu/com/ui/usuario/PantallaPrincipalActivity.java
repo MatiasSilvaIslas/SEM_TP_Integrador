@@ -10,16 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoActivity;
+import frgp.utn.edu.com.ui.electrodomesticos.ConsejosActivity;
 
 public class PantallaPrincipalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_principal);
 
+        // Navegar a -> Mi Perfil
         Button btnProfile = findViewById(R.id.btnProfile);
-        Button btnManageAppliances = findViewById(R.id.btnManageAppliances);
-
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,6 +30,7 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
         });
 
         // Navegar a ABMLElectrodomesticosActivity
+        Button btnManageAppliances = findViewById(R.id.btnManageAppliances);
         btnManageAppliances.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,5 +49,14 @@ public class PantallaPrincipalActivity extends AppCompatActivity {
             }
         });
 
+        // Navegar a -> Consejos del uso eficiente
+        Button btnCosejos = findViewById(R.id.btnCosejos);
+        btnCosejos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PantallaPrincipalActivity.this, ConsejosActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

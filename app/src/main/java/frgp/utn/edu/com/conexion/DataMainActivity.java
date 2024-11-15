@@ -1,18 +1,5 @@
 package frgp.utn.edu.com.conexion;
 
-import android.content.Context;
-import android.widget.ListView;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import android.widget.Toast;
-import frgp.utn.edu.com.entidad.Articulo;
-
 public class DataMainActivity {
 
    /* private ListView lvArticulo;

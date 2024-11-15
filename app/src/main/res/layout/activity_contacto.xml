@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blanco"
+    tools:context=".ui.soporte.ContactoFragment">
+
+
+    <!-- Nos aseguramos que los textos usen sp como unidad de medida para ser escalables -->
+    <!-- Nos aseguramos que las imágenes tengan contentDescription y dp como unidad de medida -->
+    <!-- Hacer focusable los TextView e ImageView para navegación por teclado -->
+    <!-- Utilizamos importantForAccesibility="no" para excluir elementos interactivos de la navegación por teclado y lectores de pantalla -->
+    <!-- Aplicar atributos de navegación nextFocusForward -->
+
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue"
+        app:titleTextColor="@android:color/white"
+        tools:ignore="MissingConstraints">
+
+        <!-- Icono de usuario a la izquierda -->
+        <ImageView
+            android:id="@+id/icon_user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_user"
+            android:padding="8dp"
+            app:tint="@android:color/white"
+            android:contentDescription="@string/user"
+            android:layout_gravity="start" />
+
+        <!-- Icono de notificación a la derecha -->
+        <ImageView
+            android:id="@+id/icon_notification"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_notification"
+            android:padding="8dp"
+            android:contentDescription="@string/notificaciones"
+            app:tint="@android:color/white"
+            android:layout_gravity="end" />
+
+    </androidx.appcompat.widget.Toolbar>
+    <!-- FIN Toolbar -->
+
+    <!-- Imagen del título -->
+
+    <!-- Texto del título -->
+    <!-- FIN del titulo -->
+
+
+    <!-- android:text="@string/copyright_contacto" -->
+
+    <ImageView
+        android:id="@+id/contacto"
+        android:layout_width="75dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/icono_sustentable"
+        android:src="@android:drawable/sym_action_email"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="MissingConstraints,RtlHardcoded"
+        tools:layout_editor_absoluteX="75dp" />
+
+    <TextView
+        android:id="@+id/edit_nombre_alarma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Titulo de la Activity"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/robotobold"
+        android:text="@string/titulo_activity_contacto"
+        android:textColor="@color/verde"
+        android:textSize="24sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="112dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="370dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="Imagen del Equipo de Desarrollo que brinda Soporte a los Usuarios de AnalizArApp"
+        android:importantForAccessibility="no"
+
+        android:src="@drawable/imagen_contacto_1"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_nombre_alarma" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:contentDescription="Enlace a la página "
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/robotoregular"
+
+        android:nextFocusForward="@id/linearLayout"
+        android:text="@string/link"
+        android:textSize="14sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_soporte" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/robotoregular"
+        android:text="@string/texto_publicitario_contacto"
+        android:textAlignment="center"
+
+        android:textColor="@color/negro"
+        android:textSize="17sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/btn_soporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/blue_primary"
+        android:contentDescription="Botón para contactar al area de Soporte de Calculadora de Energia"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/robotobold"
+        android:nextFocusForward="@id/textView10"
+
+        android:text="@string/btn_soporte"
+        android:textColor="@color/blanco"
+        android:textSize="20sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/robotoregular"
+        android:text="@string/titulo_publicitario_contacto"
+        android:textAlignment="center"
+        android:textColor="@color/negro"
+
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="138dp"
+        android:layout_height="142dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:srcCompat="@drawable/ic_launcher" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

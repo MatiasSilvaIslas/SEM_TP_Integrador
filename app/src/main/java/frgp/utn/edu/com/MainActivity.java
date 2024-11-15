@@ -1,7 +1,5 @@
 package frgp.utn.edu.com;
 
-
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,11 +29,9 @@ import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMainMenuNavigatorListener {
 
     private final int FIRST_FRAGMENT = 0;
-
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -43,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
 
     private ActionBarDrawerToggle drawerToggle;
-
 
     private Toolbar toolbar;
     @Override
@@ -56,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("MainActivity","oncreate-log");
         NavigationView navigationView = findViewById(R.id.navigation_viewf);
 
-
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -67,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switchFragment(FIRST_FRAGMENT);
 
-
     }
     @Override
     public void setSupportActionBar(@Nullable Toolbar toolbar) {
@@ -75,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Whenever we change the action bar, we must restore the default behaviour of the drawer
         restoreDrawer();
     }
-
-
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -121,8 +111,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-
     private void switchFragment(int fragment){
         Fragment newFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -154,8 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ((MainActivity) this ).setnavigateToMainMenu(true);
 
-
-
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgment_frame, newFragment);
         fragmentTransaction.commit();
@@ -163,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
         drawer.closeDrawer(GravityCompat.START);
-
     }
 
     private void restoreDrawer() {
@@ -191,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
-
 
     @Override
     public void setnavigateToMainMenu(boolean navigate) {

@@ -1,5 +1,6 @@
 package frgp.utn.edu.com.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
@@ -10,7 +11,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
+import frgp.utn.edu.com.ui.electrodomesticos.ConsejosActivity;
+import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 
 
@@ -71,7 +75,17 @@ public class PantallaPrincipalFragment extends Fragment {
                 startActivity(intent);*/
             }
         });
-
+        Button btnCosejos = view.findViewById(R.id.btnCosejosf);
+        btnCosejos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new ConsejosFragment());
+                fragmentTransaction.commit();
+            }
+        });
     }
     /*@Override
     public void onCreate(Bundle savedInstanceState) {

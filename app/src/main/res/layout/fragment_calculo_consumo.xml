@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
                 android:id="@+id/fragment_consumo"
-    tools:context="frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoActivity"
+    tools:context="frgp.utn.edu.com.ui.back.CalculoConsumoActivity"
 
 >
 

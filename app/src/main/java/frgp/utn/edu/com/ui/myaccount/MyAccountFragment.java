@@ -15,20 +15,15 @@ import androidx.lifecycle.ViewModelProvider;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.databinding.FragmentMyaccountBinding;
+import frgp.utn.edu.com.ui.Login.LoginFragment;
+import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 
 public class MyAccountFragment extends Fragment {
 
     private FragmentMyaccountBinding binding;
 
-    private View.OnClickListener logoutButtonClickListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            Toast.makeText(getActivity(), " Se cerro cerro sesión", Toast.LENGTH_SHORT).show();
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
-    };
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +33,15 @@ public class MyAccountFragment extends Fragment {
         View view = binding.getRoot();
 
         Button logout = (Button)view.findViewById(R.id.btnLogout);
-        logout.setOnClickListener(logoutButtonClickListener);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginRegisterViewModel loginRegisterViewModel = new ViewModelProvider(getActivity()).get(LoginRegisterViewModel.class);
+                loginRegisterViewModel.logout();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 

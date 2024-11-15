@@ -21,6 +21,9 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public void login(String email, String password) {
         authAppRepository.login(email, password);
     }
+    public void logout() {
+        authAppRepository.logOut();
+    }
 
     /*public void register(String email, String password) {
         authAppRepository.register(email, password, new RegistrationCallback() {

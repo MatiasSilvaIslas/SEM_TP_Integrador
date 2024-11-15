@@ -22,18 +22,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
 import frgp.utn.edu.com.ui.articulos.ArticuloFragment;
+import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
 import frgp.utn.edu.com.ui.usuario.PantallaPrincipalFragment;
+import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 import org.jetbrains.annotations.NotNull;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMainMenuNavigatorListener {
 
     private final int FIRST_FRAGMENT = 0;
-    private final int SECOND_FRAGMENT = 1;
+
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -52,12 +57,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         Log.d("MainActivity","oncreate-log");
+        NavigationView navigationView = findViewById(R.id.navigation_viewf);
+
+
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_viewf);
-        navigationView.setNavigationItemSelectedListener(this);
 
-        //disable drawer
+        navigationView.setNavigationItemSelectedListener(this);
 
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         navigationView.getMenu().getItem(FIRST_FRAGMENT).setChecked(false);
@@ -72,14 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Whenever we change the action bar, we must restore the default behaviour of the drawer
         restoreDrawer();
     }
-
-    /*private void initFragment(){
-        // abrir login fragment, main activity tiene un framelayout y login es un fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frgment_frame, new LoginFragment());
-        fragmentTransaction.commit();
-    }*/
 
 
 
@@ -107,12 +105,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Toast.makeText(this, "Item: " + id, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
 
-        if (id == R.id.nav_articulos) {
-            switchFragment(FIRST_FRAGMENT);
-        } else if (id == R.id.nav_myaccount) {
-            switchFragment(SECOND_FRAGMENT);
+        if (item.toString().equals( "Articulos")){
+            switchFragment(2);
+        } else if (item.toString().equals("Cuenta")){
+            switchFragment(3);
+        } else if (item.toString().equals("Principal")){
+            switchFragment(4);
+        } else if (item.toString().equals("Cerrar sesion")){
+            switchFragment(5);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
@@ -127,16 +129,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         switch (fragment){
-            case FIRST_FRAGMENT:
+            case 1:
                 newFragment = new LoginFragment();
                 break;
-            case SECOND_FRAGMENT:
-                newFragment = new ArticuloFragment();
+            case 2:
+                newFragment = new MyAccountFragment();
+                break;
+            case 3:
+                newFragment = new MyAccountFragment();
+                break;
+            case 4:
+                newFragment = new PantallaPrincipalFragment();
+                break;
+            case 5:
+                LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getApplication());
+                loginRegisterViewModel.logout();
+                newFragment = new LoginFragment();
                 break;
             default:
                 newFragment = new LoginFragment();
         }
 
+        ((MainActivity) this ).setnavigateToMainMenu(true);
+
+
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frgment_frame, newFragment);
+        fragmentTransaction.commit();
         fragmentManager.beginTransaction().replace(R.id.frgment_frame, newFragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);

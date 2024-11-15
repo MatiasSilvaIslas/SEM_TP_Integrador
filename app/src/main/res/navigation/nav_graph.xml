@@ -15,7 +15,15 @@
             android:id="@+id/action_loginFragment_to_loggedInFragment"
             app:destination="@id/login_to_main" />
     </fragment>
+    <fragment
+            android:id="@+id/nav_myaccount"
+            android:name="frgp.utn.edu.com.ui.myaccount.MyAccountFragment"
+            android:label="fragment_first" />
+    <action
+            android:id="@+id/uffrag"
+            app:destination="@id/Fragmentmyaccount" />
 
+    <fragment         />
     <fragment
         android:id="@+id/registerFragment"
         android:name="frgp.utn.edu.com.ui.Login.RegisterFragment"

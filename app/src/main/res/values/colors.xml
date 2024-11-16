@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Paleta de Colores Optimizada para Accesibilidad -->
+    <!-- Durante el Sprint 2 se deberán adaptar los utilizados anteriormente a estos tonos -->
+    <color name="negro">#000000</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="verde">#1f5834</color>
+    <color name="verde_alternativo">#4D8E40</color>
+    <color name="gris_campos">#e3ece8</color>
+    <color name="azul">#0000FF</color>
+    <color name="verde_oscuro">#4D8E40</color>
+    <color name="verde_intermedio">#84A894</color>
+    <color name="gris">#F3F8F5</color>
+    <color name="rojo">#EB5757</color>
+    <color name="gris_claro">#B5B1B1</color>
+    <color name="verde_formulario">#2784A894</color>
+    <!-- Los colores utilizados en los gráficos de consumos no se modifican -->
+
+    <!-- Paleta de Colores Utilizada en los Sprints 0 y 1 -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#2196F3</color> <!-- Azul material design -->

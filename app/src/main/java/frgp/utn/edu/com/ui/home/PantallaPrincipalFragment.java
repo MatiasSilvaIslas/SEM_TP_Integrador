@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
@@ -17,6 +20,7 @@ import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
+import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
 
 
 public class PantallaPrincipalFragment extends Fragment {
@@ -87,6 +91,18 @@ public class PantallaPrincipalFragment extends Fragment {
                 FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frgment_frame, new ConsejosFragment());
+                fragmentTransaction.commit();
+            }
+        });
+
+        FloatingActionButton btnHelp = view.findViewById(R.id.btnHelp);
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new ContactoSoporteFragment());
                 fragmentTransaction.commit();
             }
         });

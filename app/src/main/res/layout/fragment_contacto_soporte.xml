@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context="frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment">
+
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue"
+
+        app:titleTextColor="@android:color/white">
+
+        <!-- Icono de usuario a la izquierda -->
+        <ImageView
+            android:id="@+id/icon_user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_user"
+            android:contentDescription="User Icon"
+            android:padding="8dp"
+            android:layout_gravity="start"
+            app:tint="@android:color/white" />
+
+        <!-- Icono de notificación a la derecha -->
+        <ImageView
+            android:id="@+id/icon_notification"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_notification"
+            android:contentDescription="Notification Icon"
+            android:padding="8dp"
+            android:layout_gravity="end"
+            app:tint="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <!-- Contenedor Principal -->
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_background"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Contactar a Soporte"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/editCasoResumen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Resumen del caso" />
+
+        <EditText
+            android:id="@+id/editCasoDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Detalle del caso"
+            android:inputType="textMultiLine" />
+
+        <!-- Botón Enviar -->
+        <Button
+            android:id="@+id/btnEnviarSoporte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:text="Enviar"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</RelativeLayout>

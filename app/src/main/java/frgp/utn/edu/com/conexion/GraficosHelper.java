@@ -34,7 +34,7 @@ public class GraficosHelper {
 
                     Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
                     PreparedStatement pst = con.prepareStatement(
-                            "SELECT fecha, consumo_diario FROM Consumo WHERE ID_usuario = ? ORDER BY fecha"
+                            "SELECT ue.dias, SUM(ue.horas * e.consumo_hora_wh * ue.cantidad) AS consumo_diario FROM sql10735229.UsuarioElectrodomestico AS ue LEFT JOIN sql10735229.Electrodomestico AS e ON ue.electrodomestico_id = e.id_electrodomestico WHERE ue.usuario_id = ? GROUP BY ue.dias ORDER BY ue.dias;"
                     )
             ) {
                 pst.setInt(1, userId);

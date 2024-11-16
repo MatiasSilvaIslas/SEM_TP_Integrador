@@ -54,7 +54,6 @@ public class MyAccountFragment extends Fragment {
         TextView txtCorreo = (TextView) view.findViewById(R.id.txtCorreo);
         String email= SessionManager.getUserEmail(getActivity());
         DataUsuario dataUsuario = new DataUsuario(getActivity());
-
         dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
             if(usuario!=null){
                 this.usuario = usuario;
@@ -64,7 +63,6 @@ public class MyAccountFragment extends Fragment {
                 Toast.makeText(getActivity(), "Error al obtener usuario", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
         return view;

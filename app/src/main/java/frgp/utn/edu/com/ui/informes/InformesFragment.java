@@ -81,7 +81,7 @@ public class InformesFragment extends Fragment {
 //        Usuario usuario = new Usuario();
 //        DataUsuario dataUsuario = new DataUsuario( getActivity());
 //        usuario = dataUsuario.obtenerUsuarioPorEmail(loco, null);
-       return 1;
+        return 1;
     }
     /// Aca diego
     private double obtenerLimiteConsumo() {

@@ -25,6 +25,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.List;
 
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.conexion.GraficosHelper;
 
 public class GraficosFragment extends Fragment {
 

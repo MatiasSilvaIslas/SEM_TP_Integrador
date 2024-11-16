@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     //id("com.android.application")
     id("com.google.gms.google-services")
-    alias(libs.plugins.jetbrains.kotlin.android)
+
 }
 
 android {
@@ -33,9 +33,7 @@ android {
         dataBinding = true
         viewBinding = true
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+
 }
 
 dependencies {

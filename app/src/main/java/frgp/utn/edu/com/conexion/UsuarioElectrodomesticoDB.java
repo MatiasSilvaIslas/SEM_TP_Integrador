@@ -120,7 +120,53 @@ public class UsuarioElectrodomesticoDB {
         });
     }
 
+    public void eliminarElectrodomestico(int usuarioId, int electrodomesticoId, EliminarElectrodomesticoCallback callback) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            boolean success = true;
+            try {
+                // Cargar el driver JDBC
+                Class.forName("com.mysql.jdbc.Driver");
 
+                // Establecer conexión con la base de datos
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                // Consulta para eliminar el electrodoméstico
+                String queryDelete = "DELETE FROM UsuarioElectrodomestico WHERE usuario_id = ? AND electrodomestico_id = ?";
+
+                PreparedStatement pstDelete = con.prepareStatement(queryDelete);
+                pstDelete.setInt(1, usuarioId);
+                pstDelete.setInt(2, electrodomesticoId);
+                int rowsAffected = pstDelete.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Si se eliminó correctamente
+                    success = true;
+                } else {
+                    // Si no se encontró el registro para eliminar
+                    success = false;
+                }
+
+                pstDelete.close();
+                con.close();
+            } catch (Exception e) {
+                success = false;
+                e.printStackTrace();
+                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    Toast.makeText(context, "Error al eliminar el electrodoméstico", Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            // Llamar al callback con el resultado
+            boolean finalSuccess = success;
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onElectrodomesticoEliminado(finalSuccess));
+        });
+    }
+
+    // Interfaz para el callback de eliminación
+    public interface EliminarElectrodomesticoCallback {
+        void onElectrodomesticoEliminado(boolean success);
+    }
 
     // Interfaz para el callback de inserción
     public interface InsertarElectrodomesticosCallback {

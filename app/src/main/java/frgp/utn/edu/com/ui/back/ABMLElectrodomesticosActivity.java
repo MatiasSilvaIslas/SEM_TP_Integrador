@@ -22,6 +22,7 @@ import frgp.utn.edu.com.conexion.CategoriaDB;
 import frgp.utn.edu.com.conexion.ElectrodomesticoDB;
 import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
+import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.CategoriaAdapter;
 import frgp.utn.edu.com.ui.electrodomesticos.ElectrodomesticoAdapter;
 import frgp.utn.edu.com.utils.SessionManager;
@@ -36,6 +37,7 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
     private CategoriaAdapter categoriaAdapter;
     private CategoriaDB categoriaDB;
     private ElectrodomesticoDB electrodomesticoDB;
+    private int usuarioId = -1; // Variable global para almacenar el ID del usuario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
         // Inicialización de las clases de base de datos
         electrodomesticoDB = new ElectrodomesticoDB(this);
         categoriaDB = new CategoriaDB(this);
+
 
         // Obtener las categorías de la base de datos de manera asincrónica
         categoriaDB.obtenerCategoriasAsync(new CategoriaDB.CategoriaCallback() {
@@ -87,15 +90,11 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
         RecyclerView dialogRecyclerElectrodomesticos = view.findViewById(R.id.recyclerElectrodomesticos);
         dialogRecyclerElectrodomesticos.setLayoutManager(new GridLayoutManager(this, 1));
 
-        // Configurar el botón de confirmación
-        Button btnConfirmarSeleccion = view.findViewById(R.id.btnConfirmarSeleccion);
-        btnConfirmarSeleccion.setVisibility(View.VISIBLE);
-
         // Obtener electrodomésticos de la base de datos
         electrodomesticoDB.obtenerElectrodomesticosAsync(categoria.getId_categoria(), new ElectrodomesticoDB.ElectrodomesticoCallback() {
             @Override
             public void onElectrodomesticosObtenidos(ArrayList<Electrodomestico> electrodomesticos) {
-                // Llamar al método para obtener los electrodomésticos guardados por el usuario
+                // Obtener usuarioId antes de continuar
                 obtenerUsuarioId(new CallbackUsuarioId() {
                     @Override
                     public void onIdUsuarioObtenido(int idUsuario) {
@@ -104,34 +103,34 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
                             db.obtenerElectrodomesticosGuardadosPorCategoria(idUsuario, categoria.getId_categoria(), new UsuarioElectrodomesticoDB.ObtenerElectrodomesticosCallback() {
                                 @Override
                                 public void onElectrodomesticosObtenidos(ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados) {
-                                    // Crear el adaptador para los electrodomésticos obtenidos y las configuraciones guardadas
-                                    electrodomesticoAdapter = new ElectrodomesticoAdapter(ABMLElectrodomesticosActivity.this, electrodomesticos, electrodomesticosGuardados);
+                                    // Crear el adaptador con los electrodomésticos obtenidos
+                                    electrodomesticoAdapter = new ElectrodomesticoAdapter(ABMLElectrodomesticosActivity.this, electrodomesticos, electrodomesticosGuardados, idUsuario);
 
                                     // Asignar el adaptador al RecyclerView dentro del BottomSheet
                                     dialogRecyclerElectrodomesticos.setAdapter(electrodomesticoAdapter);
                                 }
                             });
                         } else {
-                            // Manejo de error si no se obtuvo el id del usuario
+                            // Manejo de error si no se obtiene el id del usuario
                             Toast.makeText(ABMLElectrodomesticosActivity.this, "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
                 // Configurar el evento de click para el botón de confirmación
+                Button btnConfirmarSeleccion = view.findViewById(R.id.btnConfirmarSeleccion);
+                btnConfirmarSeleccion.setVisibility(View.VISIBLE);
                 btnConfirmarSeleccion.setOnClickListener(v -> {
                     ArrayList<Electrodomestico> seleccionados = electrodomesticoAdapter.getSeleccionados();
                     ArrayList<UsuarioElectrodomestico> usuarioElectrodomesticos = new ArrayList<>();
 
+                    // Obtener usuarioId nuevamente antes de guardar
                     obtenerUsuarioId(new CallbackUsuarioId() {
                         @Override
                         public void onIdUsuarioObtenido(int idUsuario) {
                             if (idUsuario != -1) {
-                                UsuarioElectrodomesticoDB usuarioElectrodomesticoDB = new UsuarioElectrodomesticoDB(ABMLElectrodomesticosActivity.this);
-
                                 for (int position = 0; position < seleccionados.size(); position++) {
                                     Electrodomestico electrodomestico = seleccionados.get(position);
-
                                     int cantidad = getCantidadSeleccionada(dialogRecyclerElectrodomesticos, position);
                                     int horas = getHorasSeleccionada(dialogRecyclerElectrodomesticos, position);
                                     int dias = getDiasSeleccionada(dialogRecyclerElectrodomesticos, position);
@@ -147,7 +146,8 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
                                     usuarioElectrodomesticos.add(usuarioElectrodomestico);
                                 }
 
-                                // Llamada a actualizarOInsertarElectrodomesticos con todos los elementos seleccionados
+                                // Llamada para insertar o actualizar los electrodomésticos
+                                UsuarioElectrodomesticoDB usuarioElectrodomesticoDB = new UsuarioElectrodomesticoDB(ABMLElectrodomesticosActivity.this);
                                 usuarioElectrodomesticoDB.actualizarOInsertarElectrodomesticos(idUsuario, usuarioElectrodomesticos, success -> {
                                     if (success) {
                                         Toast.makeText(ABMLElectrodomesticosActivity.this, "Selección guardada correctamente", Toast.LENGTH_SHORT).show();
@@ -162,7 +162,6 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
                         }
                     });
                 });
-
             }
         });
 
@@ -211,7 +210,7 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
         });
     }
 
-    private void obtenerUsuarioId(CallbackUsuarioId callback) {
+    private void obtenerUsuarioId(final CallbackUsuarioId callback) {
         String userEmail = SessionManager.getUserEmail(this);
 
         DataUsuario dataUsuario = new DataUsuario(this);
@@ -226,6 +225,7 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 

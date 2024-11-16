@@ -36,6 +36,9 @@ public class ABMLElectrodomesticosFragment extends Fragment {
     private CategoriaAdapter categoriaAdapter;
     private CategoriaDB categoriaDB;
     private ElectrodomesticoDB electrodomesticoDB;
+    private int usuarioId = -1; // Variable global para almacenar el ID del usuario
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,6 +57,12 @@ public class ABMLElectrodomesticosFragment extends Fragment {
         electrodomesticoDB = new ElectrodomesticoDB(getActivity());
         categoriaDB = new CategoriaDB(getActivity());
 
+        obtenerUsuarioId(new CallbackUsuarioId() {
+            @Override
+            public void onIdUsuarioObtenido(int idUsuario) {
+                usuarioId = idUsuario;
+            }
+        });
         // Obtener las categorías de la base de datos de manera asincrónica
         categoriaDB.obtenerCategoriasAsync(new CategoriaDB.CategoriaCallback() {
             @Override
@@ -110,64 +119,67 @@ public class ABMLElectrodomesticosFragment extends Fragment {
                                 @Override
                                 public void onElectrodomesticosObtenidos(ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados) {
                                     // Crear el adaptador para los electrodomésticos obtenidos y las configuraciones guardadas
-                                    electrodomesticoAdapter = new ElectrodomesticoAdapter(getActivity(), electrodomesticos, electrodomesticosGuardados);
+                                    electrodomesticoAdapter = new ElectrodomesticoAdapter(getActivity(), electrodomesticos, electrodomesticosGuardados, usuarioId);
 
-                                    // Asignar el adaptador al RecyclerView dentro del BottomSheet
-                                    dialogRecyclerElectrodomesticos.setAdapter(electrodomesticoAdapter);
+                                    // Asegurarse de que el RecyclerView tenga el adaptador antes de renderizarlo
+                                    if (dialogRecyclerElectrodomesticos.getAdapter() == null) {
+                                        dialogRecyclerElectrodomesticos.setAdapter(electrodomesticoAdapter);
+                                    }
+
+                                    // Configurar el evento de click para el botón de confirmación
+                                    btnConfirmarSeleccion.setOnClickListener(v -> {
+                                        // Asegúrate de que electrodomesticoAdapter no sea null
+                                        if (electrodomesticoAdapter != null) {
+                                            ArrayList<Electrodomestico> seleccionados = electrodomesticoAdapter.getSeleccionados();
+                                            ArrayList<UsuarioElectrodomestico> usuarioElectrodomesticos = new ArrayList<>();
+
+                                            obtenerUsuarioId(new CallbackUsuarioId() {
+                                                @Override
+                                                public void onIdUsuarioObtenido(int idUsuario) {
+                                                    if (idUsuario != -1) {
+                                                        UsuarioElectrodomesticoDB usuarioElectrodomesticoDB = new UsuarioElectrodomesticoDB(getActivity());
+
+                                                        for (int position = 0; position < seleccionados.size(); position++) {
+                                                            Electrodomestico electrodomestico = seleccionados.get(position);
+
+                                                            int cantidad = getCantidadSeleccionada(dialogRecyclerElectrodomesticos, position);
+                                                            int horas = getHorasSeleccionada(dialogRecyclerElectrodomesticos, position);
+                                                            int dias = getDiasSeleccionada(dialogRecyclerElectrodomesticos, position);
+
+                                                            UsuarioElectrodomestico usuarioElectrodomestico = new UsuarioElectrodomestico(
+                                                                    idUsuario,
+                                                                    electrodomestico.getId_electrodomestico(),
+                                                                    cantidad,
+                                                                    horas,
+                                                                    dias
+                                                            );
+
+                                                            usuarioElectrodomesticos.add(usuarioElectrodomestico);
+                                                        }
+
+                                                        // Llamada a actualizarOInsertarElectrodomesticos con todos los elementos seleccionados
+                                                        usuarioElectrodomesticoDB.actualizarOInsertarElectrodomesticos(idUsuario, usuarioElectrodomesticos, success -> {
+                                                            if (success) {
+                                                                Toast.makeText(getActivity(), "Selección guardada correctamente", Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                Toast.makeText(getActivity(), "Error al guardar la selección", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                            dialog.dismiss();
+                                                        });
+                                                    } else {
+                                                        Toast.makeText(getActivity(), "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             });
                         } else {
-                            // Manejo de error si no se obtuvo el id del usuario
                             Toast.makeText(getActivity(), "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-                // Configurar el evento de click para el botón de confirmación
-                btnConfirmarSeleccion.setOnClickListener(v -> {
-                    ArrayList<Electrodomestico> seleccionados = electrodomesticoAdapter.getSeleccionados();
-                    ArrayList<UsuarioElectrodomestico> usuarioElectrodomesticos = new ArrayList<>();
-
-                    obtenerUsuarioId(new CallbackUsuarioId() {
-                        @Override
-                        public void onIdUsuarioObtenido(int idUsuario) {
-                            if (idUsuario != -1) {
-                                UsuarioElectrodomesticoDB usuarioElectrodomesticoDB = new UsuarioElectrodomesticoDB(getActivity());
-
-                                for (int position = 0; position < seleccionados.size(); position++) {
-                                    Electrodomestico electrodomestico = seleccionados.get(position);
-
-                                    int cantidad = getCantidadSeleccionada(dialogRecyclerElectrodomesticos, position);
-                                    int horas = getHorasSeleccionada(dialogRecyclerElectrodomesticos, position);
-                                    int dias = getDiasSeleccionada(dialogRecyclerElectrodomesticos, position);
-
-                                    UsuarioElectrodomestico usuarioElectrodomestico = new UsuarioElectrodomestico(
-                                            idUsuario,
-                                            electrodomestico.getId_electrodomestico(),
-                                            cantidad,
-                                            horas,
-                                            dias
-                                    );
-
-                                    usuarioElectrodomesticos.add(usuarioElectrodomestico);
-                                }
-
-                                // Llamada a actualizarOInsertarElectrodomesticos con todos los elementos seleccionados
-                                usuarioElectrodomesticoDB.actualizarOInsertarElectrodomesticos(idUsuario, usuarioElectrodomesticos, success -> {
-                                    if (success) {
-                                        Toast.makeText(getActivity(), "Selección guardada correctamente", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getActivity(), "Error al guardar la selección", Toast.LENGTH_SHORT).show();
-                                    }
-                                    dialog.dismiss();
-                                });
-                            } else {
-                                Toast.makeText(getActivity(), "Error al obtener el usuario", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                });
-
             }
         });
 
@@ -176,21 +188,26 @@ public class ABMLElectrodomesticosFragment extends Fragment {
     }
 
 
+
     // Métodos actualizados para obtener cantidad, horas y días usando la posición en lugar del objeto Electrodomestico
     private int getCantidadSeleccionada(RecyclerView recyclerView, int position) {
-        Spinner spinnerCantidad = (Spinner) recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.spinnerCantidad);
+        View view = recyclerView.findViewHolderForAdapterPosition(position).itemView;
+        Spinner spinnerCantidad = view.findViewById(R.id.spinnerCantidad);
         return Integer.parseInt(spinnerCantidad.getSelectedItem().toString());
     }
 
     private int getHorasSeleccionada(RecyclerView recyclerView, int position) {
-        Spinner spinnerHoras = (Spinner) recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.spinnerHoras);
+        View view = recyclerView.findViewHolderForAdapterPosition(position).itemView;
+        Spinner spinnerHoras = view.findViewById(R.id.spinnerHoras);
         return Integer.parseInt(spinnerHoras.getSelectedItem().toString());
     }
 
     private int getDiasSeleccionada(RecyclerView recyclerView, int position) {
-        Spinner spinnerDias = (Spinner) recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.spinnerDias);
+        View view = recyclerView.findViewHolderForAdapterPosition(position).itemView;
+        Spinner spinnerDias = view.findViewById(R.id.spinnerDias);
         return Integer.parseInt(spinnerDias.getSelectedItem().toString());
     }
+
 
 
     private void insertarElectrodomesticos(ArrayList<UsuarioElectrodomestico> usuarioElectrodomesticos) {

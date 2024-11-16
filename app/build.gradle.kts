@@ -56,6 +56,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:5.1.26")
     implementation ("androidx.recyclerview:recyclerview:1.2.0")
     implementation ("com.google.android.material:material:1.9.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     /*implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-messaging")

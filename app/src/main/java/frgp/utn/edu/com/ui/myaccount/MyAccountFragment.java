@@ -15,8 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.databinding.FragmentMyaccountBinding;
+import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
+import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 
@@ -24,7 +27,7 @@ public class MyAccountFragment extends Fragment {
 
     private FragmentMyaccountBinding binding;
 
-
+    private Usuario usuario;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,11 +50,20 @@ public class MyAccountFragment extends Fragment {
 
 
 
-        /*TextView txtNombre = (TextView) view.findViewById(R.id.txtNombre);
+        TextView txtNombre = (TextView) view.findViewById(R.id.txtNombre);
         TextView txtCorreo = (TextView) view.findViewById(R.id.txtCorreo);
-        User user = (User)getActivity().getIntent().getSerializableExtra(PutExtraConst.UserKey);
-        txtNombre.setText(user.getName());
-        txtCorreo.setText(user.getEmail());*/
+        String email= SessionManager.getUserEmail(getActivity());
+        DataUsuario dataUsuario = new DataUsuario(getActivity());
+        dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
+            if(usuario!=null){
+                this.usuario = usuario;
+                txtCorreo.setText(usuario.getEmail());
+                txtNombre.setText(usuario.getNombre_usuario());
+            }else{
+                Toast.makeText(getActivity(), "Error al obtener usuario", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return view;
     }

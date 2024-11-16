@@ -27,7 +27,7 @@ import java.util.List;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.GraficosHelper;
 
-public class GraficosFragment extends Fragment {
+public class InformesFragment extends Fragment {
 
     private LineChart lineChart;
     private PieChart pieChart;
@@ -42,7 +42,7 @@ public class GraficosFragment extends Fragment {
         // Inicializar vistas
         lineChart = view.findViewById(R.id.lineChart);
         pieChart = view.findViewById(R.id.pieChart);
-        editLimiteConsumo = view.findViewById(R.id.editLimiteConsumo);
+        //editLimiteConsumo = view.findViewById(R.id.editLimiteConsumo);
 
         // Inicializar helper de gráficos
         graficosHelper = new GraficosHelper(getContext());
@@ -75,11 +75,11 @@ public class GraficosFragment extends Fragment {
         // Esto puede incluir la obtención del email de SharedPreferences y realizar una consulta a la base de datos
         return 1; // Temporal: reemplaza esto con la lógica real
     }
-
+    /// Aca diego
     private double obtenerLimiteConsumo() {
-        String limiteText = editLimiteConsumo.getText().toString().trim();
+        //String limiteText = editLimiteConsumo.getText().toString().trim();
         try {
-            return Double.parseDouble(limiteText);
+            return Double.parseDouble("1000");
         } catch (NumberFormatException e) {
             Toast.makeText(getContext(), "Ingrese un límite válido", Toast.LENGTH_SHORT).show();
             return 0; // Valor por defecto

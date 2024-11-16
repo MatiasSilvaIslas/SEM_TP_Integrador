@@ -10,6 +10,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -19,50 +20,52 @@ import java.util.Map;
 
 public class GraficosHelper {
     private Context context;
-
-    public GraficosHelper(Context context) {
-        this.context = context;
+    public GraficosHelper( Context ct) {
+        context = ct;
     }
+    //DatabaseHelper db = new DatabaseHelper();
+
 
     public void actualizarGraficos(int userId, double limiteConsumo, GraficoListener listener) {
+
+
         new Thread(() -> {
-            try (Connection connection = DatabaseHelper.getConnection()) {
-                String query = "SELECT e.nombre, ue.horas, e.consumo_hora_wh " +
-                        "FROM UsuarioElectrodomestico as ue " +
-                        "LEFT JOIN Electrodomestico as e ON ue.electrodomestico_id = id_electrodomestico " +
-                        "WHERE ue.usuario_id = ?";
+            try (
 
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setInt(1, userId);
-
-                ResultSet resultSet = preparedStatement.executeQuery();
+                    Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+                    PreparedStatement pst = con.prepareStatement(
+                            "SELECT fecha, consumo_diario FROM Consumo WHERE ID_usuario = ? ORDER BY fecha"
+                    )
+            ) {
+                pst.setInt(1, userId);
+                ResultSet rs = pst.executeQuery();
 
                 List<Entry> datosLinea = new ArrayList<>();
                 List<PieEntry> datosTorta = new ArrayList<>();
-                Map<String, Double> consumoPorElectrodomestico = new HashMap<>();
+                Map<String, Float> consumoPorMes = new HashMap<>();
 
-                double consumoTotal = 0;
-                int dia = 1;
+                while (rs.next()) {
+                    String fecha = rs.getString("fecha");
+                    float consumoDiario = rs.getFloat("consumo_diario");
 
-                while (resultSet.next()) {
-                    String nombre = resultSet.getString("nombre");
-                    int horas = resultSet.getInt("horas");
-                    double consumoHora = resultSet.getDouble("consumo_hora_wh");
-                    double consumo = horas * consumoHora / 1000.0;
+                    // Agregar datos a la línea
+                    datosLinea.add(new Entry(datosLinea.size(), consumoDiario));
 
-                    consumoTotal += consumo;
-
-                    consumoPorElectrodomestico.put(nombre,
-                            consumoPorElectrodomestico.getOrDefault(nombre, 0.0) + consumo);
-
-                    datosLinea.add(new Entry(dia++, (float) consumoTotal));
+                    // Agregar datos a la torta
+                    String mes = fecha.substring(0, 7);
+                    if (consumoPorMes.containsKey(mes)) {
+                        consumoPorMes.put(mes, consumoPorMes.get(mes) + consumoDiario);
+                    } else {
+                        consumoPorMes.put(mes, consumoDiario);
+                    }
                 }
 
-                for (Map.Entry<String, Double> entry : consumoPorElectrodomestico.entrySet()) {
-                    datosTorta.add(new PieEntry(entry.getValue().floatValue(), entry.getKey()));
+                // Agregar datos a la torta
+                for (Map.Entry<String, Float> entry : consumoPorMes.entrySet()) {
+                    datosTorta.add(new PieEntry(entry.getValue(), entry.getKey()));
                 }
 
-                listener.onDatosListos(datosLinea, datosTorta);
+                ((FragmentActivity) context).runOnUiThread(() -> listener.onDatosListos(datosLinea, datosTorta));
 
             } catch (Exception e) {
                 e.printStackTrace();

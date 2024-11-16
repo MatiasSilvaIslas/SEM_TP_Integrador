@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="match_parent"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
                                                     android:id="@+id/fragment_graficos"
 >
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue"
 
+            app:titleTextColor="@android:color/white" tools:ignore="MissingConstraints">
+
+        <!-- Icono de usuario a la izquierda -->
+        <ImageView
+                android:id="@+id/icon_user"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_user"
+                android:contentDescription="User Icon"
+                android:padding="8dp"
+                app:tint="@android:color/white"
+                android:layout_gravity="start" />
+
+        <!-- Icono de notificación a la derecha -->
+        <ImageView
+                android:id="@+id/icon_notification"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_notification"
+                android:contentDescription="Notification Icon"
+                android:padding="8dp"
+                app:tint="@android:color/white"
+                android:layout_gravity="end" />
+    </androidx.appcompat.widget.Toolbar>
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="0dp"

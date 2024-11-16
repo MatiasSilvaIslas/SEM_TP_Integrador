@@ -32,7 +32,7 @@ public class fragmentMiPerfil extends Fragment {
     public void initViews(View view) {
 
       Button  btnModificarPerfil = view.findViewById(R.id.btnModificarPerfil);
-      Button  btnModificarCredenciales = view.findViewById(R.id.btnModificarCredenciales);
+      //Button  btnModificarCredenciales = view.findViewById(R.id.btnModificarCredenciales);
 
         btnModificarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,15 +47,15 @@ public class fragmentMiPerfil extends Fragment {
             }
         });
 
-        btnModificarCredenciales.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frgment_frame, new EditarPasswordFragment());
-                fragmentTransaction.commit();
-            }
-        });
+//        btnModificarCredenciales.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+//                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.frgment_frame, new EditarPasswordFragment());
+//                fragmentTransaction.commit();
+//            }
+//        });
     }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import frgp.utn.edu.com.ui.soporte.ContactoFragment;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
@@ -84,14 +85,14 @@ public class PantallaPrincipalFragment extends Fragment {
 
             }
         });
-        Button btnCosejos = view.findViewById(R.id.btnCosejos);
-        btnCosejos.setOnClickListener(new View.OnClickListener() {
+       /* Button btnConsejos = view.findViewById(R.id.btnConsejosf);
+        btnConsejos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
                 getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frgment_frame, new ConsejosFragment()).commit();
             }
-        });
+        });*/
 
         FloatingActionButton btnHelp = view.findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +104,16 @@ public class PantallaPrincipalFragment extends Fragment {
                 fragmentTransaction.replace(R.id.frgment_frame, new ContactoSoporteFragment());
                 fragmentTransaction.commit();
             }
+        });
+
+        //Realizado a la antigua
+        Button btncontactanos = view.findViewById(R.id.btnContactanos);
+        btncontactanos.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(getActivity(), ContactoFragment.class);
+               startActivity(intent);
+           }
         });
     }
     /*@Override

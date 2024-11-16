@@ -8,13 +8,11 @@
     android:background="@color/blanco"
     tools:context=".ui.soporte.ContactoFragment">
 
-
     <!-- Nos aseguramos que los textos usen sp como unidad de medida para ser escalables -->
     <!-- Nos aseguramos que las imágenes tengan contentDescription y dp como unidad de medida -->
     <!-- Hacer focusable los TextView e ImageView para navegación por teclado -->
     <!-- Utilizamos importantForAccesibility="no" para excluir elementos interactivos de la navegación por teclado y lectores de pantalla -->
     <!-- Aplicar atributos de navegación nextFocusForward -->
-
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
@@ -60,40 +58,44 @@
 
     <ImageView
         android:id="@+id/contacto"
-        android:layout_width="75dp"
-        android:layout_height="78dp"
+        android:layout_width="81dp"
+        android:layout_height="83dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="28dp"
         android:contentDescription="@string/icono_sustentable"
         android:src="@android:drawable/sym_action_email"
+        app:layout_constraintEnd_toStartOf="@+id/edit_nombre_alarma"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:ignore="MissingConstraints,RtlHardcoded"
-        tools:layout_editor_absoluteX="75dp" />
+        tools:ignore="MissingConstraints,RtlHardcoded" />
 
     <TextView
         android:id="@+id/edit_nombre_alarma"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:contentDescription="Titulo de la Activity"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:fontFamily="@font/robotobold"
         android:text="@string/titulo_activity_contacto"
         android:textColor="@color/verde"
-        android:textSize="24sp"
 
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="112dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="370dp"
         android:layout_height="250dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="44dp"
         android:contentDescription="Imagen del Equipo de Desarrollo que brinda Soporte a los Usuarios de AnalizArApp"
         android:importantForAccessibility="no"
 

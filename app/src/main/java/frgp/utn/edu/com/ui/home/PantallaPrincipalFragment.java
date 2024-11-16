@@ -77,10 +77,8 @@ public class PantallaPrincipalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frgment_frame, new CalculoConsumoFragment());
-                fragmentTransaction.commit();
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frgment_frame, new CalculoConsumoFragment()).commit();
+
             }
         });
         Button btnCosejos = view.findViewById(R.id.btnCosejosf);

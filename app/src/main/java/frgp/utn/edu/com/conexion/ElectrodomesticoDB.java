@@ -79,7 +79,7 @@ public class ElectrodomesticoDB {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Electrodomestico> electrodomesticos) {
+        protected void  onPostExecute(ArrayList<Electrodomestico> electrodomesticos) {
             super.onPostExecute(electrodomesticos);
             // Llamar al callback con los resultados
             callback.onElectrodomesticosObtenidos(electrodomesticos);

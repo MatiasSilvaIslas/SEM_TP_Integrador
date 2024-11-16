@@ -1,5 +1,6 @@
 package frgp.utn.edu.com.ui.informes;
 
+import android.app.Application;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +26,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.List;
 
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.conexion.GraficosHelper;
+import frgp.utn.edu.com.entidad.Usuario;
+import frgp.utn.edu.com.utils.SessionManager;
 
 public class InformesFragment extends Fragment {
 
@@ -71,15 +75,17 @@ public class InformesFragment extends Fragment {
     }
 
     private int obtenerUserId() {
-        // Implementa tu lógica para obtener el ID del usuario
-        // Esto puede incluir la obtención del email de SharedPreferences y realizar una consulta a la base de datos
-        return 1; // Temporal: reemplaza esto con la lógica real
+        String loco= SessionManager.getUserEmail(getActivity());
+        Usuario usuario = new Usuario();
+        DataUsuario dataUsuario = new DataUsuario( getActivity());
+        usuario = dataUsuario.obtenerUsuarioPorEmail(loco, null);
+        return usuario.getIdUsuario();
     }
     /// Aca diego
     private double obtenerLimiteConsumo() {
         //String limiteText = editLimiteConsumo.getText().toString().trim();
         try {
-            return Double.parseDouble("1000");
+            return Double.parseDouble("100");
         } catch (NumberFormatException e) {
             Toast.makeText(getContext(), "Ingrese un límite válido", Toast.LENGTH_SHORT).show();
             return 0; // Valor por defecto

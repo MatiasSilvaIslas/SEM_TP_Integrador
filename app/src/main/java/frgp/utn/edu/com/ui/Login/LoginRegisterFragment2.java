@@ -1,5 +1,6 @@
 package frgp.utn.edu.com.ui.Login;
 
+import android.app.Application;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,10 +25,11 @@ import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.repository.AuthAppRepository;
 import frgp.utn.edu.com.repository.UsuarioData;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
+import frgp.utn.edu.com.utils.SessionManager;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,7 +37,7 @@ import java.util.concurrent.Executors;
 public class LoginRegisterFragment2 extends Fragment {
     private AuthAppRepository authAppRepository;
     private Button registerButton;
-    private String email;
+    private TextInputEditText email, nombre,apellido;
     private TextInputEditText etFechaNacimiento;
     private Spinner spinnerProvincia;
     private Spinner spinnerLocalidad;
@@ -82,6 +84,13 @@ public class LoginRegisterFragment2 extends Fragment {
     }
 
     public void initViews(View v) {
+        spinnerProvincia = v.findViewById(R.id.spinner_provincia);
+        spinnerLocalidad = v.findViewById(R.id.spinner_localidad);
+        spinnerGenero = v.findViewById(R.id.spinner_genero);
+        etFechaNacimiento = v.findViewById(R.id.et_fecha_nacimiento);
+        nombre= v.findViewById(R.id.et_nombre);
+        apellido= v.findViewById(R.id.et_apellido);
+
 
         registerButton = v.findViewById(R.id.btn_registrarfg2);
         registerButton.setOnClickListener(
@@ -183,42 +192,52 @@ public class LoginRegisterFragment2 extends Fragment {
             Toast.makeText(getActivity(), "La lista de localidades no está disponible.", Toast.LENGTH_SHORT).show();
         }
     }
-
+    private java.util.Date convertirStringADate(String fechaString) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            return sdf.parse(fechaString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Error al formatear la fecha", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+    }
     public void registerUserIfValid(View v) {
+        String loco= SessionManager.getUserEmail(getActivity());
         Usuario usuario = new Usuario();
-        TextView emailTextView = v.findViewById(R.id.fragment_loginregister_email);
-        usuario.setEmail(emailTextView.getText().toString());
-        TextView nombreTextView = v.findViewById(R.id.et_apellido);
-        usuario.setNombre_usuario(nombreTextView.getText().toString());
-        TextView apellidoTextView = v.findViewById(R.id.et_nombre);
-        usuario.setApellido_usuario(apellidoTextView.getText().toString());
-        TextView generoTextView = v.findViewById(R.id.spinner_genero);
-        usuario.setGenero( generoTextView.getText().toString());
+        String nombrex = nombre.getText().toString().trim();
+        String apellidox = apellido.getText().toString().trim();
+        usuario.setEmail(loco);
+        Date fechaNacimiento = convertirStringADate(etFechaNacimiento.getText().toString().trim());
+        usuario.setFecha_nac(fechaNacimiento);
+        usuario.setApellido_usuario(apellidox);
+        usuario.setNombre_usuario(nombrex);
+        String generoSeleccionado = spinnerGenero.getSelectedItem().toString();
+        Provincia provinciaSeleccionada = (Provincia) spinnerProvincia.getSelectedItem();
+        Localidad localidadSeleccionada = (Localidad) spinnerLocalidad.getSelectedItem();
+        usuario.setGenero(generoSeleccionado);
+        usuario.setProvincia(provinciaSeleccionada);
+        usuario.setLocalidad(localidadSeleccionada);
 
-
-        TextView provinciaTextView = v.findViewById(R.id.spinner_provincia);
-
-
-        ProvinciaDB provinciaDB = new ProvinciaDB(getContext());
-        usuario.setProvincia(provinciaDB.obtenerProvincia(provinciaTextView.getText().toString()));
-
-
-
-        LocalidadDB localidadDB = new LocalidadDB(getContext());
-        TextView localidadTextView = v.findViewById(R.id.spinner_localidad);
-        usuario.setLocalidad(localidadDB.obtenerLocalidad(localidadTextView.getText().toString()));
-
-        TextView fechaNacTextView = v.findViewById(R.id.et_fecha_nacimiento);
-        usuario.setFecha_nac(Date.valueOf(fechaNacTextView.getText().toString()));
         DataUsuario dataUsuario = new DataUsuario(getContext());
-        dataUsuario.agregarUsuario(usuario, null);
+        dataUsuario.agregarUsuario(usuario,success -> {
+            if (success) {
+                Toast.makeText(getActivity(), "Usuario modificado correctamente", Toast.LENGTH_SHORT).show();
+                pasarASiguientePantalla();
+            } else {
+                Toast.makeText(getActivity(), "Error al modificar usuario.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
-        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+
+
+    }
+    private void pasarASiguientePantalla() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgment_frame, new LoginFragment());
         fragmentTransaction.commit();
-
     }
 
 }

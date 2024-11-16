@@ -50,8 +50,11 @@ public class fragmentMiPerfil extends Fragment {
         btnModificarCredenciales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditarCredencialesActivity.class);
-                startActivity(intent);
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new EditarPasswordFragment());
+                fragmentTransaction.commit();
             }
         });
     }

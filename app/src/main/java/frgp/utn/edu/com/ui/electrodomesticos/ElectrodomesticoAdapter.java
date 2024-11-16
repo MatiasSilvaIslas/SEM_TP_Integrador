@@ -175,6 +175,11 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
         return seleccionados;
     }
 
+    public interface OnItemClickListener {
+        void onEditarClick(Electrodomestico electrodomestico);
+        void onEliminarClick(Electrodomestico electrodomestico);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textNombre;
         CheckBox checkBox;

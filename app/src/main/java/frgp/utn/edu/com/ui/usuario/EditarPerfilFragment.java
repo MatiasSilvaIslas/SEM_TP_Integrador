@@ -20,6 +20,7 @@ import frgp.utn.edu.com.entidad.Localidad;
 import frgp.utn.edu.com.entidad.Provincia;
 import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.utils.InputFilterLetters;
+import frgp.utn.edu.com.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -184,7 +185,9 @@ public class EditarPerfilFragment extends Fragment {
 
     private void cargarDatosUsuario() {
         DataUsuario dataUsuario = new DataUsuario(getActivity());
-        dataUsuario.obtenerUsuarioPorEmail(userEmail, usuario -> {
+        String loco=SessionManager.getUserEmail(getActivity());
+
+        dataUsuario.obtenerUsuarioPorEmail(loco, usuario -> {
             if (usuario != null) {
                 this.usuario = usuario;  // Asigna el objeto usuario a la variable global
 
@@ -243,7 +246,9 @@ public class EditarPerfilFragment extends Fragment {
         Provincia provinciaSeleccionada = (Provincia) spinnerProvincia.getSelectedItem();
         Localidad localidadSeleccionada = (Localidad) spinnerLocalidad.getSelectedItem();
         Date fechaNacimiento = convertirStringADate(etFechaNacimiento.getText().toString().trim());
-
+        usuario = new Usuario();
+        String loco=SessionManager.getUserEmail(getActivity());
+        usuario.setEmail(loco);
         usuario.setNombre_usuario(nombre);
         usuario.setApellido_usuario(apellido);
         usuario.setGenero(generoSeleccionado);

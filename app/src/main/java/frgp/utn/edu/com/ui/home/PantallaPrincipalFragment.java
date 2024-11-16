@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
@@ -63,11 +64,13 @@ public class PantallaPrincipalFragment extends Fragment {
         btnManageAppliances.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                /*((MainActivity) getActivity() ).setnavigateToMainMenu(true);
                 FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frgment_frame, new ABMLElectrodomesticosFragment());
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
+                Intent intent = new Intent(getActivity(), ABMLElectrodomesticosActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -81,15 +84,12 @@ public class PantallaPrincipalFragment extends Fragment {
 
             }
         });
-        Button btnCosejos = view.findViewById(R.id.btnCosejosf);
+        Button btnCosejos = view.findViewById(R.id.btnCosejos);
         btnCosejos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frgment_frame, new ConsejosFragment());
-                fragmentTransaction.commit();
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frgment_frame, new ConsejosFragment()).commit();
             }
         });
 

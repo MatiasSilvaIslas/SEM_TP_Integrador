@@ -69,6 +69,7 @@ public class DataUsuario {
 
     public void updateUsuario(Usuario usuario, Callback callback) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
+        System.out.println("Usuario: " + usuario.getEmail());
         executor.execute(() -> {
             boolean success = false;
 

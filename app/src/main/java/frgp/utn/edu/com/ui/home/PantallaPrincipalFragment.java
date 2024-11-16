@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import frgp.utn.edu.com.ui.informes.InformesFragment;
 import frgp.utn.edu.com.ui.soporte.ContactoFragment;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
@@ -85,6 +86,7 @@ public class PantallaPrincipalFragment extends Fragment {
 
             }
         });
+
        /* Button btnConsejos = view.findViewById(R.id.btnConsejosf);
         btnConsejos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +117,20 @@ public class PantallaPrincipalFragment extends Fragment {
                startActivity(intent);
            }
         });
+
+        Button btnReportes = view.findViewById(R.id.btnConsultReports);
+        btnReportes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new InformesFragment()).commit();
+            }
+        });
     }
+    //btn reportes
+
+
+
     /*@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

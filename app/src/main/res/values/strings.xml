@@ -192,6 +192,18 @@
     <!-- Descripciones de contenido para accesibilidad -->
     <string name="title_seccion_web_description">Título: Ir a la sección web dentro de nuestra aplicación</string>
     <string name="descripcion_btn_seccion_web_description">Descripción: Explorá nuestra sección web para acceder a contenido exclusivo y descubrí más sobre nuestros servicios.</string>
+    <string name="heladeras">Heladeras</string>
+    <string name="lavarropa">Lavarropa</string>
+    <string name="lamparas">Lamparas</string>
+    <string name="tv_y_sistemas_de_audio_video">TV y Sistemas de audio / video</string>
+    <string name="configura_tus_notificaciones">Configura tus notificaciones</string>
+    <string name="consejos_diarios">Consejos Diarios</string>
+    <string name="motores_y_bombas_electricas">Motores y Bombas Electricas</string>
+    <string name="planchas">Planchas</string>
+    <string name="computadoras">Computadora</string>
+    <string name="aire_acondicionados">Aire Acondicionado</string>
+    <string name="notification_icon">Notification Icon</string>
+    <string name="user_icon">User Icon</string>
 
 
     >>>>>>> develop

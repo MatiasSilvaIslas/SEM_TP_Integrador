@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TP_Seminario"
         tools:targetApi="31">
         <activity
+            android:name=".NotificacionesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.soporte.ContactoFragment"
             android:exported="false" />
         <activity
@@ -40,6 +43,7 @@
         <activity android:name=".ui.back.ABMLElectrodomesticosActivity" />
         <activity android:name=".ui.back.CalculoConsumoActivity" />
         <activity android:name=".ui.soporte.ContactoSoporteActivity" />
+        <receiver android:name=".NotificacionesWorker" android:enabled="true" android:exported="false" />
     </application>
 
 </manifest>

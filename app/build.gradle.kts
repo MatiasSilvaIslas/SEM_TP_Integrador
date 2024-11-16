@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     //id("com.android.application")
     id("com.google.gms.google-services")
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -32,6 +33,9 @@ android {
         dataBinding = true
         viewBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
@@ -43,6 +47,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.recyclerview)
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -50,14 +55,15 @@ dependencies {
     implementation(libs.navigation.ui)
     //com.github.PhilJay:MPAndroidChart
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation ("androidx.work:work-runtime:2.8.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
-    implementation ("androidx.appcompat:appcompat:1.4.0")
-    implementation("mysql:mysql-connector-java:5.1.26")
-    implementation ("androidx.recyclerview:recyclerview:1.2.0")
-    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("androidx.appcompat:appcompat:1.7.0")
+    implementation("mysql:mysql-connector-java:8.0.33")
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    implementation ("com.google.android.material:material:1.12.0")
 
     /*implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")

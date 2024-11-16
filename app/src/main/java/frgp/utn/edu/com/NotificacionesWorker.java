@@ -2,10 +2,10 @@ package frgp.utn.edu.com;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-
 
 public class NotificacionesWorker extends Worker {
 
@@ -41,8 +41,8 @@ public class NotificacionesWorker extends Worker {
         // Verifica si la notificación está habilitada
         boolean isEnabled = preferences.getBoolean(preferenceKey, false);
         if (isEnabled) {
-            Object NotificationHelper = null;
             NotificationHelper.createNotification(getApplicationContext(), title, message);
         }
     }
 }
+

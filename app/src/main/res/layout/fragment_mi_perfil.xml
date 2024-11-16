@@ -66,7 +66,7 @@ android:background="@android:color/white">
     android:textColor="@android:color/white"
     android:backgroundTint="@color/blue_primary" />
 
-<!-- Botón Gestionar Electrodomésticos -->
+<!-- Botón Gestionar Electrodomésticos
 <com.google.android.material.button.MaterialButton
     android:id="@+id/btnModificarCredenciales"
     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -80,5 +80,5 @@ android:background="@android:color/white">
     android:text="Editar email y contraseña"
     android:textColor="@android:color/white"
     android:backgroundTint="@color/blue_primary" />
-
+-->
 </RelativeLayout>

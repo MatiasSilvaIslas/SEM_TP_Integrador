@@ -85,6 +85,7 @@ public class PantallaPrincipalFragment extends Fragment {
 
             }
         });
+
        /* Button btnConsejos = view.findViewById(R.id.btnConsejosf);
         btnConsejos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +116,7 @@ public class PantallaPrincipalFragment extends Fragment {
                startActivity(intent);
            }
         });
+
     }
     /*@Override
     public void onCreate(Bundle savedInstanceState) {

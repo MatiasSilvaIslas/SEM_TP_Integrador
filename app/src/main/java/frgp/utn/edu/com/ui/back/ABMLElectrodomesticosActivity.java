@@ -1,6 +1,8 @@
 package frgp.utn.edu.com.ui.back;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -41,6 +43,7 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abml_electrodomesticos);
+        setSupportActionBar(findViewById(R.id.toolbar));
 
         // Inicialización del RecyclerView
         recyclerCategorias = findViewById(R.id.recyclerCategorias);
@@ -72,6 +75,9 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
             }
         });
     }
+    //tollbar set
+
+
 
     private void mostrarElectrodomesticosDialog(Categoria categoria) {
         // Inflar el layout del BottomSheet

@@ -75,11 +75,11 @@ public class InformesFragment extends Fragment {
     }
 
     private int obtenerUserId() {
-        String loco= SessionManager.getUserEmail(getActivity());
-        Usuario usuario = new Usuario();
-        DataUsuario dataUsuario = new DataUsuario( getActivity());
-        usuario = dataUsuario.obtenerUsuarioPorEmail(loco, null);
-        return usuario.getIdUsuario();
+//        String loco= SessionManager.getUserEmail(getActivity());
+//        Usuario usuario = new Usuario();
+//        DataUsuario dataUsuario = new DataUsuario( getActivity());
+//        usuario = dataUsuario.obtenerUsuarioPorEmail(loco, null);
+       return 1;
     }
     /// Aca diego
     private double obtenerLimiteConsumo() {

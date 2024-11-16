@@ -26,12 +26,12 @@ public class CalculoConsumoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflar la vista
         View view = inflater.inflate(R.layout.fragment_calculo_consumo, container, false);
-
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         // Configurar Toolbar
         //Toolbar toolbar = view.findViewById(R.id.toolbar);
         //if (toolbar != null) {
-       //    ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-       // }
+        //    ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        // }
 
         // Inicializar vistas
         spinnerElectrodomesticos = view.findViewById(R.id.spinnerElectrodomesticos);
@@ -87,5 +87,6 @@ public class CalculoConsumoFragment extends Fragment {
         return view;
     }
 }
+
 
 

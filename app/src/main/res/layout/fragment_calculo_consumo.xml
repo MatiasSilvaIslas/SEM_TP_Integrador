@@ -57,12 +57,31 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selecciona un Electrodoméstico"
+            android:text="Selecciona una Cateogoría"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#000000" />
 
+        <!-- Spinner de Categorias -->
+        <Spinner
+            android:id="@+id/spinnerCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#000000" />
+
+        <!-- Título -->
+
         <!-- Spinner de Electrodomésticos -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona un Electrodoméstico"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <Spinner
             android:id="@+id/spinnerElectrodomesticos"
             android:layout_width="match_parent"

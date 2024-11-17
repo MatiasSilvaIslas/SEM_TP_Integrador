@@ -13,12 +13,7 @@
                 android:title="Principal"
 
         />
-        <item
-                android:id="@+id/nav_articulos"
-                android:icon="@android:drawable/sym_action_call"
-                android:title="Articulos"
 
-        />
         <item
                 android:id="@+id/nav_reportes"
                 android:icon="@android:drawable/stat_sys_download"

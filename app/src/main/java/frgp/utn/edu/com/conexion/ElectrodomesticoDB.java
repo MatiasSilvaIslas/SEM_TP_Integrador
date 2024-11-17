@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import frgp.utn.edu.com.entidad.Categoria;
@@ -109,4 +110,54 @@ public class ElectrodomesticoDB {
     public interface ElectrodomesticoCallback {
         void onElectrodomesticosObtenidos(ArrayList<Electrodomestico> electrodomesticos);
     }
+
+    public void obtenerCategoriasAsync(CategoriaCallback callback) {
+        new ObtenerCategoriasTask(callback).execute();
+    }
+
+    //obtener la categoría para simplificar CalculoConsumo
+    private static class ObtenerCategoriasTask extends AsyncTask<Void, Void, ArrayList<Categoria>> {
+        private CategoriaCallback callback;
+
+        public ObtenerCategoriasTask(CategoriaCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected ArrayList<Categoria> doInBackground(Void... voids) {
+            ArrayList<Categoria> categorias = new ArrayList<>();
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                String query = "SELECT id_categoria, nombre FROM Categoria";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+
+                while (rs.next()) {
+                    int idCategoria = rs.getInt("id_categoria");
+                    String nombre = rs.getString("nombre");
+                    categorias.add(new Categoria(idCategoria, nombre));
+                }
+
+                rs.close();
+                stmt.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return categorias;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Categoria> categorias) {
+            super.onPostExecute(categorias);
+            callback.onCategoriasObtenidas(categorias);
+        }
+    }
+
+    public interface CategoriaCallback {
+        void onCategoriasObtenidas(ArrayList<Categoria> categorias);
+    }
+
 }

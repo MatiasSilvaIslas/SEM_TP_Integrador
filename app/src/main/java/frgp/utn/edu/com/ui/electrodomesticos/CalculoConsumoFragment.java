@@ -10,15 +10,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.ElectrodomesticoDB;
+import frgp.utn.edu.com.entidad.Categoria;
 import frgp.utn.edu.com.entidad.Electrodomestico;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CalculoConsumoFragment extends Fragment {
+    private Spinner spinnerCategoria;
     private Spinner spinnerElectrodomesticos;
     private EditText editHorasUso, editDiasUso;
     private TextView textConsumoEstimado;
     private ElectrodomesticoDB electrodomesticoDB;
+    private ArrayList<Categoria> listaCategorias;
     private ArrayList<Electrodomestico> listaElectrodomesticos;
 
     @Nullable
@@ -26,32 +30,55 @@ public class CalculoConsumoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflar la vista
         View view = inflater.inflate(R.layout.fragment_calculo_consumo, container, false);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
-        // Configurar Toolbar
-        //Toolbar toolbar = view.findViewById(R.id.toolbar);
-        //if (toolbar != null) {
-        //    ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-        // }
+        ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
 
         // Inicializar vistas
+        spinnerCategoria = view.findViewById(R.id.spinnerCategoria);
         spinnerElectrodomesticos = view.findViewById(R.id.spinnerElectrodomesticos);
         editHorasUso = view.findViewById(R.id.editHorasUso);
         editDiasUso = view.findViewById(R.id.editDiasUso);
         textConsumoEstimado = view.findViewById(R.id.textConsumoEstimado);
         Button btnCalcular = view.findViewById(R.id.btnCalcular);
 
-        // Inicializar base de datos y cargar electrodomésticos
+        // Inicializar base de datos
         electrodomesticoDB = new ElectrodomesticoDB(getContext());
-        electrodomesticoDB.obtenerElectrodomesticosAsync(1, electrodomesticos -> {
-            listaElectrodomesticos = electrodomesticos;
 
-            // Configurar el adaptador del Spinner
-            ArrayAdapter<Electrodomestico> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, electrodomesticos);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerElectrodomesticos.setAdapter(adapter);
+        // Paso 1: Cargar categorías en el spinner
+        electrodomesticoDB.obtenerCategoriasAsync(categorias -> {
+            listaCategorias = categorias;
+
+            // Configurar el adaptador del spinner de categorías
+            ArrayAdapter<Categoria> adapterCategoria = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categorias);
+            adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerCategoria.setAdapter(adapterCategoria);
         });
 
-        // Configurar botón de cálculo
+        // Paso 2: Manejar selección de categoría
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Categoria categoriaSeleccionada = (Categoria) parent.getItemAtPosition(position);
+
+                // Cargar electrodomésticos según la categoría seleccionada
+                electrodomesticoDB.obtenerElectrodomesticosAsync(categoriaSeleccionada.getId_categoria(), electrodomesticos -> {
+                    listaElectrodomesticos = electrodomesticos;
+
+                    // Configurar el adaptador del spinner de electrodomésticos
+                    ArrayAdapter<Electrodomestico> adapterElectrodomestico = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, electrodomesticos);
+                    adapterElectrodomestico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerElectrodomesticos.setAdapter(adapterElectrodomestico);
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Manejar caso donde no hay categoría seleccionada
+                ArrayAdapter<Electrodomestico> emptyAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<>());
+                emptyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerElectrodomesticos.setAdapter(emptyAdapter);
+            }
+        });
+
         btnCalcular.setOnClickListener(v -> {
             // Validar que el Spinner tenga un elemento seleccionado
             if (spinnerElectrodomesticos.getSelectedItem() == null) {
@@ -78,7 +105,11 @@ public class CalculoConsumoFragment extends Fragment {
 
                 // Calcular consumo
                 double consumoTotal = (selected.getPotenciaPromedioWatts() / 1000.0) * horasPorDia * dias;
-                textConsumoEstimado.setText("El consumo estimado es: " + consumoTotal + " kWh en " + dias + " días.");
+
+                // Formatear el resultado con un decimal
+                String consumoFormateado = String.format(Locale.getDefault(), "%.1f", consumoTotal);
+
+                textConsumoEstimado.setText("El consumo estimado es: " + consumoFormateado + " kWh en " + dias + " días.");
             } catch (NumberFormatException e) {
                 Toast.makeText(getContext(), "Entrada inválida. Ingresa solo números.", Toast.LENGTH_SHORT).show();
             }
@@ -87,6 +118,3 @@ public class CalculoConsumoFragment extends Fragment {
         return view;
     }
 }
-
-
-

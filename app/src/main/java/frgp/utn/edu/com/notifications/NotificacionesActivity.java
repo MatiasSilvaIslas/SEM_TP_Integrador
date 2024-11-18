@@ -47,6 +47,7 @@ public class NotificacionesActivity extends AppCompatActivity{
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
 
         Button postNotification = findViewById(R.id.ping_button);
+        postNotification.getBackground();
         postNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

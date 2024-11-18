@@ -3,6 +3,7 @@ package frgp.utn.edu.com;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 import android.widget.Toast;
@@ -31,12 +32,13 @@ import frgp.utn.edu.com.ui.Login.LoginFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
 import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
+import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMainMenuNavigatorListener {
 
     private final int FIRST_FRAGMENT = 0;
-
+    private String userEmail;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
 
@@ -48,28 +50,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Locale locale = new Locale("es", "ES"); // Para Español de España
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        Log.d("MainActivity","oncreate-log");
         NavigationView navigationView = findViewById(R.id.navigation_viewf);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
-
+        mDrawerLayout = findViewById(R.id.drawer_layoutmains);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        navigationView.getMenu().getItem(FIRST_FRAGMENT).setChecked(false);
+        // Verificar si el usuario tiene sesión iniciada
+        userEmail = SessionManager.getUserEmail(getApplicationContext());
 
-        switchFragment(FIRST_FRAGMENT);
-
+        if (userEmail == null || userEmail.isEmpty()) {
+            // Si no hay sesión iniciada, oculta el NavigationView y bloquea el Drawer
+            navigationView.setVisibility(View.GONE);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            switchFragment(1); // Mostrar LoginFragment
+        } else {
+            // Si hay sesión iniciada, muestra el NavigationView y habilita el Drawer
+            navigationView.setVisibility(View.VISIBLE);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            switchFragment(FIRST_FRAGMENT); // El fragmento inicial que se mostrará
+        }
     }
+
+
     @Override
     public void setSupportActionBar(@Nullable Toolbar toolbar) {
         super.setSupportActionBar(toolbar);
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
         Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
 
@@ -120,45 +123,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void switchFragment(int fragment){
+    private void switchFragment(int fragment) {
         Fragment newFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        switch (fragment){
-            case 1:
-                newFragment = new LoginFragment();
-                break;
-            case 2:
-                newFragment = new MyAccountFragment();
-                break;
-            case 3:
-                newFragment = new MyAccountFragment();
-                break;
-            case 4:
-                newFragment = new PantallaPrincipalFragment();
-                break;
-            case 5:
-                LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getApplication());
-                loginRegisterViewModel.logout(getApplicationContext());
-                newFragment = new LoginFragment();
-                break;
-            case 6:
-                newFragment = new ConsejosFragment();
-                break;
-            default:
-                newFragment = new LoginFragment();
+        NavigationView navigationView = findViewById(R.id.navigation_viewf);
+        mDrawerLayout = findViewById(R.id.drawer_layoutmains);
+
+        // Verificar si el usuario no está logueado
+        if ((userEmail == null || userEmail.isEmpty()) && fragment != 1 && fragment != 5) {
+            // Ocultar NavigationView y bloquear el DrawerLayout
+            navigationView.setVisibility(View.GONE);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            // Cargar el LoginFragment
+            newFragment = new LoginFragment();
+            Toast.makeText(this, "Por favor, inicia sesión para continuar", Toast.LENGTH_SHORT).show();
+        } else {
+            // Manejo de los diferentes fragmentos
+            switch (fragment) {
+                case 1:
+                    newFragment = new LoginFragment();
+                    break;
+                case 2:
+                    newFragment = new MyAccountFragment();
+                    break;
+                case 3:
+                    newFragment = new MyAccountFragment();
+                    break;
+                case 4:
+                    newFragment = new PantallaPrincipalFragment();
+                    break;
+                case 5:
+                    // Lógica de cierre de sesión
+                    LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getApplication());
+                    loginRegisterViewModel.logout(getApplicationContext());
+                    // Volver al LoginFragment
+                    newFragment = new LoginFragment();
+                    // Ocultar NavigationView y bloquear el DrawerLayout al cerrar sesión
+                    navigationView.setVisibility(View.GONE);
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    break;
+                case 6:
+                    newFragment = new ConsejosFragment();
+                    break;
+                default:
+                    newFragment = new LoginFragment();
+            }
+
+            // Mostrar el NavigationView y habilitar el DrawerLayout si el usuario está logueado
+            if (userEmail != null && !userEmail.isEmpty()) {
+                navigationView.setVisibility(View.VISIBLE);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
         }
 
-        ((MainActivity) this ).setnavigateToMainMenu(true);
-
+        // Cambiar al fragmento correspondiente
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgment_frame, newFragment);
         fragmentTransaction.commit();
-        fragmentManager.beginTransaction().replace(R.id.frgment_frame, newFragment).commit();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
+        // Cerrar el Drawer
+        DrawerLayout drawer = findViewById(R.id.drawer_layoutmains);
         drawer.closeDrawer(GravityCompat.START);
     }
+
+
 
     private void restoreDrawer() {
         // Restores the behaviour of action bar and ActionBarDrawerToggle

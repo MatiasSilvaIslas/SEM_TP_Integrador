@@ -1,7 +1,7 @@
 package frgp.utn.edu.com.viewmodel;
 
 import static frgp.utn.edu.com.utils.SessionManager.getUserEmail;
-
+import frgp.utn.edu.com.utils.SessionManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,11 +28,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public void logout(Context context) {
         authAppRepository.logOut();
 
-        SharedPreferences prefs = context.getSharedPreferences(getUserEmail(context), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-
+        SessionManager.limpiarSesion(context);
     }
 
     /*public void register(String email, String password) {

@@ -24,4 +24,10 @@ public class SessionManager {
         SharedPreferences prefs = context.getSharedPreferences(KEY_Nombre, Context.MODE_PRIVATE);
         return prefs.getString(KEY_Nombre, null);
     }
+    public static void limpiarSesion(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

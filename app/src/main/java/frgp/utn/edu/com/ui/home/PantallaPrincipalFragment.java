@@ -123,7 +123,8 @@ public class PantallaPrincipalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new InformesFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new InformesFragment()
+                ).commit();
             }
         });
     }

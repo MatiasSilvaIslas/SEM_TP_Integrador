@@ -96,13 +96,27 @@
         app:backgroundTint="@android:color/white"
         app:tint="@color/black" />
 
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnproyeccion"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnCalculateConsumption"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="98dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/blue_primary"
+            android:text="@string/btn_contactanos"
+            android:textColor="@android:color/white" />
+
     <!-- Botón Contactanos -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnContactanos"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnCalculateConsumption"
+        android:layout_below="@id/btnproyeccion"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="98dp"

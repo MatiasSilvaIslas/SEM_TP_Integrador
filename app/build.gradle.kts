@@ -53,13 +53,13 @@ dependencies {
     implementation(libs.navigation.ui)
     //com.github.PhilJay:MPAndroidChart
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation ("androidx.work:work-runtime:2.8.0")
+    implementation ("androidx.work:work-runtime:2.10.0")
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
     implementation ("androidx.appcompat:appcompat:1.7.0")
-    implementation("mysql:mysql-connector-java:5.1.49")
+    implementation("mysql:mysql-connector-java:8.0.33")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("com.google.android.material:material:1.12.0")
 

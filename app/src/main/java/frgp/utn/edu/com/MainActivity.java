@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 5:
                 LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getApplication());
-                loginRegisterViewModel.logout();
+                loginRegisterViewModel.logout(getApplicationContext());
                 newFragment = new LoginFragment();
                 break;
             case 6:

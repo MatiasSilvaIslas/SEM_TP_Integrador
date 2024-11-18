@@ -56,7 +56,7 @@ public class AuthAppRepository {
                             userLiveData.postValue(firebaseAuth.getCurrentUser());
                             callback.onSuccess();
                         } else {
-                            Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application.getApplicationContext(), "Ya existe una cuenta registrada con este correo electrónico", Toast.LENGTH_SHORT).show();
                             callback.onFailure(task.getException().getMessage());
                         }
                     }

@@ -155,31 +155,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner_localidad" />
 
-    <!-- Texto e Hipervínculo para Ingresar -->
-    <TextView
-        android:id="@+id/tv_tienes_cuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="20dp"
-        android:text="Tenés una cuenta?"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_registrar" />
-
-    <Button
-        android:id="@+id/bt_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:background="?attr/selectableItemBackground"
-        android:text="Ingresar"
-        android:textColor="@color/blue_primary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_tienes_cuenta"
-        app:layout_constraintTop_toBottomOf="@id/btn_registrar" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

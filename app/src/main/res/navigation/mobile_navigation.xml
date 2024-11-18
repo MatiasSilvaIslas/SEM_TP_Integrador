@@ -8,8 +8,8 @@
 
     <fragment
             android:id="@+id/nav_parking"
-            android:name="frgp.utn.edu.com.ui.articulos.ArticuloFragment"
-            android:label="@string/menu_articulos"
+            android:name="frgp.utn.edu.com.ui.home.PantallaPrincipalFragment"
+            android:label="menu"
             tools:layout="@layout/activity_pantalla_principal" />
 
     <fragment

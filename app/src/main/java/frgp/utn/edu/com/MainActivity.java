@@ -1,11 +1,13 @@
 package frgp.utn.edu.com;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +29,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Locale;
 
 import frgp.utn.edu.com.interfaces.OnMainMenuNavigatorListener;
+import frgp.utn.edu.com.notifications.CommonConstants;
+import frgp.utn.edu.com.notifications.NotificationService;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
 
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
@@ -36,6 +40,7 @@ import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMainMenuNavigatorListener {
+    Intent  mServiceIntent;
 
     private final int FIRST_FRAGMENT = 0;
     private String userEmail;
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
         NavigationView navigationView = findViewById(R.id.navigation_viewf);
         mDrawerLayout = findViewById(R.id.drawer_layoutmains);
         navigationView.setNavigationItemSelectedListener(this);
@@ -70,6 +75,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             switchFragment(FIRST_FRAGMENT); // El fragmento inicial que se mostrará
         }
+    }
+    public void createNotification(View v) {
+        int seconds;
+        String message = "This is my awesome text for notification!";
+        mServiceIntent.putExtra(CommonConstants.EXTRA_MESSAGE, message);
+        mServiceIntent.setAction(CommonConstants.ACTION_NOTIFY);
+        Toast.makeText(this, R.string.timer_start, Toast.LENGTH_SHORT).show();
+
+        EditText editText = (EditText) findViewById(R.id.edit_seconds);
+        String input = editText.getText().toString();
+
+        if (input == null || input.trim().equals("")) {
+            seconds = R.string.seconds_default;
+        } else {
+            seconds = Integer.parseInt(input);
+        }
+        int milliseconds = (seconds * 1000);
+        mServiceIntent.putExtra(CommonConstants.EXTRA_TIMER, milliseconds);
+        startService(mServiceIntent);
     }
 
 

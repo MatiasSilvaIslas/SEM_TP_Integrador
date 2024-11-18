@@ -12,16 +12,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import frgp.utn.edu.com.notifications.NotificacionesActivity;
 import frgp.utn.edu.com.ui.informes.InformesFragment;
-import frgp.utn.edu.com.ui.soporte.ContactoFragment;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
-import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
-import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
-import frgp.utn.edu.com.ui.electrodomesticos.ConsejosActivity;
-import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
 
@@ -113,7 +109,7 @@ public class PantallaPrincipalFragment extends Fragment {
         btncontactanos.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent = new Intent(getActivity(), ContactoFragment.class);
+               Intent intent = new Intent(getActivity(), NotificacionesActivity.class);
                startActivity(intent);
            }
         });

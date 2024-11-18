@@ -20,8 +20,13 @@
         android:theme="@style/Theme.TP_Seminario"
         tools:targetApi="31">
         <activity
-            android:name=".NotificacionesActivity"
+            android:name=".notifications.NotificacionesActivity"
             android:exported="false" />
+        <service
+                android:name=".notifications.NotificationService"
+                android:enabled="true"
+                android:label="NotificationServicelabel" >
+        </service>
         <activity
             android:name=".ui.soporte.ContactoFragment"
             android:exported="false" />

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_pantalla_principal"
     android:background="@android:color/white"
-    tools:context=".NotificacionesActivity">
+    tools:context=".notifications.NotificacionesActivity">
 
     <!-- Toolbar con iconos de usuario y notificaciones -->
     <androidx.appcompat.widget.Toolbar

@@ -32,6 +32,14 @@ android {
         dataBinding = true
         viewBinding = true
     }
+
+    packaging {
+        resources {
+            excludes.add("META-INF/NOTICE.md")
+            excludes.add("META-INF/LICENSE.md")
+            excludes.add("META-INF/DEPENDENCIES")
+        }
+    }
 }
 
 dependencies {
@@ -46,8 +54,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
     //com.github.PhilJay:MPAndroidChart
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
@@ -58,6 +64,8 @@ dependencies {
     implementation("mysql:mysql-connector-java:5.1.26")
     implementation ("androidx.recyclerview:recyclerview:1.2.0")
     implementation ("com.google.android.material:material:1.9.0")
+    implementation ("com.sun.mail:android-mail:1.6.7")
+    implementation ("com.sun.mail:android-activation:1.6.7")
 
     /*implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")

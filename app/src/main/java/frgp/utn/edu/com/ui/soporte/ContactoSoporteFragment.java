@@ -2,9 +2,11 @@ package frgp.utn.edu.com.ui.soporte;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +31,9 @@ import java.sql.ResultSet;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.DataDB;
 import frgp.utn.edu.com.conexion.SoporteDB;
+import frgp.utn.edu.com.servicio.EmailService;
+import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 public class ContactoSoporteFragment extends Fragment {
@@ -103,34 +109,47 @@ public class ContactoSoporteFragment extends Fragment {
     }
 
     private void procesarCasoSoporte(String email, String resumen, String detalle) {
-        if (!isAdded()) return;
-
         progressDialog.show();
         btnEnviarSoporte.setEnabled(false);
 
+        // Primero obtenemos el ID del usuario
         soporteDB.obtenerIdUsuario(email, new SoporteDB.IdUsuarioCallback() {
             @Override
             public void onIdUsuarioObtenido(int idUsuario) {
-                soporteDB.insertarCasoSoporte(idUsuario, resumen, detalle, new SoporteDB.OperacionCallback() {
-                    @Override
-                    public void onExito() {
-                        if (isAdded()) {
-                            requireActivity().runOnUiThread(() -> {
-                                progressDialog.dismiss();
-                                btnEnviarSoporte.setEnabled(true);
-                                Toast.makeText(requireContext(),
-                                        "Caso registrado exitosamente",
-                                        Toast.LENGTH_SHORT).show();
-                                getParentFragmentManager().popBackStack();
-                            });
-                        }
-                    }
+                if (idUsuario != -1) {
+                    // Una vez que tenemos el ID, insertamos el caso
+                    soporteDB.insertarCasoSoporte(idUsuario, resumen, detalle, new SoporteDB.OperacionCallback() {
+                        @Override
+                        public void onExito() {
+                            // Enviar notificación por email
+                            EmailService.enviarNotificacionNuevoCaso(
+                                    resumen,
+                                    detalle,
+                                    email,
+                                    new EmailService.EmailCallback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            finalizarProceso("Caso registrado exitosamente");
+                                        }
 
-                    @Override
-                    public void onError(String mensaje) {
-                        manejarError(mensaje);
-                    }
-                });
+                                        @Override
+                                        public void onError(String error) {
+                                            // El caso se guardó pero hubo error en el email
+                                            Log.w("ContactoSoporte", "Caso guardado pero " + error);
+                                            finalizarProceso("Caso registrado, pero hubo un problema al enviar la notificación");
+                                        }
+                                    }
+                            );
+                        }
+
+                        @Override
+                        public void onError(String mensaje) {
+                            manejarError(mensaje);
+                        }
+                    });
+                } else {
+                    manejarError("No se encontró el usuario en la base de datos");
+                }
             }
 
             @Override
@@ -141,22 +160,21 @@ public class ContactoSoporteFragment extends Fragment {
     }
 
     private void manejarError(String mensaje) {
-        if (isAdded()) {
-            requireActivity().runOnUiThread(() -> {
-                progressDialog.dismiss();
-                btnEnviarSoporte.setEnabled(true);
-                Toast.makeText(requireContext(),
-                        mensaje,
-                        Toast.LENGTH_LONG).show();
-            });
-        }
+        progressDialog.dismiss();
+        btnEnviarSoporte.setEnabled(true);
+        Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+    private void finalizarProceso(String mensaje) {
+        progressDialog.dismiss();
+        btnEnviarSoporte.setEnabled(true);
+        Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show();
+        getParentFragmentManager().popBackStack(); // En lugar de finish()
+
+        Intent intent = new Intent(requireContext(), PantallaPrincipalActivity.class);
+        startActivity(intent);
+
+        // Finaliza el fragmento actual si es necesario
+        requireActivity().finish();
     }
 }

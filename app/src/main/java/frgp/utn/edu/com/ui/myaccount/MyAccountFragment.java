@@ -42,7 +42,7 @@ public class MyAccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LoginRegisterViewModel loginRegisterViewModel = new ViewModelProvider(getActivity()).get(LoginRegisterViewModel.class);
-                loginRegisterViewModel.logout();
+                loginRegisterViewModel.logout(getContext());
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
             }

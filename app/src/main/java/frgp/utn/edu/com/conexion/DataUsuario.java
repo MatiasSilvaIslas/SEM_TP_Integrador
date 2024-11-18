@@ -55,7 +55,6 @@ public class DataUsuario {
             } catch (Exception e) {
                 e.printStackTrace();
                 new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
-                    Toast.makeText(context, "Error al agregar usuario", Toast.LENGTH_SHORT).show();
                 });
             }
 

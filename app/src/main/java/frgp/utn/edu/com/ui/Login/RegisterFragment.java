@@ -8,32 +8,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseUser;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.repository.AuthAppRepository;
 import frgp.utn.edu.com.utils.SessionManager;
-import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class RegisterFragment extends Fragment {
     private AuthAppRepository authAppRepository;
-    private LoginRegisterViewModel loginRegisterViewModel;
     private Button nextButton, ingresoButton;
     private String email;
     public static final String TAG = RegisterFragment.class.getSimpleName();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,28 +41,28 @@ public class RegisterFragment extends Fragment {
         nextButton.setOnClickListener(view -> registerUserIfValid());
         ingresoButton = v.findViewById(R.id.fragment_registervw);
         ingresoButton.setOnClickListener(view -> goToLogin());
+
         // Inicializar el ícono de ayuda
         ImageView passwordHelpIcon = v.findViewById(R.id.password_help_icon);
 
         // Configurar el comportamiento para mostrar/ocultar el mensaje de ayuda
-        passwordHelpIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Crear y mostrar un AlertDialog con los requisitos de la contraseña
-                new androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                        .setTitle("Requisitos de la contraseña")
-                        .setMessage("La contraseña debe tener al menos:\n- 8 caracteres\n- 1 letra mayúscula\n- 1 letra minúscula\n- 1 número\n- 1 símbolo especial")
-                        .setPositiveButton("Entendido", null)
-                        .show();
-            }
-        });
+        passwordHelpIcon.setOnClickListener(view -> new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Requisitos de la contraseña")
+                .setMessage("La contraseña debe tener al menos:\n- 8 caracteres\n- 1 letra mayúscula\n- 1 letra minúscula\n- 1 número\n- 1 símbolo especial")
+                .setPositiveButton("Entendido", null)
+                .show());
     }
-
 
     private void registerUserIfValid() {
         email = getEmailInput();
         String password = getPasswordInput();
         String repeatPassword = getRepeatPasswordInput();
+
+        // Validar que los campos no estén vacíos
+        if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()) {
+            showToast("Complete todos los campos");
+            return;
+        }
 
         // Validar los datos
         if (validateInputs(email, password, repeatPassword)) {
@@ -116,6 +108,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onSuccess() {
                 SessionManager.saveUserEmail(getContext(), email);
+                showToast("Usuario registrado exitosamente");
                 goToRegister2(email);
                 Log.d("Register", "Registration successful");
             }
@@ -143,11 +136,9 @@ public class RegisterFragment extends Fragment {
         return password.matches(passwordPattern);
     }
 
-
-    private void goToLogin(){
-
-        ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+    private void goToLogin() {
+        ((MainActivity) getActivity()).setnavigateToMainMenu(true);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgment_frame, new LoginFragment());
         fragmentTransaction.commit();
@@ -157,15 +148,11 @@ public class RegisterFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
         bundle.putString("password", getPasswordInput());
-//      NavController navController = Navigation.findNavController(getView());
-//        navController.navigate(R.id.action_registerFragment_to_loginRegisterFragment2, bundle);
-        ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+
+        ((MainActivity) getActivity()).setnavigateToMainMenu(true);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frgment_frame, new LoginRegisterFragment2());
         fragmentTransaction.commit();
     }
-
-
-
 }

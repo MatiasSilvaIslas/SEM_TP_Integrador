@@ -40,8 +40,18 @@ public class AuthAppRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             userLiveData.postValue(firebaseAuth.getCurrentUser());
-                        } else {
-                            Toast.makeText(application.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application.getApplicationContext(), "¡Bienvenido!", Toast.LENGTH_SHORT).show();
+                        }
+                        else { String errorMessage = task.getException().getMessage();
+                            if (errorMessage.contains("The supplied auth credential is incorrect, malformed or has expired.")) {
+                                errorMessage = "La credencial de autenticación proporcionada es incorrecta.";
+                            } else if (errorMessage.contains("The email address is badly formatted.")) {
+                                errorMessage = "Por favor, ingresa una dirección de correo electrónico válida.";
+                            } else if (errorMessage.contains("The password is invalid or the user does not have a password")) {
+                                errorMessage = "La contraseña es inválida o el usuario no tiene una contraseña.";
+                            }
+                            // Mostrar el mensaje de error traducido
+                            Toast.makeText(application.getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -56,7 +66,7 @@ public class AuthAppRepository {
                             userLiveData.postValue(firebaseAuth.getCurrentUser());
                             callback.onSuccess();
                         } else {
-                            Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application.getApplicationContext(), "Ya existe una cuenta registrada con este correo electrónico", Toast.LENGTH_SHORT).show();
                             callback.onFailure(task.getException().getMessage());
                         }
                     }

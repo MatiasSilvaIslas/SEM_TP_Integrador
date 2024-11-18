@@ -83,7 +83,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fragment_loginregister_email_layout"
         android:layout_width="319dp"
-        android:layout_height="0dp"
+        android:layout_height="60dp"
         android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fragment_loginregister_email"
             android:layout_width="315dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:hint="Ingresa tu Email"
             android:inputType="textEmailAddress"
             android:padding="16dp" />
@@ -105,7 +105,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fragment_loginregister_password_layout"
         android:layout_width="315dp"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:endIconMode="password_toggle"
@@ -133,7 +133,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fragment_loginregister_password_layout1"
         android:layout_width="315dp"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +144,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fragment_loginregister_password_repeat"
             android:layout_width="312dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:hint="Repetir contraseña"
             android:inputType="textPassword"
             android:padding="16dp" />
@@ -179,19 +179,19 @@
         app:layout_constraintHorizontal_bias="0.419"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/next_button"
-        app:layout_constraintVertical_bias="0.865" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/fragment_registervw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="64dp"
         android:background="?attr/selectableItemBackground"
         android:text="Ingresar"
         android:textColor="@color/blue_primary"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintHorizontal_bias="0.408"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/next_button" />
 
@@ -207,6 +207,7 @@
         android:src="@drawable/ic_info"
         app:layout_constraintBottom_toTopOf="@+id/fragment_loginregister_password_layout1"
         app:layout_constraintStart_toEndOf="@+id/fragment_loginregister_password_layout"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_loginregister_email_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_loginregister_email_layout"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

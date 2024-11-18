@@ -81,7 +81,7 @@ public class LoginFragment extends Fragment {
                     loginRegisterViewModel.login(email, password);
 
                 } else {
-                    Toast.makeText(getContext(), "Email Address and Password Must Be Entered", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Por favor ingresar dirección de correo electrónico y contraseña.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

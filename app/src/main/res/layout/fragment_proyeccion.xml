@@ -34,6 +34,7 @@
                 />
         </androidx.appcompat.widget.Toolbar>
 <TextView
+
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Cálculo de Consumo Eléctrico"
@@ -78,4 +79,12 @@ android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Resultado:" />
 
-        </LinearLayout>
+    <TextView
+            android:id="@+id/Resultadoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$:" />
+
+
+
+</LinearLayout>

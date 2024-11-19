@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+        android:orientation="vertical"
+       >
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_blue"
+                >
+
+                <!-- Icono de usuario a la izquierda -->
+                <ImageView
+                        android:id="@+id/icon_user"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_user"
+                        android:contentDescription="@string/user_icon"
+                        android:padding="8dp"
+                        android:layout_gravity="start"
+                />
+
+                <!-- Icono de notificación a la derecha -->
+                <ImageView
+                        android:id="@+id/icon_notification"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+                        android:contentDescription="@string/notification_icon"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_notify_off"
+                />
+        </androidx.appcompat.widget.Toolbar>
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Cálculo de Consumo Eléctrico"
+android:textSize="20sp"
+android:textStyle="bold" />
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Electrodoméstico: Refrigerador" />
+
+<EditText
+android:id="@+id/etPotencia"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Potencia    (W)"
+android:inputType="number" />
+
+<EditText
+android:id="@+id/etHorasUso"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Horas de uso al día"
+android:inputType="number" />
+
+<EditText
+android:id="@+id/etDiasUso"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Días de uso al mes"
+android:inputType="number" />
+
+<Button
+android:id="@+id/btnCalcular"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Calcular"   />
+
+<TextView
+android:id="@+id/tvResultado"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Resultado:" />
+
+        </LinearLayout>

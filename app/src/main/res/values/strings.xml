@@ -227,12 +227,10 @@
     <string name="reminder_text">Don\'t forget!</string>
 
     <!--  Logging -->
-
     <string name="snoozing">Snoozing!</string>
     <string name="timer_start">Setting the timer</string>
     <string name="sleep_error">Sleep failure</string>
     <string name="timer_finished">Timer finished.</string>
-
-
+    <string name="btn_notificaciones">Notificaciones</string>
 
 </resources>

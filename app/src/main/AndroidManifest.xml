@@ -7,14 +7,14 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- LABEL: Aqui ingresamos el nombre que aparece debajo del icono de la app -->
+    <!-- LABEL: Aqui ingresamos el nombre que aparece debajo del icono de la app
+    android:label="Consumo Electrico" -->
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Consumo Electrico"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TP_Seminario"

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,11 +26,16 @@ import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
 public class PantallaPrincipalFragment extends Fragment {
     Toolbar toolbar;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_pantalla_principal,container,false);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+
+        // Configurar la Toolbar
+        toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        // Inicializar otras vistas
         initViews(view);
-        return view;
+
+       return view;
     }
 
     @Override
@@ -38,9 +43,6 @@ public class PantallaPrincipalFragment extends Fragment {
         inflater.inflate(R.menu.activity_main_menu_drawer, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
-
-
-
 
     public void initViews(View view)
     {

@@ -1,145 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/fragment_pantalla_principal"
-    android:background="@android:color/white">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Toolbar con iconos de usuario y notificaciones -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_blue"
-        app:titleTextColor="@android:color/white">
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_pantalla_principal"
+        android:background="@android:color/white">
 
-        <!-- Icono de usuario a la izquierda -->
-        <ImageView
-            android:id="@+id/icon_user"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_user"
-            android:contentDescription="@string/user_icon"
-            android:padding="8dp"
-            android:layout_gravity="start"
-            app:tint="@android:color/white" />
+        <!-- Include de la Toolbar -->
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_layout" />
 
-        <!-- Icono de notificación a la derecha -->
-        <ImageView
-            android:id="@+id/icon_notification"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:contentDescription="@string/notification_icon"
-            android:padding="8dp"
-            android:src="@drawable/ic_notify_off"
-            app:tint="@android:color/white" />
-    </androidx.appcompat.widget.Toolbar>
+        <!-- Texto de Bienvenida -->
+        <TextView
+            android:id="@+id/textWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido Usuario"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/toolbar_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp" />
 
+        <!-- Botón Mi Perfil -->
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btnProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textWelcome"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Mi Perfil" />
 
-    <!-- Texto de Bienvenida -->
-    <TextView
-        android:id="@+id/textWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenido Usuario"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_below="@id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"/>
+        <!-- Botón Gestionar Electrodomésticos -->
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btnManageAppliances"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnProfile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Gestionar Electrodomésticos" />
 
-    <!-- Botón Mi Perfil -->
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textWelcome"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Mi Perfil" />
+        <!-- Botón Calcular Consumo -->
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btnCalculateConsumption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnManageAppliances"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Calcular consumo" />
 
-    <!-- Botón Gestionar Electrodomésticos -->
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnManageAppliances"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnProfile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Gestionar Electrodomésticos"/>
+        <!-- Botón Consultar Reportes -->
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btnConsultReports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnCalculateConsumption"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Consultar reportes" />
 
-    <!-- Botón Calcular Consumo -->
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnCalculateConsumption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnManageAppliances"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Calcular consumo"/>
+        <!-- Botón de ayuda en la esquina inferior derecha -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnHelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_help"
+            android:contentDescription="Help Icon"
+            app:backgroundTint="@android:color/white"
+            app:tint="@color/black" />
 
-    <!-- Botón Consultar Reportes -->
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnConsultReports"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnCalculateConsumption"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Consultar reportes" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btnproyeccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnCalculateConsumption"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="98dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/btn_contactanos" />
 
-    <!-- Botón de ayuda en la esquina inferior derecha -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnHelp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_help"
-        android:contentDescription="Help Icon"
-        app:backgroundTint="@android:color/white"
-        app:tint="@color/black" />
-
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnproyeccion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnCalculateConsumption"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/btn_contactanos" />
-
-    <!-- Botón Contactanos -->
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnContactanos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnproyeccion"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/btn_notificaciones" />
+        <!-- Botón Contactanos -->
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btnContactanos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnproyeccion"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="98dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/btn_notificaciones" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

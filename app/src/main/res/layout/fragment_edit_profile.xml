@@ -7,30 +7,29 @@
  android:id="@+id/editarPerfils"
     android:background="@android:color/white">
 
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_blue"
-
-            app:titleTextColor="@android:color/white" tools:ignore="MissingConstraints" />
-
+    <!-- Include de la Toolbar -->
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar_layout" />
 
     <!-- Título Registro -->
+
+    <!-- Subtítulo -->
+
     <TextView
         android:id="@+id/tv_registro_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_layout"
+        android:layout_marginTop="68dp"
         android:text="Editar datos "
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Subtítulo -->
     <TextView
         android:id="@+id/tv_registro_subtitulo"
         android:layout_width="wrap_content"
@@ -148,7 +147,9 @@
         app:layout_constraintTop_toBottomOf="@id/spinner_provincia_edit" />
 
     <!-- Botón Registrar -->
-    <com.google.android.material.button.MaterialButton
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:background="@drawable/rounded_button"
         android:id="@+id/btn_guardar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

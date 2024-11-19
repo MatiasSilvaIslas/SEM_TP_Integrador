@@ -12,11 +12,11 @@
             android:theme="@style/Theme.TP_Seminario.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/Theme.TP_SeminarioControl.PopupOverlay" />
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/light_blue"
+            app:popupTheme="@style/Theme.TP_SeminarioControl.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

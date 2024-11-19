@@ -6,46 +6,17 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:id="@+id/fragment_consumo"
-    tools:context="frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment"
+    tools:context="frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment">
 
-    >
-
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_blue"
-
-        app:titleTextColor="@android:color/white">
-
-        <!-- Icono de usuario a la izquierda -->
-        <ImageView
-            android:id="@+id/icon_user"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_user"
-            android:contentDescription="User Icon"
-            android:padding="8dp"
-            android:layout_gravity="start"
-            app:tint="@android:color/white" />
-
-        <!-- Icono de notificación a la derecha -->
-        <ImageView
-            android:id="@+id/icon_notification"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_notification"
-            android:contentDescription="Notification Icon"
-            android:padding="8dp"
-            android:layout_gravity="end"
-            app:tint="@android:color/white" />
-    </androidx.appcompat.widget.Toolbar>
+    <!-- Include de la Toolbar -->
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar_layout" />
 
     <!-- Contenedor Principal -->
     <LinearLayout
         android:id="@+id/container"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -148,13 +119,15 @@
 
         <!-- Botón Calcular Consumo -->
         <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnCalcular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:backgroundTint="?attr/colorPrimary"
             android:text="Calcular Consumo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 </RelativeLayout>

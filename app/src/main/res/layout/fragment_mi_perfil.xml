@@ -6,37 +6,10 @@ android:layout_height="match_parent"
                 android:id="@+id/MiPerfil"
 android:background="@android:color/white">
 
-<!-- Toolbar con iconos de usuario y notificaciones -->
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/light_blue"
-
-    app:titleTextColor="@android:color/white">
-
-    <!-- Icono de usuario a la izquierda -->
-    <ImageView
-        android:id="@+id/icon_user"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_user"
-        android:contentDescription="User Icon"
-        android:padding="8dp"
-        app:tint="@android:color/white"
-        android:layout_gravity="start" />
-
-    <!-- Icono de notificación a la derecha -->
-    <ImageView
-        android:id="@+id/icon_notification"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_notification"
-        android:contentDescription="Notification Icon"
-        android:padding="8dp"
-        app:tint="@android:color/white"
-        android:layout_gravity="end" />
-</androidx.appcompat.widget.Toolbar>
+<!-- Include de la Toolbar -->
+<include
+    android:id="@+id/toolbar_layout"
+    layout="@layout/toolbar_layout" />
 
 <!-- Texto de Bienvenida -->
 <TextView
@@ -47,24 +20,25 @@ android:background="@android:color/white">
     android:textSize="24sp"
     android:textStyle="bold"
     android:textColor="@android:color/black"
-    android:layout_below="@id/toolbar"
+    android:layout_below="@id/toolbar_layout"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="24dp"/>
 
 <!-- Botón Mi Perfil -->
-<com.google.android.material.button.MaterialButton
-    android:id="@+id/btnModificarPerfil"
-    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/textWelcome"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="16dp"
-    android:layout_marginStart="24dp"
-    android:layout_marginEnd="24dp"
-    android:text="Editar datos del perfil"
-    android:textColor="@android:color/white"
-    android:backgroundTint="@color/blue_primary" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:background="@drawable/rounded_button"
+        android:id="@+id/btnModificarPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textWelcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="Editar datos del perfil"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/blue_primary" />
 
 <!-- Botón Gestionar Electrodomésticos
 <com.google.android.material.button.MaterialButton

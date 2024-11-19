@@ -32,9 +32,11 @@
             android:hint="Categoría" />
 
     <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Guardar"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="18dp" />
 </LinearLayout>

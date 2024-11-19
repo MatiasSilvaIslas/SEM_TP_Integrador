@@ -27,6 +27,8 @@
         android:layout_marginTop="16dp" />
 
     <Button
+        style="?android:attr/buttonStyleSmall"
+        android:background="@drawable/rounded_button"
         android:id="@+id/button_guardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

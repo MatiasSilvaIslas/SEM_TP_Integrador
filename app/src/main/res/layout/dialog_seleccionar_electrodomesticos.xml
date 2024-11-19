@@ -23,6 +23,8 @@
             android:layout_marginTop="8dp" />
 
         <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/rounded_button"
             android:id="@+id/btnConfirmarSeleccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

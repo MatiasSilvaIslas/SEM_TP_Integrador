@@ -6,37 +6,10 @@
     android:id="@+id/activity_pantalla_principal"
     android:background="@android:color/white">
 
-    <!-- Toolbar con iconos de usuario y notificaciones -->
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_blue"
-        app:titleTextColor="@android:color/white">
-
-        <!-- Icono de usuario a la izquierda -->
-        <ImageView
-            android:id="@+id/icon_user"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_user"
-            android:contentDescription="User Icon"
-            android:padding="8dp"
-            android:layout_gravity="start"
-            app:tint="@android:color/white" />
-
-        <!-- Icono de notificación a la derecha -->
-        <ImageView
-            android:id="@+id/icon_notification"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_notification"
-            android:contentDescription="Notification Icon"
-            android:padding="8dp"
-            android:layout_gravity="end"
-            app:tint="@android:color/white" />
-    </androidx.appcompat.widget.Toolbar>
+    <!-- Include de la Toolbar -->
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar_layout" />
 
     <!-- Texto de Bienvenida -->
     <TextView
@@ -47,7 +20,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/toolbar_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"/>
 

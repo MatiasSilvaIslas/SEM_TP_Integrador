@@ -2,39 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_blue"
+    <!-- Include de la Toolbar -->
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar_layout" />
 
-            app:titleTextColor="@android:color/white">
-
-        <!-- Icono de usuario a la izquierda -->
-        <ImageView
-                android:id="@+id/icon_user"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_user"
-                android:contentDescription="User Icon"
-                android:padding="8dp"
-                android:layout_gravity="start"
-                app:tint="@android:color/white" />
-
-        <!-- Icono de notificación a la derecha -->
-        <ImageView
-                android:id="@+id/icon_notification"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_notification"
-                android:contentDescription="Notification Icon"
-                android:padding="8dp"
-                android:layout_gravity="end"
-                app:tint="@android:color/white" />
-    </androidx.appcompat.widget.Toolbar>
     <!-- Título para el CRUD de electrodomésticos -->
     <TextView
         android:id="@+id/textTitulo"
@@ -43,6 +17,7 @@
         android:text="Selecciona Categoría de Electrodoméstico"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_below="@id/toolbar_layout"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:paddingVertical="80dp" />

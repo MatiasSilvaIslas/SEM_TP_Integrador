@@ -232,5 +232,6 @@
     <string name="sleep_error">Sleep failure</string>
     <string name="timer_finished">Timer finished.</string>
     <string name="btn_notificaciones">Notificaciones</string>
+    <string name="crear_notificacion">Crear Notificación</string>
 
 </resources>

@@ -19,6 +19,7 @@ import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
+import frgp.utn.edu.com.ui.proyeccion.ProyeccionFragment;
 import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
 
 
@@ -83,14 +84,14 @@ public class PantallaPrincipalFragment extends Fragment {
             }
         });
 
-       /* Button btnConsejos = view.findViewById(R.id.btnConsejosf);
+        Button btnConsejos = view.findViewById(R.id.btnproyeccion);
         btnConsejos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frgment_frame, new ConsejosFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new ProyeccionFragment()).commit();
             }
-        });*/
+        });
 
         FloatingActionButton btnHelp = view.findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +114,8 @@ public class PantallaPrincipalFragment extends Fragment {
                startActivity(intent);
            }
         });
+
+
 
         Button btnReportes = view.findViewById(R.id.btnConsultReports);
         btnReportes.setOnClickListener(new View.OnClickListener() {

@@ -45,5 +45,9 @@ public class DataDB {
 
     public static String url = "jdbc:mysql://52.67.231.97:3306/sql10735229";
     public static String driver = "com.mysql.jdbc.Driver";
+
+
+
+
 }
 

@@ -86,5 +86,15 @@
             android:backgroundTint="?attr/colorPrimary"
             android:text="Enviar"
             android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_marginVertical="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Si necesita solicitar el agregado de un nuevo electrodoméstico o presenta un inconveniente con la aplicación, por favor genere un caso para que soporte lo resuelva a la brevedad. Gracias"
+            android:textColor="#000000"
+            android:textSize="18sp" />
     </LinearLayout>
+
 </RelativeLayout>

@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,8 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import frgp.utn.edu.com.conexion.DataUsuario;
-import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.notifications.NotificacionesActivity;
 import frgp.utn.edu.com.ui.informes.InformesFragment;
 import frgp.utn.edu.com.MainActivity;
@@ -25,19 +21,20 @@ import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 import frgp.utn.edu.com.ui.proyeccion.ProyeccionFragment;
 import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
-import frgp.utn.edu.com.utils.SessionManager;
 
 
 public class PantallaPrincipalFragment extends Fragment {
     Toolbar toolbar;
-    Usuario usuario;
-    TextView txtNombre;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_pantalla_principal,container,false);
+
+        // Configurar la Toolbar
         ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+
+        // Inicializar otras vistas
         initViews(view);
-        return view;
+
+       return view;
     }
 
     @Override
@@ -46,14 +43,8 @@ public class PantallaPrincipalFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
-
-
     public void initViews(View view)
     {
-
-        txtNombre = view.findViewById(R.id.textWelcome);
-        getUserName();
         Button btnProfile = view.findViewById(R.id.btnProfile);
         Button btnManageAppliances = view.findViewById(R.id.btnManageAppliances);
 
@@ -136,22 +127,6 @@ public class PantallaPrincipalFragment extends Fragment {
                 ).commit();
             }
         });
-    }
-
-    private void getUserName() {
-        String email= SessionManager.getUserEmail(getActivity());
-        DataUsuario dataUsuario = new DataUsuario(getActivity());
-        dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
-            if(usuario!=null){
-                this.usuario = usuario;
-                String txt= "Bienvenido: "+usuario.getNombre_usuario();
-                txtNombre.setText(txt);
-                txtNombre.setText(txt);
-            }else{
-                Toast.makeText(getActivity(), "Error al obtener usuario", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
     //btn reportes
 

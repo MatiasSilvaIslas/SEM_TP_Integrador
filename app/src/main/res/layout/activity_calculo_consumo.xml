@@ -7,20 +7,15 @@
     android:background="#F5F5F5"
     tools:context="frgp.utn.edu.com.ui.back.CalculoConsumoActivity">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_blue"
-        android:title="Consumo Eléctrico"
-        android:titleTextColor="#FFFFFF"
-        />
+    <!-- Include de la Toolbar -->
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar_layout" />
 
-    <!-- Contenedor Principal -->
+        <!-- Contenedor Principal -->
     <LinearLayout
         android:id="@+id/container"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

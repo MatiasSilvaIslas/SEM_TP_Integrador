@@ -35,14 +35,15 @@
                 app:tint="@android:color/white"
                 android:layout_gravity="end" />
     </androidx.appcompat.widget.Toolbar>
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="401dp"
+        android:layout_height="321dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/barChart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,12 +64,12 @@
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="403dp"
+        android:layout_height="624dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

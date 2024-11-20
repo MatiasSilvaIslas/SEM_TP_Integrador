@@ -161,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             // Cargar el LoginFragment
             newFragment = new LoginFragment();
-            Toast.makeText(this, "Por favor, inicia sesión para continuar", Toast.LENGTH_SHORT).show();
         } else {
             // Manejo de los diferentes fragmentos
             switch (fragment) {

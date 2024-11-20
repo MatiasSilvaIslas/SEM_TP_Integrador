@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import frgp.utn.edu.com.conexion.DataUsuario;
+import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.notifications.NotificacionesActivity;
 import frgp.utn.edu.com.ui.informes.InformesFragment;
 import frgp.utn.edu.com.MainActivity;
@@ -20,10 +26,13 @@ import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
+import frgp.utn.edu.com.utils.SessionManager;
 
 
 public class PantallaPrincipalFragment extends Fragment {
     Toolbar toolbar;
+    private Usuario usuario;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_pantalla_principal,container,false);
@@ -43,7 +52,20 @@ public class PantallaPrincipalFragment extends Fragment {
 
     public void initViews(View view)
     {
-        Button btnProfile = view.findViewById(R.id.btnProfile);
+        TextView textWelcome = (TextView) view.findViewById(R.id.textWelcome);
+        String email= SessionManager.getUserEmail(getActivity());
+        DataUsuario dataUsuario = new DataUsuario(getActivity());
+        dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
+            if(usuario!=null){
+                this.usuario = usuario;
+                textWelcome.append( " " + usuario.getNombre_usuario());
+                //textWelcome.setText(usuario.getEmail());
+            }else{
+                Toast.makeText(getActivity(), "Error al obtener usuario", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ImageView btnProfile = view.findViewById(R.id.icon_user);
         Button btnManageAppliances = view.findViewById(R.id.btnManageAppliances);
 
         btnProfile.setOnClickListener(new View.OnClickListener() {

@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/light_blue"
-
+            android:paddingTop="26dp"
             app:titleTextColor="@android:color/white">
 
         <!-- Icono de usuario a la izquierda -->
@@ -38,14 +38,14 @@
     <!-- Título para el CRUD de electrodomésticos -->
     <TextView
         android:id="@+id/textTitulo"
-        android:layout_width="wrap_content"
+        android:layout_width="408dp"
         android:layout_height="wrap_content"
-        android:text="Selecciona Categoría de Electrodoméstico"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:paddingVertical="80dp" />
+        android:paddingVertical="80dp"
+        android:text="Selecciona la categoría de Electrodoméstico"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <!-- RecyclerView para mostrar categorías en formato de grilla -->
     <androidx.recyclerview.widget.RecyclerView

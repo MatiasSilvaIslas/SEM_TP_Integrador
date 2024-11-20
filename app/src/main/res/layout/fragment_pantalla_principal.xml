@@ -37,13 +37,12 @@
             app:tint="@android:color/white" />
     </androidx.appcompat.widget.Toolbar>
 
-
     <!-- Texto de Bienvenida -->
     <TextView
         android:id="@+id/textWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido Usuario"
+        android:text="Bienvenido"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -51,28 +50,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"/>
 
-    <!-- Botón Mi Perfil -->
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textWelcome"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Mi Perfil" />
-
     <!-- Botón Gestionar Electrodomésticos -->
     <Button style="?android:attr/buttonStyleSmall"
         android:background="@drawable/rounded_button"
         android:id="@+id/btnManageAppliances"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnProfile"
+        android:layout_below="@id/textWelcome"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:text="Gestionar Electrodomésticos"/>
@@ -116,30 +102,16 @@
         app:backgroundTint="@android:color/white"
         app:tint="@color/black" />
 
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnproyeccion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnCalculateConsumption"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/btn_contactanos" />
-
     <!-- Botón Contactanos -->
     <Button style="?android:attr/buttonStyleSmall"
         android:background="@drawable/rounded_button"
         android:id="@+id/btnContactanos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnproyeccion"
+        android:layout_below="@id/btnConsultReports"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="98dp"
         android:layout_marginEnd="24dp"
         android:text="@string/btn_notificaciones" />
-
-
 </RelativeLayout>

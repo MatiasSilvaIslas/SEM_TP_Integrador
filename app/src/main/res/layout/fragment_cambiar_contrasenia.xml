@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
- xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
- xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
- android:id="@+id/editarPerfils"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/editarPass"
     android:background="@android:color/white">
 
     <androidx.appcompat.widget.Toolbar
@@ -42,10 +41,10 @@
 
     <!-- Título Registro -->
     <TextView
-        android:id="@+id/tv_registro_titulo"
+        android:id="@+id/tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Editar datos "
+        android:text="Cambiar contraseña "
         android:textSize="24sp"
         android:textStyle="bold"
         android:paddingTop="22dp"
@@ -57,20 +56,20 @@
 
     <!-- Subtítulo -->
     <TextView
-        android:id="@+id/tv_registro_subtitulo"
+        android:id="@+id/tv_subtitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Aqui puedes editar tus datos personales"
+        android:text="Aqui puedes cambiar contraseña"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_registro_titulo" />
+        app:layout_constraintTop_toBottomOf="@id/tv_titulo" />
 
-    <!-- Nombre -->
+    <!-- Contraseña actual -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_nombre"
+        android:id="@+id/layout_contraseña_actual"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -79,19 +78,19 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_registro_subtitulo">
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitulo">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_nombre_edit"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingresa tu nombre"
+            android:hint="Ingresa tu contraseña"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Apellido -->
+    <!-- Nueva Contraseña -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_apellido"
+        android:id="@+id/layout_nueva_contraseña"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -100,79 +99,36 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_nombre">
+        app:layout_constraintTop_toBottomOf="@id/layout_contraseña_actual">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_apellido_edit"
+            android:id="@+id/et_nueva_contraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingresa tu apellido"
+            android:hint="Ingresa tu nueva contraseña"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Fecha de Nacimiento (DatePicker) -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_fecha_nacimiento"
+        android:id="@+id/layout_nueva_contraseña_2"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_apellido">
+        app:layout_constraintTop_toBottomOf="@id/layout_nueva_contraseña">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_fecha_nacimiento_edit"
+            android:id="@+id/et_nueva_contraseña_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Selecciona tu fecha de nacimiento"
-            android:inputType="none"
-            android:focusable="true"
-            android:clickable="true" />
+            android:hint="Repite tu nueva contraseña"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <Spinner
-        android:id="@+id/spinner_genero_edit"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/spinner_outline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_fecha_nacimiento" />
-
-    <!-- Provincia (Spinner) -->
-    <Spinner
-        android:id="@+id/spinner_provincia_edit"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/spinner_outline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_genero_edit" />
-
-    <!-- Localidad (Spinner) -->
-    <Spinner
-        android:id="@+id/spinner_localidad_edit"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/spinner_outline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_provincia_edit" />
-
-    <!-- Botón Registrar -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_guardar"
         android:layout_width="0dp"
@@ -186,7 +142,6 @@
         app:cornerRadius="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_localidad_edit" />
+        app:layout_constraintTop_toBottomOf="@id/layout_nueva_contraseña_2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

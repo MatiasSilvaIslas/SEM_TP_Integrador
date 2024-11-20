@@ -5,16 +5,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.conexion.UsuarioElectrodomesticoDB;
@@ -27,6 +31,7 @@ import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
 import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.CategoriaAdapter;
 import frgp.utn.edu.com.ui.electrodomesticos.ElectrodomesticoAdapter;
+import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 import frgp.utn.edu.com.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -46,6 +51,23 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abml_electrodomesticos);
         setSupportActionBar(findViewById(R.id.toolbar));
+
+        ImageView btnProfile = findViewById(R.id.icon_user);
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Usa el FragmentManager de la Activity actual
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.frgment_frame, new fragmentMiPerfil()); //ver acá por que esta mierda no funciona
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+
 
         // Inicialización del RecyclerView
         recyclerCategorias = findViewById(R.id.recyclerCategorias);

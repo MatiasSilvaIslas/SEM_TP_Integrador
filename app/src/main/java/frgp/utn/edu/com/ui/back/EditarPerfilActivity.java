@@ -45,6 +45,13 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private Spinner spinnerGenero;
     private Button btnActualizar;
 
+    private String nombreInicial;
+    private String apellidoInicial;
+    private String generoInicial;
+    private Provincia provinciaInicial;
+    private Localidad localidadInicial;
+    private Date fechaNacimientoInicial;
+
     private Provincia provinciaBefore;
     private Localidad localidadBefore;
 
@@ -155,8 +162,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
                     } else {
                         cargarLocalidades(listaProvincias.get(0).getId_provincia()); // Cargar localidades si no había provincia seleccionada previamente
                     }
-                } else {
-                    Toast.makeText(this, "No se encontraron provincias.", Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -180,8 +185,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(this, "Usuario no cargado correctamente", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(this, "No se encontraron localidades para esta provincia.", Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -211,8 +214,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
                 cargarLocalidades(usuario.getProvincia().getId_provincia());
                 setSpinnerProvincia(usuario.getProvincia());
                 setSpinnerLocalidad(usuario.getLocalidad()); // Ya puedes usar usuario aquí
-            } else {
-                Toast.makeText(this, "Error al cargar los datos del usuario", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -236,8 +237,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
                     break;
                 }
             }
-        } else {
-            Toast.makeText(this, "La lista de localidades no está disponible.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -249,15 +248,28 @@ public class EditarPerfilActivity extends AppCompatActivity {
         Localidad localidadSeleccionada = (Localidad) spinnerLocalidad.getSelectedItem();
         Date fechaNacimiento = convertirStringADate(etFechaNacimiento.getText().toString().trim());
 
-        usuario.setNombre_usuario(nombre);
-        usuario.setApellido_usuario(apellido);
-        usuario.setGenero(generoSeleccionado);
-        usuario.setProvincia(provinciaSeleccionada);
-        usuario.setLocalidad(localidadSeleccionada);
-        usuario.setFecha_nac(fechaNacimiento);
+        // Verificar si hubo cambios
+        boolean huboCambio = !nombre.equals(nombreInicial) ||
+                !apellido.equals(apellidoInicial) ||
+                !generoSeleccionado.equals(generoInicial) ||
+                !provinciaSeleccionada.equals(provinciaInicial) ||
+                !localidadSeleccionada.equals(localidadInicial) ||
+                !fechaNacimiento.equals(fechaNacimientoInicial);
+
+        if (!huboCambio) {
+            Toast.makeText(this, "No se detectaron cambios en los datos.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (nombre.isEmpty() || apellido.isEmpty() || provinciaSeleccionada == null || localidadSeleccionada == null) {
             Toast.makeText(this, "Por favor complete todos los campos.", Toast.LENGTH_SHORT).show();
         } else {
+            usuario.setNombre_usuario(nombre);
+            usuario.setApellido_usuario(apellido);
+            usuario.setGenero(generoSeleccionado);
+            usuario.setProvincia(provinciaSeleccionada);
+            usuario.setLocalidad(localidadSeleccionada);
+            usuario.setFecha_nac(fechaNacimiento);
             actualizarUsuario(usuario);
         }
     }
@@ -266,10 +278,10 @@ public class EditarPerfilActivity extends AppCompatActivity {
         DataUsuario dataUsuario = new DataUsuario(getApplicationContext());
         dataUsuario.updateUsuario(usuario, success -> {
             if (success) {
-                Toast.makeText(getApplicationContext(), "Usuario modificado correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Usuario modificado correctamente", Toast.LENGTH_SHORT).show();
                 pasarASiguientePantalla();
             } else {
-                Toast.makeText(getApplicationContext(), "Error al modificar usuario.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error al modificar usuario.", Toast.LENGTH_SHORT).show();
             }
         });
     }

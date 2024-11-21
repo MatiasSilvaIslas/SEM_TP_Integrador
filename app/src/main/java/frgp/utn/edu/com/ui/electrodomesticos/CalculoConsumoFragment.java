@@ -1,6 +1,7 @@
 package frgp.utn.edu.com.ui.electrodomesticos;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,10 @@ public class CalculoConsumoFragment extends Fragment {
         editDiasUso = view.findViewById(R.id.editDiasUso);
         textConsumoEstimado = view.findViewById(R.id.textConsumoEstimado);
         Button btnCalcular = view.findViewById(R.id.btnCalcular);
+
+        // Agregar InputFilters para limitar la entrada de texto
+        editHorasUso.setFilters(new InputFilter[]{crearInputFilter(25)});
+        editDiasUso.setFilters(new InputFilter[]{crearInputFilter(31)});
 
         // Inicializar base de datos
         electrodomesticoDB = new ElectrodomesticoDB(getContext());
@@ -79,6 +84,7 @@ public class CalculoConsumoFragment extends Fragment {
             }
         });
 
+        // Configurar botón para calcular consumo
         btnCalcular.setOnClickListener(v -> {
             // Validar que el Spinner tenga un elemento seleccionado
             if (spinnerElectrodomesticos.getSelectedItem() == null) {
@@ -103,6 +109,17 @@ public class CalculoConsumoFragment extends Fragment {
                 int horasPorDia = Integer.parseInt(horasText);
                 int dias = Integer.parseInt(diasText);
 
+                // Validar que las horas y días estén en los rangos permitidos
+                if (horasPorDia >= 25) {
+                    Toast.makeText(getContext(), "Las horas de uso no pueden ser mayores o iguales a 25", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (dias >= 31) {
+                    Toast.makeText(getContext(), "Los días de uso no pueden ser mayores o iguales a 31", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // Calcular consumo
                 double consumoTotal = (selected.getPotenciaPromedioWatts() / 1000.0) * horasPorDia * dias;
 
@@ -116,5 +133,23 @@ public class CalculoConsumoFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private InputFilter crearInputFilter(final int maxValue) {
+        return (source, start, end, dest, dstart, dend) -> {
+            try {
+                // Combinar el texto existente con el nuevo
+                String nuevoTexto = dest.toString().substring(0, dstart) + source + dest.toString().substring(dend);
+
+                // Validar que no exceda el valor máximo
+                int input = Integer.parseInt(nuevoTexto);
+                if (input >= maxValue) {
+                    return "";
+                }
+            } catch (NumberFormatException e) {
+                // Ignorar entradas inválidas
+            }
+            return null; // Aceptar el texto
+        };
     }
 }

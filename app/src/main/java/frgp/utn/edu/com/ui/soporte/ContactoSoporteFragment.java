@@ -169,7 +169,7 @@ public class ContactoSoporteFragment extends Fragment {
         progressDialog.dismiss();
         btnEnviarSoporte.setEnabled(true);
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show();
-        getParentFragmentManager().popBackStack(); // En lugar de finish()
+        getParentFragmentManager().popBackStack();
 
         FragmentTransaction transaction = requireActivity()
                 .getSupportFragmentManager()

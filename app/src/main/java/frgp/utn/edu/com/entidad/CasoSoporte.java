@@ -18,26 +18,32 @@ public class CasoSoporte {
     }
 
     public int getIdCaso() {
+
         return idCaso;
     }
 
     public int getIdUsuario() {
+
         return idUsuario;
     }
 
     public String getResumen() {
+
         return resumen;
     }
 
     public String getDetalle() {
+
         return detalle;
     }
 
     public String getEstado() {
+
         return estado;
     }
 
     public long getTimestamp() {
+
         return timestamp;
     }
 }

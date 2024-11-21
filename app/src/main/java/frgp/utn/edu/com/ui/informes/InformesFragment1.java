@@ -64,13 +64,13 @@ public class InformesFragment1 extends Fragment {
 
     private double obtenerLimiteConsumo() {
         if (editLimiteConsumo == null || editLimiteConsumo.getText().toString().trim().isEmpty()) {
-            Toast.makeText(getContext(), "Ingrese un límite válido", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Ingrese un límite válido", Toast.LENGTH_SHORT).show();
             return 0; // Valor por defecto
         }
         try {
             return Double.parseDouble(editLimiteConsumo.getText().toString().trim());
         } catch (NumberFormatException e) {
-            Toast.makeText(getContext(), "Ingrese un número válido", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Ingrese un número válido", Toast.LENGTH_SHORT).show();
             return 0; // Valor por defecto
         }
     }
@@ -85,7 +85,7 @@ public class InformesFragment1 extends Fragment {
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraOffsets(5, 10, 5, 5);
-
+        pieChart.setDrawEntryLabels(false);
         pieChart.setDragDecelerationFrictionCoef(0.95f);
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.WHITE);
@@ -93,9 +93,9 @@ public class InformesFragment1 extends Fragment {
 
         // Configurar leyenda
         Legend legend = pieChart.getLegend();
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
         legend.setXEntrySpace(7f);
         legend.setYEntrySpace(0f);

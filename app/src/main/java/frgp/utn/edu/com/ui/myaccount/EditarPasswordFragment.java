@@ -14,9 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.entidad.Usuario;
+import frgp.utn.edu.com.ui.usuario.EditarPerfilFragment;
 import frgp.utn.edu.com.utils.InputFilterLetters;
 import frgp.utn.edu.com.repository.AuthAppRepository; // Asegúrate de que este import sea correcto
 import frgp.utn.edu.com.utils.SessionManager;
@@ -96,6 +100,12 @@ public class EditarPasswordFragment extends Fragment {
                         SessionManager.limpiarSesion(getContext());
                         SessionManager.saveUserPassword(getContext(), newPassword);
                         SessionManager.saveUserEmail(getContext(), email);
+
+                        ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                        FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frgment_frame, new fragmentMiPerfil());
+                        fragmentTransaction.commit();
                     }
 
                     @Override
@@ -106,17 +116,6 @@ public class EditarPasswordFragment extends Fragment {
         );
     }
 
-    /**
-     * Valida que la contraseña cumpla con los requisitos:
-     * - Al menos 8 caracteres
-     * - Al menos una letra mayúscula
-     * - Al menos una letra minúscula
-     * - Al menos un número
-     * - Al menos un símbolo especial
-     *
-     * @param password Contraseña a validar
-     * @return true si cumple los requisitos, false en caso contrario
-     */
     private boolean esContraseñaValida(String password) {
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$";
         return password.matches(regex);

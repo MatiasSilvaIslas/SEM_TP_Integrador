@@ -24,6 +24,7 @@ import frgp.utn.edu.com.MainActivity;
 
 import frgp.utn.edu.com.R;
 
+import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;

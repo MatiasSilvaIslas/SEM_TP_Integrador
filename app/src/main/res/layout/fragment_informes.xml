@@ -15,7 +15,7 @@
 
 
     <EditText
-        android:id="@+id/editLimiteConsumo"
+        android:id="@+id/editLimiteConsumos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ingrese el límite de consumo (kWh)"

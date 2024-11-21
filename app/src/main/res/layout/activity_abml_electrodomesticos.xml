@@ -41,11 +41,6 @@
         android:layout_width="408dp"
         android:layout_height="wrap_content"
 
-        android:text="Selecciona Categoría de Electrodoméstico"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_below="@id/toolbar_layout"
-
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:paddingVertical="80dp"

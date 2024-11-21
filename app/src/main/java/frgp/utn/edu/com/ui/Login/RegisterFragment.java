@@ -108,6 +108,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onSuccess() {
                 SessionManager.saveUserEmail(getContext(), email);
+                SessionManager.saveUserPassword(getContext(), password);
                 showToast("Usuario registrado exitosamente");
                 goToRegister2(email);
                 Log.d("Register", "Registration successful");

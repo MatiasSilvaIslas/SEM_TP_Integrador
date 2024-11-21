@@ -13,60 +13,68 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import frgp.utn.edu.com.utils.SessionManager;
+
 public class GraficosHelper {
     private Context context;
-    public GraficosHelper( Context ct) {
+
+    public GraficosHelper(Context ct) {
         context = ct;
     }
-    //DatabaseHelper db = new DatabaseHelper();
 
-
-    public void actualizarGraficos(int userId, double limiteConsumo, GraficoListener listener) {
-
-
+    public void actualizarGraficos(double limiteConsumo, GraficoListener listener) {
         new Thread(() -> {
             try (
-
                     Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
                     PreparedStatement pst = con.prepareStatement(
-                            "SELECT ue.dias, SUM(ue.horas * e.consumo_hora_wh * ue.cantidad) AS consumo_diario FROM sql10735229.UsuarioElectrodomestico AS ue LEFT JOIN sql10735229.Electrodomestico AS e ON ue.electrodomestico_id = e.id_electrodomestico WHERE ue.usuario_id = ? GROUP BY ue.dias ORDER BY ue.dias;"
+                            "SELECT e.nombre, ue.dias, ue.cantidad, ue.horas, e.consumo_hora_wh, " +
+                                    "(ue.horas * e.consumo_hora_wh * ue.cantidad) AS consumo_diario " +
+                                    "FROM sql10735229.UsuarioElectrodomestico AS ue " +
+                                    "LEFT JOIN sql10735229.Electrodomestico AS e ON ue.electrodomestico_id = e.id_electrodomestico " +
+                                    "LEFT JOIN sql10735229.Usuarios AS u ON ue.usuario_id = u.ID_usuario " +
+                                    "WHERE u.email_usuario = ? ORDER BY ue.dias;"
                     )
             ) {
-                pst.setInt(1, userId);
+                // Obtener el email del usuario desde las preferencias
+                String userEmail = SessionManager.getUserEmail(context);
+                if (userEmail == null || userEmail.isEmpty()) {
+                    throw new IllegalStateException("El email del usuario no está disponible en la sesión.");
+                }
+
+                // Establecer el email en la consulta
+                pst.setString(1, userEmail);
                 ResultSet rs = pst.executeQuery();
 
                 List<Entry> datosLinea = new ArrayList<>();
                 List<PieEntry> datosTorta = new ArrayList<>();
-                Map<String, Float> consumoPorMes = new HashMap<>();
+                float totalConsumo = 0;
 
                 while (rs.next()) {
-                    String fecha = rs.getString("fecha");
+                    String nombre = rs.getString("nombre");
+                    int dias = rs.getInt("dias");
+                    int cantidad = rs.getInt("cantidad");
+                    int horas = rs.getInt("horas");
+                    float consumoHoraWh = rs.getFloat("consumo_hora_wh");
                     float consumoDiario = rs.getFloat("consumo_diario");
 
-                    // Agregar datos a la línea
-                    datosLinea.add(new Entry(datosLinea.size(), consumoDiario));
+                    totalConsumo += consumoDiario;
 
-                    // Agregar datos a la torta
-                    String mes = fecha.substring(0, 7);
-                    if (consumoPorMes.containsKey(mes)) {
-                        consumoPorMes.put(mes, consumoPorMes.get(mes) + consumoDiario);
-                    } else {
-                        consumoPorMes.put(mes, consumoDiario);
-                    }
+                    // Agregar entradas para el gráfico de línea y de torta
+                    datosLinea.add(new Entry(dias, consumoDiario));
+                    datosTorta.add(new PieEntry(consumoDiario, nombre));
                 }
 
-                // Agregar datos a la torta
-                for (Map.Entry<String, Float> entry : consumoPorMes.entrySet()) {
-                    datosTorta.add(new PieEntry(entry.getValue(), entry.getKey()));
-                }
+                float consumoPromedio = totalConsumo / (datosLinea.size() > 0 ? datosLinea.size() : 1);
 
-                ((FragmentActivity) context).runOnUiThread(() -> listener.onDatosListos(datosLinea, datosTorta));
-
+                // Enviar datos al listener
+                ((FragmentActivity) context).runOnUiThread(() -> listener.onDatosListos(datosLinea, datosTorta, consumoPromedio));
             } catch (Exception e) {
                 e.printStackTrace();
                 ((FragmentActivity) context).runOnUiThread(() ->
@@ -77,6 +85,6 @@ public class GraficosHelper {
     }
 
     public interface GraficoListener {
-        void onDatosListos(List<Entry> datosLinea, List<PieEntry> datosTorta);
+        void onDatosListos(List<Entry> datosLinea, List<PieEntry> datosTorta, float consumoPromedio);
     }
 }

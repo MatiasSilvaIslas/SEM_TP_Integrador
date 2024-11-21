@@ -33,6 +33,35 @@ public class AuthAppRepository {
         }
     }
 
+    public void changePassword(String email, String oldPassword, String newPassword, ChangePasswordCallback callback) {
+        firebaseAuth.signInWithEmailAndPassword(email, oldPassword)
+                .addOnCompleteListener(application.getMainExecutor(), task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        if (user != null) {
+                            user.updatePassword(newPassword)
+                                    .addOnCompleteListener(application.getMainExecutor(), task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            // Cerrar sesión después de cambiar la contraseña
+                                            firebaseAuth.signOut();
+                                            callback.onSuccess();
+                                        } else {
+                                            callback.onFailure(task1.getException().getMessage());
+                                        }
+                                    });
+                        }
+                    } else {
+                        callback.onFailure("Error al reautenticar: " + task.getException().getMessage());
+                    }
+                });
+    }
+
+
+    public interface ChangePasswordCallback {
+        void onSuccess();
+        void onFailure(String errorMessage);
+    }
+
     public void login(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
@@ -76,7 +105,9 @@ public class AuthAppRepository {
 
     public void logOut() {
         firebaseAuth.signOut();
-        loggedOutLiveData.postValue(true);    }
+        loggedOutLiveData.postValue(true);
+        FirebaseAuth.getInstance().signOut();
+    }
 
     public MutableLiveData<FirebaseUser> getUserLiveData() {
         return userLiveData;

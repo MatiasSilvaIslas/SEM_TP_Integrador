@@ -66,9 +66,6 @@ public class LoginRegisterFragment2 extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Fecha máxima es hoy
-        long todayInMillis = calendar.getTimeInMillis();
-
         // Establecer la fecha mínima como 12 años atrás
         calendar.add(Calendar.YEAR, -12);  // Resta 12 años
         long twelveYearsAgoInMillis = calendar.getTimeInMillis();
@@ -82,11 +79,7 @@ public class LoginRegisterFragment2 extends Fragment {
                     }
                 }, year, month, dayOfMonth);
 
-        // Establece la fecha mínima (12 años atrás)
-
-        // Establece la fecha máxima (hoy)
         datePickerDialog.getDatePicker().setMaxDate(twelveYearsAgoInMillis);
-
         datePickerDialog.show();
     }
 

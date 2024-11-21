@@ -8,11 +8,19 @@ public class SessionManager {
     private static final String KEY_USER_EMAIL = "userEmail";
     private static final int UID = 0;
     private  static final String KEY_Nombre = "nombre";
+    private static final String KEY_USER_PASSWORD = "userPassword";
 
     public static void saveUserEmail(Context context, String email) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(KEY_USER_EMAIL, email);
+        editor.apply();
+    }
+
+    public static void saveUserPassword(Context context, String password) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_PASSWORD, password);
         editor.apply();
     }
 

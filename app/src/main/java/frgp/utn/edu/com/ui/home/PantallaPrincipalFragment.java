@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
+
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -31,8 +32,13 @@ import frgp.utn.edu.com.utils.SessionManager;
 
 public class PantallaPrincipalFragment extends Fragment {
     Toolbar toolbar;
-    Usuario usuario;
+
+
     TextView txtNombre;
+
+    private Usuario usuario;
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_pantalla_principal,container,false);
@@ -53,9 +59,26 @@ public class PantallaPrincipalFragment extends Fragment {
     public void initViews(View view)
     {
 
+
         txtNombre = view.findViewById(R.id.textWelcome);
         getUserName();
         Button btnProfile = view.findViewById(R.id.btnProfile);
+
+        
+        String email= SessionManager.getUserEmail(getActivity());
+        DataUsuario dataUsuario = new DataUsuario(getActivity());
+        dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
+            if(usuario!=null){
+                this.usuario = usuario;
+                textWelcome.append( " " + usuario.getNombre_usuario());
+                //textWelcome.setText(usuario.getEmail());
+            }else{
+                Toast.makeText(getActivity(), "Error al obtener usuario", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ImageView btnProfile = view.findViewById(R.id.icon_user);
+
         Button btnManageAppliances = view.findViewById(R.id.btnManageAppliances);
 
         btnProfile.setOnClickListener(new View.OnClickListener() {

@@ -1,19 +1,16 @@
 package frgp.utn.edu.com.ui.informes;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -33,10 +30,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.List;
 
 import frgp.utn.edu.com.R;
-import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.conexion.GraficosHelper;
-import frgp.utn.edu.com.entidad.Usuario;
-import frgp.utn.edu.com.utils.SessionManager;
 
 public class InformesFragment extends Fragment {
 
@@ -50,10 +44,10 @@ public class InformesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_graficos, container, false);
+        View view = inflater.inflate(R.layout.fragment_graficos_tres, container, false);
 
         initializeViews(view);
-        setupPieChart();
+
         setupLineChart();
 
         graficosHelper = new GraficosHelper(requireContext());
@@ -69,7 +63,7 @@ public class InformesFragment extends Fragment {
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
                     actualizarGraficoLinea(datosLinea);
-                    actualizarGraficoTorta(datosTorta);
+
                     //actualizarConsumoPromedio(consumoPromedio);
                 });
             }
@@ -92,7 +86,7 @@ public class InformesFragment extends Fragment {
     private void initializeViews(View view) {
         editLimiteConsumo = view.findViewById(R.id.editLimiteConsumo);
         lineChart = view.findViewById(R.id.lineChart);
-        pieChart = view.findViewById(R.id.pieChart);
+
     }
 
     private void setupPieChart() {
@@ -180,6 +174,7 @@ public class InformesFragment extends Fragment {
         lineChart.setData(lineData);
         lineChart.invalidate();
     }
+
 }
 
 
@@ -189,12 +184,12 @@ public class InformesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_graficos, container, false);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
 
-        // Inicializar vistas correctamente
-        editLimiteConsumo = view.findViewById(R.id.editLimiteConsumo);
+        // Inicializar vistas
         lineChart = view.findViewById(R.id.lineChart);
         pieChart = view.findViewById(R.id.pieChart);
-        //consumoPromedioTextView = view.findViewById(R.id.consumoPromedioTextView);
+        //editLimiteConsumo = view.findViewById(R.id.editLimiteConsumo);
 
         // Inicializar helper de gráficos
         graficosHelper = new GraficosHelper(getContext());

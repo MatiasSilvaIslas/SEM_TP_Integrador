@@ -15,14 +15,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+
 import com.google.firebase.auth.FirebaseUser;
 import frgp.utn.edu.com.MainActivity;
 
 import frgp.utn.edu.com.R;
 
-import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
+
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
@@ -34,8 +33,7 @@ public class LoginFragment extends Fragment {
     public static final String TAG = LoginFragment.class.getSimpleName();
     private LoginRegisterViewModel loginRegisterViewModel;
 
-    private NavController navController;
-    private MainActivity myContext;
+
     public LoginFragment() {
     }
 
@@ -103,9 +101,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void pasarASiguientePantalla() {
-        //pantallaprincipalfragment
-        /*NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.fragment_pantalla_principal);*/
+
         ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
 
 

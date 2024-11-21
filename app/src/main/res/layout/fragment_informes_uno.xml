@@ -28,17 +28,7 @@
                 android:inputType="numberDecimal"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Container para el PieChart -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginBottom="16dp">
 
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pieChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </FrameLayout>
 
             <!-- Container para el LineChart -->
             <FrameLayout

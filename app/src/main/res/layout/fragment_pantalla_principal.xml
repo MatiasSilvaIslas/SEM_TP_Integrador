@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
->
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
     </data>
@@ -13,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fragment_pantalla_principal"
-        android:background="@android:color/white"
-
-    >
+        android:background="@android:color/white">
 
         <!-- Include de la Toolbar -->
         <androidx.appcompat.widget.Toolbar
@@ -23,7 +18,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/light_blue"
-
                 app:layout_constraintTop_toTopOf="parent"
                 app:titleTextColor="@android:color/white">
 
@@ -67,20 +61,6 @@
             android:layout_marginTop="24dp" />
 
 
-        <!-- Botón Mi Perfil -->
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:background="@drawable/rounded_button"
-            android:id="@+id/btnProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textWelcome"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:text="Mi Perfil" />
-
         <!-- Botón Gestionar Electrodomésticos -->
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -88,7 +68,7 @@
             android:id="@+id/btnManageAppliances"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btnProfile"
+            android:layout_below="@id/textWelcome"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:layout_marginStart="24dp"

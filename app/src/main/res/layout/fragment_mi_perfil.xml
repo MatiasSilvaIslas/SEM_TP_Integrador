@@ -6,7 +6,6 @@ android:layout_height="match_parent"
                 android:id="@+id/MiPerfil"
 android:background="@android:color/white">
 
-<!-- Include de la Toolbar -->
 
     <Button
         android:id="@+id/btnCerrarSesion"

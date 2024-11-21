@@ -1,5 +1,7 @@
 package frgp.utn.edu.com;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -126,25 +128,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         int id = item.getItemId();
         Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
 
-        if (item.toString().equals( "Articulos")){
+        if (item.toString().equals("Articulos")) {
             switchFragment(2);
-        } else if (item.toString().equals("Cuenta")){
+        } else if (item.toString().equals("Cuenta")) {
             switchFragment(3);
-        } else if (item.toString().equals("Principal")){
+        } else if (item.toString().equals("Principal")) {
             switchFragment(4);
-        } else if (item.toString().equals("Cerrar sesion")){
-            switchFragment(5);
-        } else if (item.toString().equals("Consejos de Uso")){
+        } else if (item.toString().equals("Cerrar sesion")) {
+            showLogoutConfirmationDialog();
+        } else if (item.toString().equals("Consejos de Uso")) {
             switchFragment(6);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layoutmains);
+        DrawerLayout drawer = findViewById(R.id.drawer_layoutmains);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showLogoutConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cerrar Sesión")
+                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Lógica para cerrar sesión
+                        LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getApplication());
+                        loginRegisterViewModel.logout(getApplicationContext());
+                        switchFragment(1); // Cambiar al LoginFragment
+
+                        NavigationView navigationView = findViewById(R.id.navigation_viewf);
+                        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        navigationView.setVisibility(View.GONE);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     private void switchFragment(int fragment) {
@@ -204,6 +226,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Cerrar el Drawer
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
+
+
 
     private void restoreDrawer() {
         // Restores the behaviour of action bar and ActionBarDrawerToggle

@@ -1,7 +1,10 @@
 package frgp.utn.edu.com.ui.myaccount;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,57 +26,82 @@ import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
 public class fragmentMiPerfil extends Fragment {
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mi_perfil, container, false);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
-        initViews(view);
-        return view;
-    }
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_mi_perfil, container, false);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+            initViews(view);
+            return view;
+        }
 
-    public void initViews(View view) {
+        public void initViews(View view) {
 
-      Button  btnModificarPerfil = view.findViewById(R.id.btnModificarPerfil);
-      Button  btnCambiarContraseña = view.findViewById(R.id.btnCambiarContraseña);
-      Button  btnCerrarSesion = view.findViewById(R.id.btnCerrarSesion);
+            // Inicializar los botones
+            Button btnModificarPerfil = view.findViewById(R.id.btnModificarPerfil);
+            Button btnCambiarContraseña = view.findViewById(R.id.btnCambiarContraseña);
+            Button btnCerrarSesion = view.findViewById(R.id.btnCerrarSesion);
 
+            btnModificarPerfil.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Navegar al fragmento de modificar perfil
+                    if (getActivity() != null) {
+                        ((MainActivity) getActivity()).setnavigateToMainMenu(true);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frgment_frame, new EditarPerfilFragment());
+                        fragmentTransaction.commit();
+                    }
+                }
+            });
 
-        btnModificarPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            btnCambiarContraseña.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Navegar al fragmento de cambiar contraseña
+                    if (getActivity() != null) {
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frgment_frame, new EditarPasswordFragment());
+                        fragmentTransaction.commit();
+                    }
+                }
+            });
 
-                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frgment_frame, new EditarPerfilFragment());
-                fragmentTransaction.commit();
+            btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getActivity() != null) {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("Cerrar Sesión")
+                                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Lógica para cerrar sesión
+                                        LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getActivity().getApplication());
+                                        loginRegisterViewModel.logout(getContext().getApplicationContext());
 
-            }
-        });
+                                        // Reemplazar con el fragmento de login
+                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        btnCambiarContraseña.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frgment_frame, new EditarPasswordFragment());
-                fragmentTransaction.commit();
-            }
-        });
+                                        // Configurar transiciones opcionales (esto es solo estético)
+                                        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
 
-
-        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getActivity().getApplication());
-                loginRegisterViewModel.logout(getContext().getApplicationContext());
-                Fragment newFragment = new LoginFragment();
-                //navigationView.setVisibility(View.GONE);
-                //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new LoginFragment());
-            }
-        });
-    }
+                                        // Reemplazar fragmento
+                                        fragmentTransaction.replace(R.id.frgment_frame, new LoginFragment());
+                                        fragmentTransaction.commit();
+                                    }
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
+                    } else {
+                        Log.e("fragmentMiPerfil", "Error: getActivity() es null, no se puede cerrar sesión.");
+                    }
+                }
+            });
+        }
 }
+

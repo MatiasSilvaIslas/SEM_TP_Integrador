@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabGravity="fill"
+        app:tabTextColor="#FFFFFF"
+        app:tabIndicatorColor="#FFFF"
+        app:tabSelectedTextColor="#FFFF"
+        app:tabMode="fixed"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_pager_intro"
+        app:layout_anchorGravity="bottom|center" />
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@id/tabs"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

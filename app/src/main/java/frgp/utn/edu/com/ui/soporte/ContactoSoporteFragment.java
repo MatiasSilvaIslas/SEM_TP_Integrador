@@ -171,10 +171,11 @@ public class ContactoSoporteFragment extends Fragment {
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show();
         getParentFragmentManager().popBackStack(); // En lugar de finish()
 
-        Intent intent = new Intent(requireContext(), PantallaPrincipalActivity.class);
-        startActivity(intent);
+        FragmentTransaction transaction = requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction();
 
-        // Finaliza el fragmento actual si es necesario
-        requireActivity().finish();
+        transaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
+        transaction.commit();
     }
 }

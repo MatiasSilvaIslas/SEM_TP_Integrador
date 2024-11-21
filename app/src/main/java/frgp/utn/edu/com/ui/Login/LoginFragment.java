@@ -18,15 +18,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+
 import com.google.firebase.auth.FirebaseUser;
 import frgp.utn.edu.com.MainActivity;
 
 import frgp.utn.edu.com.R;
 
-import frgp.utn.edu.com.conexion.DataUsuario;
-import frgp.utn.edu.com.ui.electrodomesticos.ABMLElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
@@ -36,6 +33,7 @@ public class LoginFragment extends Fragment {
     private EditText passwordEditText;
     private Button loginButton, registerButton;
     private LoginRegisterViewModel loginRegisterViewModel;
+
 
     public LoginFragment() {
     }
@@ -124,9 +122,11 @@ public class LoginFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+
     private void pasarPantallaInicio() {
         // Pasar a la pantalla principal
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
         fragmentTransaction.commit();

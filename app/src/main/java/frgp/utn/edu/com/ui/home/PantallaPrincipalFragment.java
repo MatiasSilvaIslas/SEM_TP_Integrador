@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -24,14 +23,21 @@ import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
+import frgp.utn.edu.com.ui.informes.tabInformeFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
+import frgp.utn.edu.com.ui.proyeccion.ProyeccionFragment;
 import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 
 public class PantallaPrincipalFragment extends Fragment {
     Toolbar toolbar;
+
+
+    TextView txtNombre;
+
     private Usuario usuario;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -52,7 +58,13 @@ public class PantallaPrincipalFragment extends Fragment {
 
     public void initViews(View view)
     {
-        TextView textWelcome = (TextView) view.findViewById(R.id.textWelcome);
+
+
+        txtNombre = view.findViewById(R.id.textWelcome);
+        getUserName();
+        Button btnProfile = view.findViewById(R.id.btnProfile);
+
+        
         String email= SessionManager.getUserEmail(getActivity());
         DataUsuario dataUsuario = new DataUsuario(getActivity());
         dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
@@ -66,6 +78,7 @@ public class PantallaPrincipalFragment extends Fragment {
         });
 
         ImageView btnProfile = view.findViewById(R.id.icon_user);
+
         Button btnManageAppliances = view.findViewById(R.id.btnManageAppliances);
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
@@ -105,14 +118,14 @@ public class PantallaPrincipalFragment extends Fragment {
             }
         });
 
-       /* Button btnConsejos = view.findViewById(R.id.btnConsejosf);
+        Button btnConsejos = view.findViewById(R.id.btnproyeccion);
         btnConsejos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frgment_frame, new ConsejosFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new ProyeccionFragment()).commit();
             }
-        });*/
+        });
 
         FloatingActionButton btnHelp = view.findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
@@ -136,15 +149,33 @@ public class PantallaPrincipalFragment extends Fragment {
            }
         });
 
+
+
         Button btnReportes = view.findViewById(R.id.btnConsultReports);
         btnReportes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new InformesFragment()
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new tabInformeFragment()
                 ).commit();
             }
         });
+    }
+
+    private void getUserName() {
+        String email= SessionManager.getUserEmail(getActivity());
+        DataUsuario dataUsuario = new DataUsuario(getActivity());
+        dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
+            if(usuario!=null){
+                this.usuario = usuario;
+                String txt= "Bienvenido: "+usuario.getNombre_usuario();
+                txtNombre.setText(txt);
+                txtNombre.setText(txt);
+            }else{
+                Toast.makeText(getActivity(), "Error al obtener usuario", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
     //btn reportes
 

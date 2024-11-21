@@ -17,6 +17,9 @@
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar_layout" />
 
+
+        
+
         <!-- Texto de Bienvenida -->
         <TextView
             android:id="@+id/textWelcome"
@@ -29,6 +32,7 @@
             android:layout_below="@id/toolbar_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp" />
+
 
         <!-- Botón Mi Perfil -->
         <Button

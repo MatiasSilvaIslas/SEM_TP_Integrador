@@ -1,6 +1,7 @@
 package frgp.utn.edu.com.ui.electrodomesticos;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ public class CalculoConsumoFragment extends Fragment {
     private ElectrodomesticoDB electrodomesticoDB;
     private ArrayList<Categoria> listaCategorias;
     private ArrayList<Electrodomestico> listaElectrodomesticos;
-    Button btnCalcular;
 
     @Nullable
     @Override
@@ -44,42 +44,23 @@ public class CalculoConsumoFragment extends Fragment {
         editHorasUso = view.findViewById(R.id.editHorasUso);
         editDiasUso = view.findViewById(R.id.editDiasUso);
         textConsumoEstimado = view.findViewById(R.id.textConsumoEstimado);
-        btnCalcular = view.findViewById(R.id.btnCalcular);
+        Button btnCalcular = view.findViewById(R.id.btnCalcular);
+
+        // Agregar InputFilters para limitar la entrada de texto
+        editHorasUso.setFilters(new InputFilter[]{crearInputFilter(25)});
+        editDiasUso.setFilters(new InputFilter[]{crearInputFilter(31)});
 
         // Inicializar base de datos
         electrodomesticoDB = new ElectrodomesticoDB(getContext());
-
-        //Acá me voy para el perfil del usurio
-        ImageView btnProfile = view.findViewById(R.id.icon_user);
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frgment_frame, new fragmentMiPerfil());
-                fragmentTransaction.commit();
-            }
-        });
-        // Retornar la vista de fragmento
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         // Paso 1: Cargar categorías en el spinner
         electrodomesticoDB.obtenerCategoriasAsync(categorias -> {
             listaCategorias = categorias;
 
             // Configurar el adaptador del spinner de categorías
-            if (getContext() != null) {
-                ArrayAdapter<Categoria> adapterCategoria = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categorias);
-                adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerCategoria.setAdapter(adapterCategoria);
-            }
+            ArrayAdapter<Categoria> adapterCategoria = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categorias);
+            adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerCategoria.setAdapter(adapterCategoria);
         });
 
         // Paso 2: Manejar selección de categoría
@@ -93,26 +74,22 @@ public class CalculoConsumoFragment extends Fragment {
                     listaElectrodomesticos = electrodomesticos;
 
                     // Configurar el adaptador del spinner de electrodomésticos
-                    if (getContext() != null) {
-                        ArrayAdapter<Electrodomestico> adapterElectrodomestico = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, electrodomesticos);
-                        adapterElectrodomestico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinnerElectrodomesticos.setAdapter(adapterElectrodomestico);
-                    }
+                    ArrayAdapter<Electrodomestico> adapterElectrodomestico = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, electrodomesticos);
+                    adapterElectrodomestico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerElectrodomesticos.setAdapter(adapterElectrodomestico);
                 });
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Manejar caso donde no hay categoría seleccionada
-                if (getContext() != null) {
-                    ArrayAdapter<Electrodomestico> emptyAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<>());
-                    emptyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerElectrodomesticos.setAdapter(emptyAdapter);
-                }
+                ArrayAdapter<Electrodomestico> emptyAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<>());
+                emptyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerElectrodomesticos.setAdapter(emptyAdapter);
             }
         });
 
-        // Configurar botón para calcular el consumo estimado
+        // Configurar botón para calcular consumo
         btnCalcular.setOnClickListener(v -> {
             // Validar que el Spinner tenga un elemento seleccionado
             if (spinnerElectrodomesticos.getSelectedItem() == null) {
@@ -137,6 +114,17 @@ public class CalculoConsumoFragment extends Fragment {
                 int horasPorDia = Integer.parseInt(horasText);
                 int dias = Integer.parseInt(diasText);
 
+                // Validar que las horas y días estén en los rangos permitidos
+                if (horasPorDia >= 25) {
+                    Toast.makeText(getContext(), "Las horas de uso no pueden ser mayores o iguales a 25", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (dias >= 31) {
+                    Toast.makeText(getContext(), "Los días de uso no pueden ser mayores o iguales a 31", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // Calcular consumo
                 double consumoTotal = (selected.getPotenciaPromedioWatts() / 1000.0) * horasPorDia * dias;
 
@@ -148,5 +136,26 @@ public class CalculoConsumoFragment extends Fragment {
                 Toast.makeText(getContext(), "Entrada inválida. Ingresa solo números.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        return view;
+    }
+
+    // Crear InputFilter para limitar la entrada
+    private InputFilter crearInputFilter(final int maxValue) {
+        return (source, start, end, dest, dstart, dend) -> {
+            try {
+                // Combinar el texto existente con el nuevo
+                String nuevoTexto = dest.toString().substring(0, dstart) + source + dest.toString().substring(dend);
+
+                // Validar que no exceda el valor máximo
+                int input = Integer.parseInt(nuevoTexto);
+                if (input >= maxValue) {
+                    return "";
+                }
+            } catch (NumberFormatException e) {
+                // Ignorar entradas inválidas
+            }
+            return null; // Aceptar el texto
+        };
     }
 }

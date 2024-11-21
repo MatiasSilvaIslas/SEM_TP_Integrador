@@ -40,6 +40,19 @@ android:background="@android:color/white">
         android:textColor="@android:color/white"
         android:backgroundTint="@color/blue_primary" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCambiarContraseña"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnModificarPerfil"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="Cambiar contraseña"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/blue_primary" />
 <!-- Botón Gestionar Electrodomésticos
 <com.google.android.material.button.MaterialButton
     android:id="@+id/btnModificarCredenciales"

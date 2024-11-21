@@ -81,13 +81,13 @@ public class InformesFragment extends Fragment {
 
     private double obtenerLimiteConsumo() {
         if (editLimiteConsumo == null || editLimiteConsumo.getText().toString().trim().isEmpty()) {
-            Toast.makeText(getContext(), "Ingrese un límite válido", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Ingrese un límite válido", Toast.LENGTH_SHORT).show();
             return 0; // Valor por defecto
         }
         try {
             return Double.parseDouble(editLimiteConsumo.getText().toString().trim());
         } catch (NumberFormatException e) {
-            Toast.makeText(getContext(), "Ingrese un número válido", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), "Ingrese un número válido", Toast.LENGTH_SHORT).show();
             return 0; // Valor por defecto
         }
     }

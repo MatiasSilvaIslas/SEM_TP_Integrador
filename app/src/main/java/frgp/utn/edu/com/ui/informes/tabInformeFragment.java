@@ -15,11 +15,12 @@ public class tabInformeFragment  extends Fragment {
     ViewPagerAdapter viewPagerAdapter;
     TabLayout tabLayout;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_slide_informe,container,false);
         //((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.tp));
 
 
-        viewPagerAdapter = new ViewPagerAdapter(getContext(), getActivity().getSupportFragmentManager()); //view pager adapter
+        viewPagerAdapter = new ViewPagerAdapter(getActivity(), getParentFragmentManager()); //view pager adapter
         tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -27,5 +28,10 @@ public class tabInformeFragment  extends Fragment {
         viewPager.setAdapter(viewPagerAdapter);
 
         return view;
+    }
+
+    public View onDestory() {
+         this.getView().destroyDrawingCache();
+            return this.getView();
     }
 }

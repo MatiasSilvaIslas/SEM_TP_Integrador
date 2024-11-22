@@ -196,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     newFragment = new MyAccountFragment();
                     break;
                 case 4: // Pantalla Principal
+
+
                     newFragment = new PantallaPrincipalFragment();
                     break;
                 case 5: // Logout

@@ -140,7 +140,7 @@ public class ABMLElectrodomesticosFragment extends Fragment {
                                 @Override
                                 public void onElectrodomesticosObtenidos(ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados) {
                                     // Crear el adaptador para los electrodomésticos obtenidos y las configuraciones guardadas
-                                    electrodomesticoAdapter = new ElectrodomesticoAdapter(getActivity(), electrodomesticos, electrodomesticosGuardados, usuarioId);
+                                   // electrodomesticoAdapter = new ElectrodomesticoAdapter(getActivity(), electrodomesticos, electrodomesticosGuardados, usuarioId);
 
                                     // Asegurarse de que el RecyclerView tenga el adaptador antes de renderizarlo
                                     if (dialogRecyclerElectrodomesticos.getAdapter() == null) {

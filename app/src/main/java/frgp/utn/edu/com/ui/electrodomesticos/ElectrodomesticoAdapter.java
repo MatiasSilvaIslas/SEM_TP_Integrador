@@ -6,12 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,28 +18,152 @@ import java.util.HashMap;
 import java.util.Map;
 
 import frgp.utn.edu.com.R;
-import frgp.utn.edu.com.conexion.UsuarioElectrodomesticoDB;
 import frgp.utn.edu.com.entidad.Electrodomestico;
 import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
 
 public class ElectrodomesticoAdapter extends RecyclerView.Adapter<ElectrodomesticoAdapter.ViewHolder> {
-
     private Context context;
     private ArrayList<Electrodomestico> electrodomesticos;
     private ArrayList<Electrodomestico> seleccionados;
-    private Map<Integer, int[]> configuraciones;
+    private Map<Integer, SpinnerState> spinnerStates; // Guardar estado de spinners por ID
     private ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados;
-    private int usuarioId;
+
+    // Clase para mantener el estado de los spinners
+    private static class SpinnerState {
+        int cantidad;
+        int horas;
+        int dias;
+
+        SpinnerState(int cantidad, int horas, int dias) {
+            this.cantidad = cantidad;
+            this.horas = horas;
+            this.dias = dias;
+        }
+    }
 
     public ElectrodomesticoAdapter(Context context, ArrayList<Electrodomestico> electrodomesticos,
-                                   ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados, int usuarioId) {
+                                   ArrayList<UsuarioElectrodomestico> electrodomesticosGuardados) {
         this.context = context;
         this.electrodomesticos = electrodomesticos;
         this.seleccionados = new ArrayList<>();
-        this.configuraciones = new HashMap<>();
+        this.spinnerStates = new HashMap<>();
         this.electrodomesticosGuardados = electrodomesticosGuardados;
-        this.usuarioId = usuarioId;
+
+        // Inicializar estados con datos guardados
+        initializeSpinnerStates();
     }
+
+    private void initializeSpinnerStates() {
+        // Inicializar con datos guardados
+        for (UsuarioElectrodomestico ue : electrodomesticosGuardados) {
+            spinnerStates.put(ue.getElectrodomesticoId(),
+                    new SpinnerState(ue.getCantidad(), ue.getHoras(), ue.getDias()));
+
+            // Añadir a seleccionados si tiene datos guardados
+            for (Electrodomestico e : electrodomesticos) {
+                if (e.getId_electrodomestico() == ue.getElectrodomesticoId()) {
+                    seleccionados.add(e);
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Electrodomestico electrodomestico = electrodomesticos.get(position);
+        int electroId = electrodomestico.getId_electrodomestico();
+
+        // Configurar nombre
+        holder.textNombre.setText(electrodomestico.getNombre());
+
+        // Configurar CheckBox
+        holder.checkBox.setOnCheckedChangeListener(null);
+        holder.checkBox.setChecked(seleccionados.contains(electrodomestico));
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (!seleccionados.contains(electrodomestico)) {
+                    seleccionados.add(electrodomestico);
+                    // Guardar estado actual de los spinners
+                    guardarEstadoSpinners(electroId, holder);
+                }
+            } else {
+                seleccionados.remove(electrodomestico);
+                spinnerStates.remove(electroId);
+            }
+        });
+
+        // Configurar Spinners
+        setupSpinner(holder.spinnerCantidad, getCantidadOptions());
+        setupSpinner(holder.spinnerHoras, getHorasOptions());
+        setupSpinner(holder.spinnerDias, getDiasOptions());
+
+        // Restaurar estados guardados
+        SpinnerState estado = spinnerStates.get(electroId);
+        if (estado != null) {
+            holder.spinnerCantidad.setSelection(estado.cantidad - 1);
+            holder.spinnerHoras.setSelection(estado.horas - 1);
+            holder.spinnerDias.setSelection(estado.dias - 1);
+        } else {
+            holder.spinnerCantidad.setSelection(0);
+            holder.spinnerHoras.setSelection(0);
+            holder.spinnerDias.setSelection(0);
+        }
+
+        // Configurar listeners de Spinners
+        setupSpinnerListeners(holder, electroId);
+    }
+
+    private void setupSpinnerListeners(ViewHolder holder, int electroId) {
+        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (holder.checkBox.isChecked()) {
+                    guardarEstadoSpinners(electroId, holder);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        };
+
+        holder.spinnerCantidad.setOnItemSelectedListener(listener);
+        holder.spinnerHoras.setOnItemSelectedListener(listener);
+        holder.spinnerDias.setOnItemSelectedListener(listener);
+    }
+
+    private void guardarEstadoSpinners(int electroId, ViewHolder holder) {
+        int cantidad = holder.spinnerCantidad.getSelectedItemPosition() + 1;
+        int horas = holder.spinnerHoras.getSelectedItemPosition() + 1;
+        int dias = holder.spinnerDias.getSelectedItemPosition() + 1;
+
+        spinnerStates.put(electroId, new SpinnerState(cantidad, horas, dias));
+    }
+
+    // Método para obtener los valores actuales para la base de datos
+    public ArrayList<UsuarioElectrodomestico> getSeleccionadosParaGuardar(int userId) {
+        ArrayList<UsuarioElectrodomestico> result = new ArrayList<>();
+
+        for (Electrodomestico electrodomestico : seleccionados) {
+            SpinnerState estado = spinnerStates.get(electrodomestico.getId_electrodomestico());
+            if (estado != null) {
+                result.add(new UsuarioElectrodomestico(
+                        userId,
+                        electrodomestico.getId_electrodomestico(),
+                        estado.cantidad,
+                        estado.horas,
+                        estado.dias
+                ));
+            }
+        }
+
+        return result;
+    }
+    //////////////
+
+    private Map<Integer, int[]> configuraciones;
+
+
 
     @NonNull
     @Override
@@ -51,95 +172,21 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
         return new ViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Electrodomestico electrodomestico = electrodomesticos.get(position);
-        holder.textNombre.setText(electrodomestico.getNombre());
-
-        holder.checkBox.setChecked(seleccionados.contains(electrodomestico));
-        setupSpinner(holder.spinnerCantidad, getCantidadOptions());
-        setupSpinner(holder.spinnerHoras, getHorasOptions());
-        setupSpinner(holder.spinnerDias, getDiasOptions());
-
-        UsuarioElectrodomestico usuarioElectrodomestico = obtenerDatosGuardados(electrodomestico.getId_electrodomestico());
-        if (usuarioElectrodomestico != null) {
-            holder.checkBox.setChecked(true);
-            holder.spinnerCantidad.setSelection(usuarioElectrodomestico.getCantidad() - 1);
-            holder.spinnerHoras.setSelection(usuarioElectrodomestico.getHoras() - 1);
-            holder.spinnerDias.setSelection(usuarioElectrodomestico.getDias() - 1);
-          //  holder.btnEliminar.setVisibility(View.VISIBLE);
-            if (!seleccionados.contains(electrodomestico)) {
-                seleccionados.add(electrodomestico);
-            }
-        } else {
-           // holder.btnEliminar.setVisibility(View.GONE);
-        }
-
-        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (!seleccionados.contains(electrodomestico)) {
-                    seleccionados.add(electrodomestico);
-                }
-            } else {
-                seleccionados.remove(electrodomestico);
-            }
-        });
-
-        /*holder.btnEliminar.setOnClickListener(v -> {
-            new UsuarioElectrodomesticoDB(context).eliminarElectrodomestico(usuarioId, electrodomestico.getId_electrodomestico(), success -> {
-                if (success) {
-                    configuraciones.remove(electrodomestico.getId_electrodomestico());
-                    holder.checkBox.setChecked(false);
-                    holder.spinnerCantidad.setSelection(0);
-                    holder.spinnerHoras.setSelection(0);
-                    holder.spinnerDias.setSelection(0);
-                    holder.btnEliminar.setVisibility(View.GONE);
-                    Toast.makeText(context, "Configuración eliminada", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "No se pudo eliminar la configuración", Toast.LENGTH_SHORT).show();
-                }
-            });
-        });*/
-
-        holder.spinnerCantidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                if (holder.checkBox.isChecked()) {
-                    guardarConfiguracion(electrodomestico, holder);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        holder.spinnerHoras.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                if (holder.checkBox.isChecked()) {
-                    guardarConfiguracion(electrodomestico, holder);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        holder.spinnerDias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                if (holder.checkBox.isChecked()) {
-                    guardarConfiguracion(electrodomestico, holder);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-    }
 
     private void guardarConfiguracion(Electrodomestico electrodomestico, ViewHolder holder) {
-        int cantidad = holder.spinnerCantidad.getSelectedItemPosition();
-        int horas = holder.spinnerHoras.getSelectedItemPosition();
-        int dias = holder.spinnerDias.getSelectedItemPosition();
+        int cantidad = holder.spinnerCantidad.getSelectedItemPosition() + 1;
+        int horas = holder.spinnerHoras.getSelectedItemPosition() + 1;
+        int dias = holder.spinnerDias.getSelectedItemPosition() + 1;
         configuraciones.put(electrodomestico.getId_electrodomestico(), new int[]{cantidad, horas, dias});
+    }
+
+    private UsuarioElectrodomestico obtenerDatosGuardados(int electrodomesticoId) {
+        for (UsuarioElectrodomestico ue : electrodomesticosGuardados) {
+            if (ue.getElectrodomesticoId() == electrodomesticoId) {
+                return ue;
+            }
+        }
+        return null;
     }
 
     private void setupSpinner(Spinner spinner, ArrayList<Integer> options) {
@@ -149,21 +196,21 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
     }
 
     private ArrayList<Integer> getCantidadOptions() {
-        ArrayList<Integer> cantidadOptions = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) cantidadOptions.add(i);
-        return cantidadOptions;
+        ArrayList<Integer> options = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) options.add(i);
+        return options;
     }
 
     private ArrayList<Integer> getHorasOptions() {
-        ArrayList<Integer> horasOptions = new ArrayList<>();
-        for (int i = 1; i <= 24; i++) horasOptions.add(i);
-        return horasOptions;
+        ArrayList<Integer> options = new ArrayList<>();
+        for (int i = 1; i <= 24; i++) options.add(i);
+        return options;
     }
 
     private ArrayList<Integer> getDiasOptions() {
-        ArrayList<Integer> diasOptions = new ArrayList<>();
-        for (int i = 1; i <= 30; i++) diasOptions.add(i);
-        return diasOptions;
+        ArrayList<Integer> options = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) options.add(i);
+        return options;
     }
 
     @Override
@@ -175,16 +222,10 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
         return seleccionados;
     }
 
-    public interface OnItemClickListener {
-        void onEditarClick(Electrodomestico electrodomestico);
-        void onEliminarClick(Electrodomestico electrodomestico);
-    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textNombre;
         CheckBox checkBox;
         Spinner spinnerCantidad, spinnerHoras, spinnerDias;
-       // ImageView btnEliminar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -193,16 +234,6 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
             spinnerCantidad = itemView.findViewById(R.id.spinnerCantidad);
             spinnerHoras = itemView.findViewById(R.id.spinnerHoras);
             spinnerDias = itemView.findViewById(R.id.spinnerDias);
-         //   btnEliminar = itemView.findViewById(R.id.btnEliminar);
         }
-    }
-
-    private UsuarioElectrodomestico obtenerDatosGuardados(int electrodomesticoId) {
-        for (UsuarioElectrodomestico ue : electrodomesticosGuardados) {
-            if (ue.getElectrodomesticoId() == electrodomesticoId) {
-                return ue;
-            }
-        }
-        return null;
     }
 }

@@ -8,6 +8,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.ElectrodomesticoDB;
 import frgp.utn.edu.com.entidad.Categoria;
 import frgp.utn.edu.com.entidad.Electrodomestico;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -41,6 +44,18 @@ public class CalculoConsumoFragment extends Fragment {
             ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
          }
             ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
 
         // Inicializar vistas

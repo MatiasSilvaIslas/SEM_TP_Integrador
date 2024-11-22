@@ -34,6 +34,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.DataDB;
 import frgp.utn.edu.com.conexion.SoporteDB;
@@ -41,6 +42,7 @@ import frgp.utn.edu.com.servicio.EmailService;
 import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
+import frgp.utn.edu.com.ui.informes.tabInformeFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 public class ContactoSoporteFragment extends Fragment {
@@ -52,30 +54,22 @@ public class ContactoSoporteFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contacto_soporte, container, false);
-
-        // Configura la toolbar
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) requireActivity();
-        activity.setSupportActionBar(toolbar);
 
-        /* toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setNavigationOnClickListener(v -> {
-            // Navega a PantallaPrincipalFragment
-           FragmentTransaction transaction = requireActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction();
-            transaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
-            transaction.commit();
-        });*/
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
-        // Habilita el botón de retroceso
-        if (activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
 
         // Configurar el MenuProvider
         requireActivity().addMenuProvider(new MenuProvider() {
@@ -241,4 +235,6 @@ public class ContactoSoporteFragment extends Fragment {
         transaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
         transaction.commit();
     }
+
+
 }

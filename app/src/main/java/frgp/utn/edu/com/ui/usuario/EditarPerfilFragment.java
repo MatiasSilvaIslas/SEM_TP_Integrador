@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,8 @@ import frgp.utn.edu.com.conexion.ProvinciaDB;
 import frgp.utn.edu.com.entidad.Localidad;
 import frgp.utn.edu.com.entidad.Provincia;
 import frgp.utn.edu.com.entidad.Usuario;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
+import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 import frgp.utn.edu.com.utils.InputFilterLetters;
 import frgp.utn.edu.com.utils.SessionManager;
 
@@ -56,6 +60,18 @@ public class EditarPerfilFragment extends Fragment {
 
         etFechaNacimiento = view.findViewById(R.id.et_fecha_nacimiento_edit);
         etFechaNacimiento.setOnClickListener(v -> showDatePickerDialog());
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new fragmentMiPerfil())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         return view;
     }
     /*@Override

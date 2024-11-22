@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.GraficosHelper;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
 import java.util.List;
 
@@ -44,12 +47,30 @@ public class InformesFragment1 extends Fragment {
         initializeViews(view);
         setupPieChart();
 
-
         graficosHelper = new GraficosHelper(requireContext());
         cargarDatosYActualizarGraficos();
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargarDatosYActualizarGraficos(); // Recarga los datos y gráficos
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -131,6 +152,7 @@ public class InformesFragment1 extends Fragment {
     }
 
     private void actualizarGraficoTorta(List<PieEntry> datosTorta) {
+        pieChart.clear();
         if (datosTorta.isEmpty()) {
             pieChart.setNoDataText("No hay datos disponibles");
             return;

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.GraficosHelper;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
 public class InformesFragment extends Fragment {
 
@@ -56,8 +58,27 @@ public class InformesFragment extends Fragment {
         graficosHelper = new GraficosHelper(requireContext());
         cargarDatosYActualizarGraficos();
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargarDatosYActualizarGraficos(); // Recarga los datos y gráficos
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -161,6 +182,7 @@ public class InformesFragment extends Fragment {
     }
 
     private void actualizarGraficoLinea(List<Entry> datosLinea) {
+        lineChart.clear();
         if (datosLinea.isEmpty()) {
             lineChart.setNoDataText("No hay datos disponibles");
             return;

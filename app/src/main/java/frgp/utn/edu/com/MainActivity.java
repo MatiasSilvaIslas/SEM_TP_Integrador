@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handler the drawer toggle press
@@ -248,4 +250,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
 }

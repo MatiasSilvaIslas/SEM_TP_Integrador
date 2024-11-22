@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,6 +89,12 @@ public class NotificacionesActivity extends AppCompatActivity{
         int milliseconds = (seconds * 1000);
         mServiceIntent.putExtra(CommonConstants.EXTRA_TIMER, milliseconds);
         startService(mServiceIntent);
+    }
+
+
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu);
     }
 
 

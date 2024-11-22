@@ -3,9 +3,12 @@ package frgp.utn.edu.com.ui.electrodomesticos;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -32,6 +35,13 @@ public class CalculoConsumoFragment extends Fragment {
         // Inflar la vista
         View view = inflater.inflate(R.layout.fragment_calculo_consumo, container, false);
         ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+         }
+            ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+
 
         // Inicializar vistas
         spinnerCategoria = view.findViewById(R.id.spinnerCategoria);
@@ -133,6 +143,12 @@ public class CalculoConsumoFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private InputFilter crearInputFilter(final int maxValue) {

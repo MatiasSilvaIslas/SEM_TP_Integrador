@@ -2,6 +2,8 @@ package frgp.utn.edu.com.ui.electrodomesticos;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -85,7 +87,11 @@ public class ABMLElectrodomesticosFragment extends Fragment {
         return view;
     }
 
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     private void mostrarElectrodomesticosDialog(Categoria categoria) {
         // Inflar el layout del BottomSheet

@@ -2,8 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view"
-
-
 >
 
     <group android:checkableBehavior="single">
@@ -11,20 +9,17 @@
                 android:id="@+id/nav_principal"
                 android:icon="@android:drawable/btn_star"
                 android:title="Principal"
-
         />
 
         <item
                 android:id="@+id/nav_reportes"
                 android:icon="@android:drawable/stat_sys_download"
                 android:title="Reportes"
-
         />
         <item
                 android:id="@+id/Fragmentmyaccount"
                 android:icon="@android:drawable/stat_sys_upload"
                 android:title="Cuenta"
-
         />
 
         <item

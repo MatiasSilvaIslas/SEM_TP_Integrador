@@ -143,7 +143,7 @@ public class PantallaPrincipalFragment extends Fragment {
         });
 
         //Realizado a la antigua
-        Button btn_notification = view.findViewById(R.id.btn_notification);
+      Button btn_notification = view.findViewById(R.id.btn_notification);
         btn_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,9 +8,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import frgp.utn.edu.com.entidad.Electrodomestico;
 import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
 
 public class UsuarioElectrodomesticoDB {
@@ -175,6 +177,116 @@ public class UsuarioElectrodomesticoDB {
 
     public interface ObtenerElectrodomesticosCallback {
         void onElectrodomesticosObtenidos(ArrayList<UsuarioElectrodomestico> electrodomesticos);
+    }
+
+
+    public void obtenerElectrodomesticosPorUsuario(int usuarioId, CallbackElectrodomesticos callback) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            ArrayList<UsuarioElectrodomestico> electrodomesticos = new ArrayList<>();
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                String query = "SELECT " +
+                        "ue.id AS usuario_electrodomestico_id, " +
+                        "ue.usuario_id, " +
+                        "ue.electrodomestico_id, " +
+                        "e.nombre AS electrodomestico_nombre, " +
+                        "e.potencia_promedio_watts, " +
+                        "e.consumo_hora_wh, " +
+                        "ue.cantidad, " +
+                        "ue.horas, " +
+                        "ue.dias " +
+                        "FROM UsuarioElectrodomestico ue " +
+                        "INNER JOIN Electrodomestico e ON ue.electrodomestico_id = e.id_electrodomestico " +
+                        "WHERE ue.usuario_id = ?";
+
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setInt(1, usuarioId);
+
+                ResultSet rs = pst.executeQuery();
+                while (rs.next()) {
+                    // Aquí, creas un objeto UsuarioElectrodomestico y lo llenas con los datos de la consulta
+                    UsuarioElectrodomestico usuarioElectrodomestico = new UsuarioElectrodomestico();
+                    usuarioElectrodomestico.setId(rs.getInt("usuario_electrodomestico_id"));
+                    usuarioElectrodomestico.setUsuarioId(rs.getInt("usuario_id"));
+                    usuarioElectrodomestico.setElectrodomesticoId(rs.getInt("electrodomestico_id"));
+                    usuarioElectrodomestico.setCantidad(rs.getInt("cantidad"));
+                    usuarioElectrodomestico.setHoras(rs.getInt("horas"));
+                    usuarioElectrodomestico.setDias(rs.getInt("dias"));
+
+                    electrodomesticos.add(usuarioElectrodomestico);
+                }
+
+                rs.close();
+                pst.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Devuelves la lista con los objetos UsuarioElectrodomestico
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onComplete(electrodomesticos));
+        });
+    }
+
+    public interface CallbackElectrodomesticos {
+        void onComplete(ArrayList<UsuarioElectrodomestico> electrodomesticos);
+    }
+
+    public void obtenerDetallesElectrodomestico(int electrodomesticoId, final CallbackDetalles callback) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Conexión a la base de datos
+                    Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                    // Actualizamos la consulta para incluir la potencia y el consumo
+                    String query = "SELECT nombre, potencia_promedio_watts, consumo_hora_wh FROM Electrodomestico WHERE id_electrodomestico = ?";
+                    PreparedStatement pst = con.prepareStatement(query);
+                    pst.setInt(1, electrodomesticoId);
+                    ResultSet rs = pst.executeQuery();
+
+                    String nombre = null;
+                    int potenciaPromedio = 0;
+                    int consumoPorHora = 0;
+
+                    if (rs.next()) {
+                        nombre = rs.getString("nombre");
+                        potenciaPromedio = rs.getInt("potencia_promedio_watts");
+                        consumoPorHora = rs.getInt("consumo_hora_wh");
+                    }
+
+                    rs.close();
+                    pst.close();
+                    con.close();
+
+                    // Aseguramos que el callback se llama en el hilo principal
+                    final String finalNombre = nombre;
+                    final int finalPotenciaPromedio = potenciaPromedio;
+                    final int finalConsumoPorHora = consumoPorHora;
+
+                    new android.os.Handler(android.os.Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Llamamos al callback con los valores obtenidos
+                            callback.onDetallesObtenidos(finalNombre, finalPotenciaPromedio, finalConsumoPorHora);
+                        }
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public interface CallbackDetalles {
+        void onDetallesObtenidos(String nombre, int potenciaPromedio, int consumoPorHora);
     }
 
 }

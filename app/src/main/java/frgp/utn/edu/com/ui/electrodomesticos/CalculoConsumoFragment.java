@@ -3,22 +3,21 @@ package frgp.utn.edu.com.ui.electrodomesticos;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.ElectrodomesticoDB;
 import frgp.utn.edu.com.entidad.Categoria;
 import frgp.utn.edu.com.entidad.Electrodomestico;
-import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
+import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -38,25 +37,6 @@ public class CalculoConsumoFragment extends Fragment {
         // Inflar la vista
         View view = inflater.inflate(R.layout.fragment_calculo_consumo, container, false);
         ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
-
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-         }
-            ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // Navegar al Fragment deseado o realizar una acción personalizada
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
 
         // Inicializar vistas
         spinnerCategoria = view.findViewById(R.id.spinnerCategoria);
@@ -160,12 +140,7 @@ public class CalculoConsumoFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
+    // Crear InputFilter para limitar la entrada
     private InputFilter crearInputFilter(final int maxValue) {
         return (source, start, end, dest, dstart, dend) -> {
             try {

@@ -1,330 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:padding="8dp"
+    tools:context=".MainActivity">
 
     <!-- Include de la Toolbar -->
     <include
         android:id="@+id/toolbar_layout"
-        layout="@layout/toolbar_layout" />
-
-    <!-- FIN Toolbar -->
-
-    <!-- Imagen del título -->
-
-    <!-- Texto del título -->
-    <!-- FIN del titulo -->
+        layout="@layout/toolbar_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
-    <!-- 1° Layout - LAmpara Led -->
-    <!-- FIN 1° Layout -->
+    <!-- ScrollView para permitir desplazamiento -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <!-- 2° Layout - Heladera -->
-    <!-- FIN 2° Layout -->
-
-    <!-- 3° Layout - Laverropa -->
-    <!-- FIN 3° Layout -->
-
-    <!-- 4° Layout - Plancha -->
-    <!-- FIN 4° Layout -->
-
-    <!-- 5° Layout - Aire Acondicionado -->
-
-    <ImageView
-        android:id="@+id/image_sustentable"
-        android:layout_width="73dp"
-        android:layout_height="69dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="@+id/textWelcome"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="62dp"
-        android:contentDescription="@string/icono_sustentable"
-        android:src="@drawable/energia_sustentable_2"
-        tools:ignore="RtlHardcoded" />
-
-    <TextView
-        android:id="@+id/textWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_layout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="36dp"
-        android:text="@string/consejo_titulo"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="425dp"
-        android:layout_height="114dp"
-        android:layout_below="@+id/textWelcome"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="13dp"
-        android:background="#CBEBF4"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <!-- Imagen  -->
-        <ImageView
-            android:id="@+id/image_lampara_bajo_consumo"
-            android:layout_width="79dp"
-            android:layout_height="86dp"
-            android:layout_gravity="center|start"
-            android:layout_marginEnd="3dp"
-            android:accessibilityHeading="true"
-            android:contentDescription="@string/lamp_bajo_consumo"
-            android:foregroundTint="#050505"
-            android:foregroundTintMode="screen"
-            android:src="@drawable/lampara_bajo_consumo"
-            android:textAlignment="gravity"
-            app:tint="#3B49A8" />
-
-        <!-- Texto  -->
-        <TextView
-            android:id="@+id/text_lampara_bajo_consumo"
-            android:layout_width="295dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/arimo_medium"
-            android:text="@string/lamp_bajo_consumo"
-            android:textAlignment="center"
-            android:textColor="#474646"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            tools:ignore="TextSizeCheck" />
-    </LinearLayout>
+            android:orientation="vertical">
+            <!-- Título -->
+            <TextView
+                android:id="@+id/textWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/consejo_titulo"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="425dp"
-        android:layout_height="111dp"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="13dp"
-        android:background="#CBEBF4"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+            <!-- Imagen del Título -->
+            <ImageView
+                android:id="@+id/image_sustentable"
+                android:layout_width="72dp"
+                android:layout_height="62dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/icono_sustentable"
+                android:src="@drawable/energia_sustentable_2"
+                android:layout_gravity="center_horizontal" />
 
-        <ImageView
-            android:id="@+id/image_heladera"
-            android:layout_width="81dp"
-            android:layout_height="88dp"
-            android:layout_gravity="center|start"
-            android:layout_marginEnd="3dp"
-            android:accessibilityHeading="true"
-            android:foregroundTint="#050505"
-            android:foregroundTintMode="screen"
-            android:src="@drawable/heladera"
-            android:contentDescription="@string/heladera"
-            android:textAlignment="gravity"
-            app:tint="#3B49A8" />
+            <!-- Layout 1: Lámpara LED -->
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CBEBF4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/text_heladera"
-            android:layout_width="297dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/arimo_medium"
-            android:text="@string/heladera"
-            android:textAlignment="center"
-            android:textColor="#474646"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            tools:ignore="TextSizeCheck" />
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/image_lampara_bajo_consumo"
+                    android:layout_width="79dp"
+                    android:layout_height="86dp"
+                    android:src="@drawable/lampara_bajo_consumo"
+                    android:contentDescription="@string/lamp_bajo_consumo" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="425dp"
-        android:layout_height="111dp"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="13dp"
-        android:background="#CBEBF4"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/text_lampara_bajo_consumo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/lamp_bajo_consumo"
+                    android:textAlignment="center"
+                    android:textColor="#474646"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/arimo_medium" />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/image_lavarropas"
-            android:layout_width="83dp"
-            android:layout_height="87dp"
-            android:layout_gravity="center|start"
-            android:layout_marginEnd="3dp"
-            android:accessibilityHeading="true"
-            android:foregroundTint="#050505"
-            android:foregroundTintMode="screen"
-            android:src="@drawable/lavarropas"
-            android:contentDescription="@string/lavarropas"
-            android:textAlignment="gravity"
-            app:tint="#3B49A8" />
+            <!-- Layout 2: Heladera -->
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CBEBF4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/text_lavarropas"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/arimo_medium"
-            android:text="@string/lavarropas"
-            android:textAlignment="center"
-            android:textColor="#050505"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            tools:ignore="TextSizeCheck" />
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/image_heladera"
+                    android:layout_width="81dp"
+                    android:layout_height="88dp"
+                    android:src="@drawable/heladera"
+                    android:contentDescription="@string/heladera" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="425dp"
-        android:layout_height="110dp"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="13dp"
-        android:background="#CBEBF4"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/text_heladera"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/heladera"
+                    android:textAlignment="center"
+                    android:textColor="#474646"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/arimo_medium" />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/image_plancha"
-            android:layout_width="83dp"
-            android:layout_height="83dp"
-            android:layout_gravity="center|start"
-            android:layout_marginEnd="3dp"
-            android:accessibilityHeading="true"
-            android:foregroundTint="#050505"
-            android:foregroundTintMode="screen"
-            android:src="@drawable/plancha"
-            android:contentDescription="@string/plancha"
-            android:textAlignment="gravity"
-            app:tint="#3B49A8" />
+            <!-- Layout 3: Lavarropas -->
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CBEBF4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/text_plancha"
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/arimo_medium"
-            android:text="@string/plancha"
-            android:textAlignment="center"
-            android:textColor="#474646"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            tools:ignore="TextSizeCheck" />
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/image_lavarropas"
+                    android:layout_width="83dp"
+                    android:layout_height="87dp"
+                    android:src="@drawable/lavarropas"
+                    android:contentDescription="@string/lavarropas" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout7"
-        android:layout_width="wrap_content"
-        android:layout_height="93dp"
-        android:layout_above="@+id/linearLayout5"
-        android:layout_below="@+id/linearLayout4"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="13dp"
+                <TextView
+                    android:id="@+id/text_lavarropas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/lavarropas"
+                    android:textAlignment="center"
+                    android:textColor="#050505"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/arimo_medium" />
+            </LinearLayout>
 
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="12dp"
-        android:background="#CBEBF4"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+            <!-- Layout 4: Plancha -->
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CBEBF4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
+                <ImageView
+                    android:id="@+id/image_plancha"
+                    android:layout_width="83dp"
+                    android:layout_height="83dp"
+                    android:src="@drawable/plancha"
+                    android:contentDescription="@string/plancha" />
 
-        <ImageView
-            android:id="@+id/image_computadora"
-            android:layout_width="75dp"
-            android:layout_height="79dp"
-            android:layout_gravity="center|start"
-            android:layout_marginEnd="3dp"
-            android:accessibilityHeading="true"
-            android:contentDescription="@string/computadora_pc"
-            android:foregroundTint="#050505"
-            android:foregroundTintMode="screen"
-            android:src="@drawable/computadora"
-            android:textAlignment="gravity"
-            app:tint="#3B49A8" />
+                <TextView
+                    android:id="@+id/text_plancha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/plancha"
+                    android:textAlignment="center"
+                    android:textColor="#474646"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/arimo_medium" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_computadora"
-            android:layout_width="295dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/arimo_medium"
-            android:text="@string/computadora"
-            android:textAlignment="center"
-            android:textColor="#474646"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            tools:ignore="TextSizeCheck" />
-    </LinearLayout>
+            <!-- Layout 5: Aire Acondicionado -->
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CBEBF4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
+                <ImageView
+                    android:id="@+id/image_ac"
+                    android:layout_width="75dp"
+                    android:layout_height="79dp"
+                    android:src="@drawable/aire_acondicionado"
+                    android:contentDescription="@string/aire_acondicionado" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="wrap_content"
-        android:layout_height="123dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="15dp"
-        android:background="#CBEBF4"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/text_ac"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/aire_ac"
+                    android:textAlignment="center"
+                    android:textColor="#474646"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/arimo_medium" />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/image_ac"
-            android:layout_width="75dp"
-            android:layout_height="79dp"
-            android:layout_gravity="center|start"
-            android:layout_marginEnd="3dp"
-            android:accessibilityHeading="true"
-            android:contentDescription="@string/aire_acondicionado"
-            android:foregroundTint="#050505"
-            android:foregroundTintMode="screen"
-            android:src="@drawable/aire_acondicionado"
-            android:textAlignment="gravity"
-            app:tint="#3B49A8" />
+            <!-- Layout 6: Televisores -->
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CBEBF4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/text_ac"
-            android:layout_width="302dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/arimo_medium"
-            android:text="@string/aire_ac"
-            android:textAlignment="center"
-            android:textColor="#474646"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:typeface="normal"
-            tools:ignore="TextSizeCheck" />
+                <ImageView
+                    android:id="@+id/image_tv"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/televisor"
+                    android:contentDescription="@string/televisor" />
 
+                <TextView
+                    android:id="@+id/text_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tv"
+                    android:textAlignment="center"
+                    android:textColor="#474646"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/arimo_medium" />
+            </LinearLayout>
 
-    </LinearLayout>
-    <!-- FIN 5° Layout - Aire Acondicionado -->
+            <!-- Layout 7: Computadoras / pc -->
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CBEBF4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:paddingHorizontal="16dp">
 
-</RelativeLayout>
+                <ImageView
+                    android:id="@+id/image_computadora"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/computadora"
+                    android:contentDescription="@string/computadora_pc" />
+
+                <TextView
+                    android:id="@+id/text_computadora"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/computadora"
+                    android:textAlignment="center"
+                    android:textColor="#474646"
+                    android:textSize="16sp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/arimo_medium" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

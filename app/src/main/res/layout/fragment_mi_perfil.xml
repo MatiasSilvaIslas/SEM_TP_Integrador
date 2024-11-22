@@ -6,8 +6,23 @@ android:layout_height="match_parent"
                 android:id="@+id/MiPerfil"
 android:background="@android:color/white">
 
-<!-- Include de la Toolbar -->
-<include
+
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="325dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="@color/blue_primary"
+        android:text="Cerrar Sesion"
+        android:textColor="@android:color/white" />
+
+    <include
     android:id="@+id/toolbar_layout"
     layout="@layout/toolbar_layout" />
 
@@ -40,16 +55,18 @@ android:background="@android:color/white">
         android:textColor="@android:color/white"
         android:backgroundTint="@color/blue_primary" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:id="@+id/btnCambiarContraseña"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnModificarPerfil"
+        android:background="@drawable/rounded_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+
         android:text="Cambiar contraseña"
         android:textColor="@android:color/white"
         android:backgroundTint="@color/blue_primary" />

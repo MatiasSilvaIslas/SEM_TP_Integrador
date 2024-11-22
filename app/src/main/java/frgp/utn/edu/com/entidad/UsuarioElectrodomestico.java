@@ -26,6 +26,33 @@ public class UsuarioElectrodomestico {
         this.dias = dias;
     }
 
+    public UsuarioElectrodomestico() {
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public void setElectrodomesticoId(int electrodomesticoId) {
+        this.electrodomesticoId = electrodomesticoId;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setHoras(int horas) {
+        this.horas = horas;
+    }
+
+    public void setDias(int dias) {
+        this.dias = dias;
+    }
+
     public int getUsuarioId() {
         return usuarioId;
     }

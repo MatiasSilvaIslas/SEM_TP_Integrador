@@ -116,6 +116,7 @@
         app:backgroundTint="@android:color/white"
         app:tint="@color/black" />
 
+    <!-- Botón proyeccion -->
     <Button style="?android:attr/buttonStyleSmall"
         android:background="@drawable/rounded_button"
         android:id="@+id/btnproyeccion"
@@ -128,18 +129,19 @@
         android:layout_marginEnd="24dp"
         android:text="@string/btn_contactanos" />
 
-    <!-- Botón Contactanos -->
-    <Button style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnContactanos"
+    <!-- Botón proyecciones -->
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/btn_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnproyeccion"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="98dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/btn_notificaciones" />
+        android:layout_marginBottom="346dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/btn_notification" />
 
 
 </RelativeLayout>

@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,11 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-
 import frgp.utn.edu.com.R;
 
-public class NotificacionesActivity extends AppCompatActivity{
-    Intent  mServiceIntent;
+public class NotificacionesActivity extends AppCompatActivity {
+    Intent mServiceIntent;
+
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean o) {
@@ -34,108 +34,103 @@ public class NotificacionesActivity extends AppCompatActivity{
         }
     });
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_noti);
-        //mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "test")
-                .setSmallIcon(R.drawable.ic_add)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText("Ejemplo de notificacion")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
-        Button postNotification = findViewById(R.id.ping_button);
-        postNotification.getBackground();
-        postNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(NotificacionesActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    activityResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        CharSequence name = getString(R.string.app_name);
-                        String description = "Ejemplo de Notification";
-                        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                        NotificationChannel channel = new NotificationChannel("test", name, importance);
-                        channel.setDescription(description);
-                        notificationManager.createNotificationChannel(channel);
-
-                        notificationManager.notify(10, builder.build());
-                    }
-                }
-            }
-        });
-
-    }
-    public void createNotification(View v) {
-        int seconds;
-        String message = "Texto para notificaciones!";
-        mServiceIntent.putExtra(CommonConstants.EXTRA_MESSAGE, message);
-        mServiceIntent.setAction(CommonConstants.ACTION_NOTIFY);
-        Toast.makeText(this, R.string.timer_start, Toast.LENGTH_SHORT).show();
-
-        EditText editText = (EditText) findViewById(R.id.edit_seconds);
-        String input = editText.getText().toString();
-
-        if (input == null || input.trim().equals("")) {
-            seconds = R.string.seconds_default;
-        } else {
-            seconds = Integer.parseInt(input);
-        }
-        int milliseconds = (seconds * 1000);
-        mServiceIntent.putExtra(CommonConstants.EXTRA_TIMER, milliseconds);
-        startService(mServiceIntent);
-    }
-
-
-
-    /*private SharedPreferences preferences;
+    // Inicialización de los Switches
+    private Switch switchConsejosDiarios;
+    private Switch[] switches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notificaciones);
+        setContentView(R.layout.activity_noti);
 
-        // Inicializa las preferencias
-        preferences = getSharedPreferences("notificaciones_prefs", MODE_PRIVATE);
+        // Inicializa el Intent para el servicio de notificaciones
+        mServiceIntent = new Intent(this, NotificationService.class);
 
-        // Configura cada Switch y registra el Worker
-        configurarSwitch(R.id.switch_lamparas, "lamparas_enabled");
-        configurarSwitch(R.id.switch_lavarropas, "lavarropas_enabled");
-        configurarSwitch(R.id.switch_heladera, "heladera_enabled");
-        configurarSwitch(R.id.switch_motores, "motores_enabled");
-        configurarSwitch(R.id.switch_planchas, "planchas_enabled");
-        configurarSwitch(R.id.switch_tv, "tv_enabled");
-        configurarSwitch(R.id.switch_Computadora, "computadora_enabled");
-        configurarSwitch(R.id.switch_acc, "acc_enabled");
+        // Inicializa los Switches
+        switchConsejosDiarios = findViewById(R.id.switch_consejos_diarios);
+        switches = new Switch[]{
+                findViewById(R.id.switch_lamparas),
+                findViewById(R.id.switch_lavarropas),
+                findViewById(R.id.switch_heladera),
+                findViewById(R.id.switch_motores),
+                findViewById(R.id.switch_planchas),
+                findViewById(R.id.switch_tv),
+                findViewById(R.id.switch_Computadora),
+                findViewById(R.id.switch_acc)
+        };
 
-        // Inicia el Worker para verificar notificaciones diarias
-        iniciarWorkerDiario();
-    }
+        // Configurar el comportamiento para activar/desactivar todos los switches
+        switchConsejosDiarios.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            for (Switch s : switches) {
+                s.setChecked(isChecked);
+            }
+        });
 
-    private void configurarSwitch(int switchId, String preferenceKey) {
-        SwitchCompat switchCompat = findViewById(switchId);
+        // Configurar cada switch para que si se desactiva, el principal también se desactive
+        for (Switch s : switches) {
+            s.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (!isChecked) {
+                    switchConsejosDiarios.setChecked(false);
+                }
+            });
+        }
 
-        // Cargar el estado inicial desde las preferencias
-        boolean isEnabled = preferences.getBoolean(preferenceKey, false);
-        switchCompat.setChecked(isEnabled);
-
-        // Actualizar las preferencias cuando el usuario cambia el estado del Switch
-        switchCompat.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(preferenceKey, isChecked);
-            editor.apply();
+        // Configuración del botón para enviar notificaciones según los switches activados
+        Button postNotification = findViewById(R.id.btn_notificacion);
+        postNotification.setOnClickListener(view -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(NotificacionesActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                activityResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    CharSequence name = getString(R.string.app_name);
+                    String description = "Ejemplo de Notification";
+                    int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                    NotificationChannel channel = new NotificationChannel("test", name, importance);
+                    channel.setDescription(description);
+                    NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                    notificationManager.createNotificationChannel(channel);
+                }
+                // Verificar los switches y enviar las notificaciones correspondientes
+                enviarNotificacionSiHabilitada(switches[0], "Lámparas LED", "Usá lámparas LED y mantenelas limpias.");
+                enviarNotificacionSiHabilitada(switches[1], "Lavarropas", "Lavá la ropa con programa económico y agua fría.");
+                enviarNotificacionSiHabilitada(switches[2], "Heladera", "Abrí la heladera la menor cantidad de tiempo posible.");
+                enviarNotificacionSiHabilitada(switches[3], "Motores y Bombas", "Revisa motores y bombas eléctricas regularmente.");
+                enviarNotificacionSiHabilitada(switches[4], "Planchas", "Plancha la mayor cantidad de ropa en una sola sesión.");
+                enviarNotificacionSiHabilitada(switches[5], "TV y Sistemas de Audio/Video", "Evita dejar los dispositivos en modo standby.");
+                enviarNotificacionSiHabilitada(switches[6], "Computadoras", "Apaga la computadora al terminar de usarla.");
+                enviarNotificacionSiHabilitada(switches[7], "Aire Acondicionado", "Configura el aire a 24°C en verano y limpia los filtros.");
+            }
         });
     }
 
-    private void iniciarWorkerDiario() {
-        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(
-                NotificacionesWorker.class,
-                1, TimeUnit.DAYS // Se ejecuta una vez al día
-        ).build();
+    // Método para enviar una notificación si el switch está activado
+    private void enviarNotificacionSiHabilitada(Switch switchButton, String title, String content) {
+        if (switchButton.isChecked()) {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "test")
+                    .setSmallIcon(R.drawable.ic_add)
+                    .setContentTitle(title)
+                    .setContentText(content)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        WorkManager.getInstance(this).enqueue(workRequest);
-    }*/
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+        }
+    }
+
+    public void createNotification(View v) {
+        int seconds = 25;
+        String message = "Mensaje de la notificación!";
+        // Asegúrate de que mServiceIntent esté inicializado
+        mServiceIntent.putExtra(CommonConstants.EXTRA_MESSAGE, message);
+        mServiceIntent.setAction(CommonConstants.ACTION_NOTIFY);
+        Toast.makeText(this, R.string.timer_start, Toast.LENGTH_SHORT).show();
+
+        int milliseconds = (seconds * 1000);
+        mServiceIntent.putExtra(CommonConstants.EXTRA_TIMER, milliseconds);
+
+        // Asegúrate de que el servicio esté definido y no sea null
+        if (mServiceIntent != null) {
+            startService(mServiceIntent);
+        }
+    }
 }

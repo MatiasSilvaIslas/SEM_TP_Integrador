@@ -1,296 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_pantalla_principal"
-    android:background="@android:color/white"
-    tools:context=".notifications.NotificacionesActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Include de la Toolbar -->
-    <include
-        android:id="@+id/toolbar_layout"
-        layout="@layout/toolbar_layout" />
+    <data>
 
-    <!-- Texto de Bienvenida -->
-    <TextView
-        android:id="@+id/textWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/notificaciones"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_below="@id/toolbar_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"/>
+    </data>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_pantalla_principal"
+        android:background="@android:color/white"
+        tools:context=".notifications.NotificacionesActivity">
 
-    <LinearLayout
-        android:layout_width="390dp"
-        android:layout_height="233dp"
-        android:layout_below="@+id/textWelcome"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="501dp"
-        android:orientation="vertical">
+        <!-- Include de la Toolbar -->
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_layout" />
 
+        <!-- Texto de Bienvenida -->
         <TextView
+            android:id="@+id/textWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/configura_tus_notificaciones"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="@string/notificaciones"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/toolbar_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp" />
 
-        <!-- Ítems de notificaciones -->
-        <LinearLayout
+        <!-- ScrollView para permitir desplazamiento en caso de pantallas pequeñas -->
+        <ScrollView
+            android:id="@+id/scrollView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_below="@id/textWelcome"
+            android:layout_marginTop="16dp">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/consejos_diarios" />
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/configura_tus_notificaciones"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+                <!-- Ítems de notificaciones -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/consejos_diarios" />
+
+                    <Switch
+                        android:id="@+id/switch_consejos_diarios"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/lamparas" />
+
+                    <Switch
+                        android:id="@+id/switch_lamparas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <!-- Otros ítems de notificaciones -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/lavarropa" />
+
+                    <Switch
+                        android:id="@+id/switch_lavarropas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/heladeras" />
+
+                    <Switch
+                        android:id="@+id/switch_heladera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/motores_y_bombas_electricas" />
+
+                    <Switch
+                        android:id="@+id/switch_motores"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/planchas" />
+
+                    <Switch
+                        android:id="@+id/switch_planchas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tv_y_sistemas_de_audio_video" />
+
+                    <Switch
+                        android:id="@+id/switch_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/computadoras" />
+
+                    <Switch
+                        android:id="@+id/switch_Computadora"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/aire_acondicionados" />
+
+                    <Switch
+                        android:id="@+id/switch_acc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:thumbTint="@color/blue"
+                        android:trackTint="@color/blue"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Botón para crear la notificación -->
+        <Button
+            android:id="@+id/btn_notificacion"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_below="@+id/scrollView3"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="122dp"
+            android:layout_marginTop="74dp"
+            android:layout_marginEnd="115dp"
+            android:layout_marginBottom="65dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/crear_notificacion" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/lamparas" />
-
-            <Switch
-                android:id="@+id/switch_lamparas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
-        </LinearLayout>
-
-        <!-- ítem -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/lavarropa" />
-
-            <Switch
-                android:id="@+id/switch_lavarropas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-        </LinearLayout>
-
-        <!-- ítem -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="@string/heladeras" />
-
-            <Switch
-                android:id="@+id/switch_heladera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-        </LinearLayout>
-
-
-        <!-- ítem -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/motores_y_bombas_electricas" />
-
-            <Switch
-                android:id="@+id/switch_motores"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-        </LinearLayout>
-
-        <!-- ítem -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/planchas" />
-
-            <Switch
-                android:id="@+id/switch_planchas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-        </LinearLayout>
-
-        <!-- ítem -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tv_y_sistemas_de_audio_video" />
-
-            <Switch
-                android:id="@+id/switch_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-        </LinearLayout>
-
-        <!-- ítem -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/computadoras" />
-
-            <Switch
-                android:id="@+id/switch_Computadora"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-        </LinearLayout>
-
-        <!-- ítem -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/aire_acondicionados" />
-
-            <Switch
-                android:id="@+id/switch_acc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/seconds_view"
-        android:layout_width="284dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="465dp"
-        android:layout_marginEnd="62dp"
-        android:text="@string/ping_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/reminder_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_seconds"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/reminder_label" />
-
-    <EditText
-        android:id="@+id/edit_reminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edit_seconds"
-        android:layout_below="@+id/reminder_view"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:text="@string/reminder_text"
-        android:inputType="textMultiLine" />
-
-    <Button
-        android:id="@+id/ping_button"
-        style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:layout_below="@+id/edit_reminder"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:onClick="createNotification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/crear_notificacion" />
-
-    <EditText
-        android:id="@+id/edit_seconds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/seconds_view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="numberSigned"
-        android:text="@string/seconds_default" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

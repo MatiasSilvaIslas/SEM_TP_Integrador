@@ -199,7 +199,7 @@
     <string name="lamparas">Lamparas</string>
     <string name="tv_y_sistemas_de_audio_video">TV y Sistemas de audio / video</string>
     <string name="configura_tus_notificaciones">Configura tus notificaciones</string>
-    <string name="consejos_diarios">Consejos Diarios</string>
+    <string name="consejos_diarios">Todos los consejos activados</string>
     <string name="motores_y_bombas_electricas">Motores y Bombas Electricas</string>
     <string name="planchas">Planchas</string>
     <string name="computadoras">Computadora</string>
@@ -233,6 +233,8 @@
     <string name="timer_finished">Timer finalizado.</string>
     <string name="btn_notificaciones">Notificaciones</string>
     <string name="crear_notificacion">Crear Notificación</string>
+    <string name="btn_proyecciones">Proyecciones</string>
+    <string name="btn_notification">Notificaciones</string>
 
 
 </resources>

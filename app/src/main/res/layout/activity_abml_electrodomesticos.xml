@@ -4,23 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Include de la Toolbar -->
-    <include
-        android:id="@+id/toolbar_layout"
-        layout="@layout/toolbar_layout" />
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue"
+            android:paddingTop="26dp"
+            app:titleTextColor="@android:color/white">
+
+        <!-- Icono de usuario a la izquierda -->
+        <ImageView
+                android:id="@+id/icon_user"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_user"
+                android:contentDescription="User Icon"
+                android:padding="8dp"
+                android:layout_gravity="start"
+                app:tint="@android:color/white" />
+
+        <!-- Icono de notificación a la derecha -->
+        <ImageView
+                android:id="@+id/icon_notification"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_notification"
+                android:contentDescription="Notification Icon"
+                android:padding="8dp"
+                android:layout_gravity="end"
+                app:tint="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
 
     <!-- Título para el CRUD de electrodomésticos -->
     <TextView
         android:id="@+id/textTitulo"
-        android:layout_width="wrap_content"
+        android:layout_width="408dp"
         android:layout_height="wrap_content"
+
         android:text="Selecciona Categoría de Electrodoméstico"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_below="@id/toolbar_layout"
+
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:paddingVertical="80dp" />
+        android:paddingVertical="80dp"
+        android:text="Selecciona la categoría de Electrodoméstico"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <!-- RecyclerView para mostrar categorías en formato de grilla -->
     <androidx.recyclerview.widget.RecyclerView

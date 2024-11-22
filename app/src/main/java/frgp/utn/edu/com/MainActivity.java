@@ -156,48 +156,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.navigation_viewf);
         mDrawerLayout = findViewById(R.id.drawer_layoutmains);
 
-        // Verificar si el usuario no está logueado
-        if ((userEmail == null || userEmail.isEmpty()) && fragment != 1 && fragment != 5) {
-            // Ocultar NavigationView y bloquear el DrawerLayout
+        // Verificar el estado de sesión del usuario dinámicamente
+        String currentUserEmail = SessionManager.getUserEmail(getApplicationContext());
+
+        if ((currentUserEmail == null || currentUserEmail.isEmpty()) && fragment != 1 && fragment != 5) {
+            // Si el usuario no está logueado y el fragment no es Login ni Logout
             navigationView.setVisibility(View.GONE);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            // Cargar el LoginFragment
-            newFragment = new LoginFragment();
-            Toast.makeText(this, "Por favor, inicia sesión para continuar", Toast.LENGTH_SHORT).show();
+            newFragment = new LoginFragment(); // Cargar el LoginFragment
         } else {
             // Manejo de los diferentes fragmentos
             switch (fragment) {
-                case 1:
+                case 1: // Login
                     newFragment = new LoginFragment();
                     break;
-                case 2:
-                    newFragment = new MyAccountFragment();
-                    break;
+                case 2: // Mi Cuenta
                 case 3:
                     newFragment = new MyAccountFragment();
                     break;
-                case 4:
+                case 4: // Pantalla Principal
                     newFragment = new PantallaPrincipalFragment();
                     break;
-                case 5:
-                    // Lógica de cierre de sesión
+                case 5: // Logout
                     LoginRegisterViewModel loginRegisterViewModel = new LoginRegisterViewModel(getApplication());
                     loginRegisterViewModel.logout(getApplicationContext());
-                    // Volver al LoginFragment
                     newFragment = new LoginFragment();
-                    // Ocultar NavigationView y bloquear el DrawerLayout al cerrar sesión
                     navigationView.setVisibility(View.GONE);
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     break;
-                case 6:
+                case 6: // Consejos
                     newFragment = new ConsejosFragment();
                     break;
-                default:
+                default: // Fallback al Login
                     newFragment = new LoginFragment();
             }
 
-            // Mostrar el NavigationView y habilitar el DrawerLayout si el usuario está logueado
-            if (userEmail != null && !userEmail.isEmpty()) {
+            // Si el usuario está logueado, muestra el NavigationView
+            if (currentUserEmail != null && !currentUserEmail.isEmpty()) {
                 navigationView.setVisibility(View.VISIBLE);
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
@@ -209,11 +204,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
 
         // Cerrar el Drawer
-        DrawerLayout drawer = findViewById(R.id.drawer_layoutmains);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
     }
-
-
 
     private void restoreDrawer() {
         // Restores the behaviour of action bar and ActionBarDrawerToggle

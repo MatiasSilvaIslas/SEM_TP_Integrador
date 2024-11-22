@@ -178,6 +178,46 @@ public class DataUsuario {
     public interface CallbackUsuario {
         void onComplete(Usuario usuario);
     }
+    public void verificarEmail(String email, CallbackVerificarEmail callback) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            int resultado = 0; // Por defecto, asumimos que no existe
 
+            try {
+                // Cargar el driver y conectar a la base de datos
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
+
+                // Consulta SQL para verificar la existencia del email
+                String query = "SELECT COUNT(*) AS total FROM Usuarios WHERE email_usuario = ?";
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setString(1, email);
+
+                // Ejecutar la consulta
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    int total = rs.getInt("total");
+                    if (total > 0) {
+                        resultado = 1; // Si el conteo es mayor a 0, el email existe
+                    }
+                }
+
+                // Cerrar recursos
+                rs.close();
+                pst.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            int finalResultado = resultado;
+            // Retornar el resultado al callback en el hilo principal
+            new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onComplete(finalResultado));
+        });
+    }
+
+    public interface CallbackVerificarEmail {
+        void onComplete(int resultado);
+    }
 
 }

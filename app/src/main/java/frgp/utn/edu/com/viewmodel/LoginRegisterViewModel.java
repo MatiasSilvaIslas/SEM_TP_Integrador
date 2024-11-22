@@ -9,6 +9,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import frgp.utn.edu.com.repository.AuthAppRepository;
 
@@ -27,7 +29,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     }
     public void logout(Context context) {
         authAppRepository.logOut();
-
+        FirebaseAuth.getInstance().signOut();
         SessionManager.limpiarSesion(context);
     }
 

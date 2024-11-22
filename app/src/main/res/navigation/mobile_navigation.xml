@@ -10,11 +10,11 @@
             android:id="@+id/nav_parking"
             android:name="frgp.utn.edu.com.ui.home.PantallaPrincipalFragment"
             android:label="menu"
-            tools:layout="@layout/fragment_pantalla_principal" />
+            tools:layout="@layout/activity_pantalla_principal" />
 
     <fragment
             android:id="@+id/nav_myaccount"
             android:name="frgp.utn.edu.com.ui.myaccount.MyAccountFragment"
             android:label="@string/menu_cuenta"
-            tools:layout="@layout/fragment_mi_perfil" />
+            tools:layout="@layout/activity_mi_perfil" />
 </navigation>

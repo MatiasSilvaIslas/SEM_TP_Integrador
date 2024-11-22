@@ -143,8 +143,8 @@ public class PantallaPrincipalFragment extends Fragment {
         });
 
         //Realizado a la antigua
-        Button btncontactanos = view.findViewById(R.id.btnContactanos);
-        btncontactanos.setOnClickListener(new View.OnClickListener() {
+      Button btn_notification = view.findViewById(R.id.btn_notification);
+        btn_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), NotificacionesActivity.class);

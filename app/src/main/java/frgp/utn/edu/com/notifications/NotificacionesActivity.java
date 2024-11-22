@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -103,7 +105,7 @@ public class NotificacionesActivity extends AppCompatActivity {
                     } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             CharSequence name = getString(R.string.app_name);
-                            String description = "Ejemplo de Notification";
+                            String description = "Notification String";
                             int importance = NotificationManager.IMPORTANCE_DEFAULT;
                             NotificationChannel channel = new NotificationChannel("test", name, importance);
                             channel.setDescription(description);
@@ -138,19 +140,23 @@ public class NotificacionesActivity extends AppCompatActivity {
         });
     }
 
-    // Método para enviar una notificación si el switch está activado
+    // Método para enviar una notificación si el switch está activado con un delay
     private void enviarNotificacionSiHabilitada(Switch switchButton, String title, String content) {
         if (switchButton.isChecked()) {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "test")
-                    .setSmallIcon(R.drawable.ic_add)
-                    .setContentTitle(title)
-                    .setContentText(content)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            // Crear un Handler para programar el delay
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "test")
+                        .setSmallIcon(R.drawable.energia_sustentable_2)
+                        .setContentTitle(title)
+                        .setContentText(content)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+            }, 2 * 60 * 1000); // 2 minutos en milisegundos
         }
     }
+
 
     public void createNotification(View v) {
         int seconds = 60;

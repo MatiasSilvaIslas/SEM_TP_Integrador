@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/txtNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Electrodoméstico"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtCantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cantidad" />
+
+    <TextView
+        android:id="@+id/txtHoras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Horas" />
+
+    <TextView
+        android:id="@+id/txtDias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Días" />
+
+    <!-- Nuevo TextView para mostrar la potencia promedio -->
+    <TextView
+        android:id="@+id/txtPotenciaPromedio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Potencia Promedio (W)" />
+
+    <!-- Nuevo TextView para mostrar el consumo por hora -->
+    <TextView
+        android:id="@+id/txtConsumoPorHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consumo por Hora (Wh)" />
+
+    <ImageButton
+        android:id="@+id/btnEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:contentDescription="Eliminar"
+        android:src="@drawable/ic_basura"
+        tools:ignore="TouchTargetSizeCheck" />
+</LinearLayout>

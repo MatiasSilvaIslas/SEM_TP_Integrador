@@ -101,13 +101,13 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp" />
         </LinearLayout>
-        <ImageView
+       <!--  <ImageView
             android:id="@+id/btnEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_basura"
             android:contentDescription="Eliminar"
-            android:visibility="gone" />
+            android:visibility="gone" /> -->
     </LinearLayout>
 
 </LinearLayout>

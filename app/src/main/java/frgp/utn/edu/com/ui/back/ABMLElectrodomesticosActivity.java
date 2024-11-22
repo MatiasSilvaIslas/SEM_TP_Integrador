@@ -1,5 +1,7 @@
 package frgp.utn.edu.com.ui.back;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,18 +54,17 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_abml_electrodomesticos);
         setSupportActionBar(findViewById(R.id.toolbar));
 
+
         ImageView btnProfile = findViewById(R.id.icon_user);
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Usa el FragmentManager de la Activity actual
-                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentManager fragmentManager = ABMLElectrodomesticosActivity.this.getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                fragmentTransaction.replace(R.id.frgment_frame, new fragmentMiPerfil()); //ver acá por que esta mierda no funciona
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(android.R.id.content, new fragmentMiPerfil());
                 fragmentTransaction.commit();
+
             }
         });
 

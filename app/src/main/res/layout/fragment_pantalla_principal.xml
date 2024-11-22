@@ -43,7 +43,7 @@
         android:id="@+id/textWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido:"
+        android:text="Bienvenido "
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -51,18 +51,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"/>
 
-    <!-- Botón Mi Perfil -->
+    <!-- Botón Gestionar Electrodomésticos -->
     <Button style="?android:attr/buttonStyleSmall"
         android:background="@drawable/rounded_button"
-        android:id="@+id/btnProfile"
+        android:id="@+id/btnMisElectrodomesticos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textWelcome"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Mi Perfil" />
+        android:text="Mis Electrodomésticos"/>
 
     <!-- Botón Gestionar Electrodomésticos -->
     <Button style="?android:attr/buttonStyleSmall"
@@ -70,7 +70,7 @@
         android:id="@+id/btnManageAppliances"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnProfile"
+        android:layout_below="@id/btnMisElectrodomesticos"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:layout_marginStart="24dp"

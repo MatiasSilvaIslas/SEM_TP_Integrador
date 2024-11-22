@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.notifications.NotificacionesActivity;
+import frgp.utn.edu.com.ui.electrodomesticos.MisElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.informes.InformesFragment;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
@@ -68,6 +69,7 @@ public class PantallaPrincipalFragment extends Fragment {
 
         ImageView btnProfile = view.findViewById(R.id.icon_user);
         Button btnManageAppliances = view.findViewById(R.id.btnManageAppliances);
+        Button btnMisElectrodomesticos = view.findViewById(R.id.btnMisElectrodomesticos);
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +94,19 @@ public class PantallaPrincipalFragment extends Fragment {
                 fragmentTransaction.commit();*/
                 Intent intent = new Intent(getActivity(), ABMLElectrodomesticosActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        // Navegar a MisElectrodomésticos
+        btnMisElectrodomesticos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new MisElectrodomesticosFragment());
+                fragmentTransaction.commit();
+
             }
         });
 

@@ -67,12 +67,12 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
             holder.spinnerCantidad.setSelection(usuarioElectrodomestico.getCantidad() - 1);
             holder.spinnerHoras.setSelection(usuarioElectrodomestico.getHoras() - 1);
             holder.spinnerDias.setSelection(usuarioElectrodomestico.getDias() - 1);
-            holder.btnEliminar.setVisibility(View.VISIBLE);
+          //  holder.btnEliminar.setVisibility(View.VISIBLE);
             if (!seleccionados.contains(electrodomestico)) {
                 seleccionados.add(electrodomestico);
             }
         } else {
-            holder.btnEliminar.setVisibility(View.GONE);
+           // holder.btnEliminar.setVisibility(View.GONE);
         }
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -85,7 +85,7 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
             }
         });
 
-        holder.btnEliminar.setOnClickListener(v -> {
+        /*holder.btnEliminar.setOnClickListener(v -> {
             new UsuarioElectrodomesticoDB(context).eliminarElectrodomestico(usuarioId, electrodomestico.getId_electrodomestico(), success -> {
                 if (success) {
                     configuraciones.remove(electrodomestico.getId_electrodomestico());
@@ -99,7 +99,7 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
                     Toast.makeText(context, "No se pudo eliminar la configuración", Toast.LENGTH_SHORT).show();
                 }
             });
-        });
+        });*/
 
         holder.spinnerCantidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -184,7 +184,7 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
         TextView textNombre;
         CheckBox checkBox;
         Spinner spinnerCantidad, spinnerHoras, spinnerDias;
-        ImageView btnEliminar;
+       // ImageView btnEliminar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -193,7 +193,7 @@ public class ElectrodomesticoAdapter extends RecyclerView.Adapter<Electrodomesti
             spinnerCantidad = itemView.findViewById(R.id.spinnerCantidad);
             spinnerHoras = itemView.findViewById(R.id.spinnerHoras);
             spinnerDias = itemView.findViewById(R.id.spinnerDias);
-            btnEliminar = itemView.findViewById(R.id.btnEliminar);
+         //   btnEliminar = itemView.findViewById(R.id.btnEliminar);
         }
     }
 

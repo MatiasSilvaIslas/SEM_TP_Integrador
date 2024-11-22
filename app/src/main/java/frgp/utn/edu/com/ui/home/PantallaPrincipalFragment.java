@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Button;
-
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -18,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.notifications.NotificacionesActivity;
+import frgp.utn.edu.com.ui.electrodomesticos.MisElectrodomesticosFragment;
 import frgp.utn.edu.com.ui.informes.InformesFragment;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
@@ -25,19 +27,13 @@ import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.informes.tabInformeFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
-import frgp.utn.edu.com.ui.proyeccion.ProyeccionFragment;
 import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 
 public class PantallaPrincipalFragment extends Fragment {
     Toolbar toolbar;
-
-
-    TextView txtNombre;
-
     private Usuario usuario;
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -58,13 +54,7 @@ public class PantallaPrincipalFragment extends Fragment {
 
     public void initViews(View view)
     {
-
-
-        txtNombre = view.findViewById(R.id.textWelcome);
-        getUserName();
-        Button btnProfile = view.findViewById(R.id.btnProfile);
-
-        
+        TextView textWelcome = (TextView) view.findViewById(R.id.textWelcome);
         String email= SessionManager.getUserEmail(getActivity());
         DataUsuario dataUsuario = new DataUsuario(getActivity());
         dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
@@ -78,8 +68,8 @@ public class PantallaPrincipalFragment extends Fragment {
         });
 
         ImageView btnProfile = view.findViewById(R.id.icon_user);
-
         Button btnManageAppliances = view.findViewById(R.id.btnManageAppliances);
+        Button btnMisElectrodomesticos = view.findViewById(R.id.btnMisElectrodomesticos);
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +97,19 @@ public class PantallaPrincipalFragment extends Fragment {
             }
         });
 
+        // Navegar a MisElectrodomésticos
+        btnMisElectrodomesticos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frgment_frame, new MisElectrodomesticosFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
         // Navegar a CalculoConsumoActivity
         Button btnCalculateConsumption = view.findViewById(R.id.btnCalculateConsumption);
         btnCalculateConsumption.setOnClickListener(new View.OnClickListener() {
@@ -118,14 +121,14 @@ public class PantallaPrincipalFragment extends Fragment {
             }
         });
 
-        Button btnConsejos = view.findViewById(R.id.btnproyeccion);
+       /* Button btnConsejos = view.findViewById(R.id.btnConsejosf);
         btnConsejos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new ProyeccionFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frgment_frame, new ConsejosFragment()).commit();
             }
-        });
+        });*/
 
         FloatingActionButton btnHelp = view.findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
@@ -140,16 +143,14 @@ public class PantallaPrincipalFragment extends Fragment {
         });
 
         //Realizado a la antigua
-        Button btncontactanos = view.findViewById(R.id.btnContactanos);
-        btncontactanos.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent intent = new Intent(getActivity(), NotificacionesActivity.class);
-               startActivity(intent);
-           }
+        Button btn_notification = view.findViewById(R.id.btn_notification);
+        btn_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NotificacionesActivity.class);
+                startActivity(intent);
+            }
         });
-
-
 
         Button btnReportes = view.findViewById(R.id.btnConsultReports);
         btnReportes.setOnClickListener(new View.OnClickListener() {
@@ -160,22 +161,6 @@ public class PantallaPrincipalFragment extends Fragment {
                 ).commit();
             }
         });
-    }
-
-    private void getUserName() {
-        String email= SessionManager.getUserEmail(getActivity());
-        DataUsuario dataUsuario = new DataUsuario(getActivity());
-        dataUsuario.obtenerUsuarioPorEmail(email,usuario->{
-            if(usuario!=null){
-                this.usuario = usuario;
-                String txt= "Bienvenido: "+usuario.getNombre_usuario();
-                txtNombre.setText(txt);
-                txtNombre.setText(txt);
-            }else{
-                Toast.makeText(getActivity(), "Error al obtener usuario", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
     //btn reportes
 

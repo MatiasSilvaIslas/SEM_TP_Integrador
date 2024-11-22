@@ -27,9 +27,9 @@ public class NotificacionesActivity extends AppCompatActivity{
         @Override
         public void onActivityResult(Boolean o) {
             if (o) {
-                Toast.makeText(NotificacionesActivity.this, "Post notification permission granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NotificacionesActivity.this, "Permisos otorgados para publicar notificaciones", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(NotificacionesActivity.this, "Post notification permission not granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NotificacionesActivity.this, "No ha concedido permisos para publicar notificaciones", Toast.LENGTH_SHORT).show();
             }
         }
     });
@@ -41,7 +41,7 @@ public class NotificacionesActivity extends AppCompatActivity{
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "test")
                 .setSmallIcon(R.drawable.ic_add)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText("Example Notification")
+                .setContentText("Ejemplo de notificacion")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -56,7 +56,7 @@ public class NotificacionesActivity extends AppCompatActivity{
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         CharSequence name = getString(R.string.app_name);
-                        String description = "Example Notification";
+                        String description = "Ejemplo de Notification";
                         int importance = NotificationManager.IMPORTANCE_DEFAULT;
                         NotificationChannel channel = new NotificationChannel("test", name, importance);
                         channel.setDescription(description);
@@ -71,7 +71,7 @@ public class NotificacionesActivity extends AppCompatActivity{
     }
     public void createNotification(View v) {
         int seconds;
-        String message = "This is my awesome text for notification!";
+        String message = "Texto para notificaciones!";
         mServiceIntent.putExtra(CommonConstants.EXTRA_MESSAGE, message);
         mServiceIntent.setAction(CommonConstants.ACTION_NOTIFY);
         Toast.makeText(this, R.string.timer_start, Toast.LENGTH_SHORT).show();

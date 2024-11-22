@@ -47,17 +47,18 @@ public class NotificationService extends IntentService {
     private void createNotification(Intent intent, String msg) {
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        // Sets up the Snooze and Dismiss action buttons that will appear in the
-        // expanded view of the notification.
+        // Configura los botones de acción Posponer y Descartar (Snooze y Dismiss) que aparecerán en la
+        // vista expandida de la notificación.
+
         Intent dismissIntent = new Intent(this, NotificationService.class);
         dismissIntent.setAction(CommonConstants.ACTION_DISMISS);
         PendingIntent piDismiss = PendingIntent.getService(this, 0,
-                dismissIntent,0);
+                dismissIntent, PendingIntent.FLAG_IMMUTABLE);
 
         Intent snoozeIntent = new Intent(this, NotificationService.class);
         snoozeIntent.setAction(CommonConstants.ACTION_SNOOZE);
         PendingIntent piSnooze = PendingIntent.getService(this, 0,
-                snoozeIntent, 0);
+                snoozeIntent, PendingIntent.FLAG_IMMUTABLE);
 
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_empty_box)

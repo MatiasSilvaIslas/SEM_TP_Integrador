@@ -22,6 +22,9 @@ import androidx.core.app.NotificationCompat;
 
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
+import android.content.res.ColorStateList;
+import androidx.core.content.ContextCompat;
+
 
 public class NotificacionesActivity extends AppCompatActivity {
     Intent mServiceIntent;
@@ -62,19 +65,27 @@ public class NotificacionesActivity extends AppCompatActivity {
                 findViewById(R.id.switch_acc)
         };
 
-        // Configura el comportamiento para activar/desactivar todos los switches
+        // Crear el ColorStateList para los tintes del track
+        ColorStateList trackColorStateList = ContextCompat.getColorStateList(this, R.color.switch_track_color);
+
+        // Configurar el comportamiento para activar/desactivar todos los switches
         switchConsejosDiarios.setOnCheckedChangeListener((buttonView, isChecked) -> {
             for (Switch s : switches) {
                 s.setChecked(isChecked);
+                s.setTrackTintList(trackColorStateList);
             }
+            // Cambiar el color del trackTint del switchConsejosDiarios
+            switchConsejosDiarios.setTrackTintList(trackColorStateList);
         });
 
-        // Configura cada switch para que si se desactiva, el principal también se desactive
+        // Configurar cada switch para que si se desactiva, el principal también se desactive
         for (Switch s : switches) {
             s.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (!isChecked) {
                     switchConsejosDiarios.setChecked(false);
                 }
+                // Cambiar el color del trackTint del switch actual
+                s.setTrackTintList(trackColorStateList);
             });
         }
 

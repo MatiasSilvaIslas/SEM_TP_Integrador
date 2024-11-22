@@ -61,15 +61,15 @@ public class ContactoSoporteFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
         activity.setSupportActionBar(toolbar);
 
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        /* toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setNavigationOnClickListener(v -> {
             // Navega a PantallaPrincipalFragment
-          /*  FragmentTransaction transaction = requireActivity()
+           FragmentTransaction transaction = requireActivity()
                     .getSupportFragmentManager()
                     .beginTransaction();
             transaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
-            transaction.commit(); */
-        });
+            transaction.commit();
+        });*/
 
         // Habilita el botón de retroceso
         if (activity.getSupportActionBar() != null) {

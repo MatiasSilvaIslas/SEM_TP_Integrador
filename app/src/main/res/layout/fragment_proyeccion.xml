@@ -92,15 +92,19 @@ android:inputType="textFilter" />
         </LinearLayout>
 <TextView
 android:id="@+id/tvResultado"
-android:layout_width="wrap_content"
+android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:text="Resultado:" />
 
     <TextView
             android:id="@+id/Resultadoc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="$:" />
+            android:text="$:"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:maxLength="50"
+    />
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvElectrodomesticoskwh"

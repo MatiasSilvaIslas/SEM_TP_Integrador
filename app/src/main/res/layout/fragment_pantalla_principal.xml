@@ -135,13 +135,11 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnproyeccion"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/btnproyeccion"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="346dp"
         android:background="@drawable/rounded_button"
         android:text="@string/btn_notification" />
 

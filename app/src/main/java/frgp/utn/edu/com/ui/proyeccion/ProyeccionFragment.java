@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
@@ -153,7 +154,7 @@ public class ProyeccionFragment extends Fragment {
 
     public void calcularConsumoTotal(List<UsuarioElectrodomestico> listaElectrodomesticos) {
         // Variable para rastrear el consumo total
-        final AtomicInteger consumoTotal = new AtomicInteger(0);
+        final AtomicLong consumoTotal = new AtomicLong(0);
         final CountDownLatch latch = new CountDownLatch(listaElectrodomesticos.size());
 
         for (UsuarioElectrodomestico electrodomesticox : listaElectrodomesticos) {
@@ -163,7 +164,7 @@ public class ProyeccionFragment extends Fragment {
                 @Override
                 public void onElectrodomesticoObtenido(Electrodomestico electrodomestico) {
                     // Actualizar el consumo total de forma segura
-                    int consumoCalculado = electrodomestico.getConsumoHoraWh() * electrodomesticox.getCantidad() * electrodomesticox.getHoras() * electrodomesticox.getDias();
+                    long consumoCalculado = electrodomestico.getConsumoHoraWh() * electrodomesticox.getCantidad() * electrodomesticox.getHoras() * electrodomesticox.getDias();
                     consumoTotal.addAndGet(consumoCalculado);
 
                     latch.countDown();

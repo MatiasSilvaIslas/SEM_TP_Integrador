@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import frgp.utn.edu.com.R;
@@ -32,34 +33,16 @@ public class NotificationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notify, container, false);
         ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
 
-        crearCanalNotificaciones();
 
-        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(
-                NotificacionWorker.class,
-                1, // Cada 15 minutos (mínimo permitido por Android)
-                TimeUnit.MINUTES)
-                .build();
+        //OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(NotificacionWorker.class).build();
 
-        WorkManager.getInstance(getActivity()).enqueue(workRequest);
+// Enqueue the work request with WorkManager
+        //WorkManager.getInstance(getActivity()).enqueue(workRequest);
 
         return view;
     }
 
-    private void crearCanalNotificaciones() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Recomendaciones de Consumo";
-            String description = "Notificaciones sobre consumo eléctrico y consejos de ahorro";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
 
-            // Registrar el canal
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
-        }
-    }
 
     private NotificationManager getSystemService(Class<NotificationManager> notificationManagerClass) {
         return null;

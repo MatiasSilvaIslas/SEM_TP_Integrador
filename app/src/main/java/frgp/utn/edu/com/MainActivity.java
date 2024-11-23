@@ -1,8 +1,11 @@
 package frgp.utn.edu.com;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.view.MenuItem;
@@ -27,6 +30,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -39,11 +44,17 @@ import frgp.utn.edu.com.ui.Login.LoginFragment;
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
 import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
+import frgp.utn.edu.com.ui.notify.NotificacionWorker;
 import frgp.utn.edu.com.utils.SessionManager;
 import frgp.utn.edu.com.viewmodel.LoginRegisterViewModel;
 
+import java.util.concurrent.TimeUnit;
+
+
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMainMenuNavigatorListener {
     Intent  mServiceIntent;
+    private static final String CHANNEL_ID = "consumo_recomendaciones";
 
     private final int FIRST_FRAGMENT = 0;
     private String userEmail;
@@ -77,6 +88,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setVisibility(View.VISIBLE);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             switchFragment(FIRST_FRAGMENT); // El fragmento inicial que se mostrará
+        }
+        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(
+                NotificacionWorker.class,
+                15,
+                TimeUnit.MINUTES)
+                .build();
+
+        WorkManager.getInstance(this).enqueue(workRequest);
+        crearCanalNotificaciones();
+    }
+    private void crearCanalNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Recomendaciones de Consumo";
+            String description = "Notificaciones sobre consumo eléctrico y consejos de ahorro";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // Registrar el canal
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
     }
     public void createNotification(View v) {

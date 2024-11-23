@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -19,7 +17,6 @@ import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.ElectrodomesticoDB;
 import frgp.utn.edu.com.entidad.Categoria;
 import frgp.utn.edu.com.entidad.Electrodomestico;
-import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 
 import java.util.ArrayList;
@@ -57,7 +54,14 @@ public class CalculoConsumoFragment extends Fragment {
         electrodomesticoDB = new ElectrodomesticoDB(getContext());
 
         // Paso 1: Cargar categorías en el spinner
+        electrodomesticoDB.obtenerCategoriasAsync(categorias -> {
+            listaCategorias = categorias;
 
+            // Configurar el adaptador del spinner de categorías
+            ArrayAdapter<Categoria> adapterCategoria = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categorias);
+            adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerCategoria.setAdapter(adapterCategoria);
+        });
 
         // Paso 2: Manejar selección de categoría
         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -132,19 +136,6 @@ public class CalculoConsumoFragment extends Fragment {
                 Toast.makeText(getContext(), "Entrada inválida. Ingresa solo números.", Toast.LENGTH_SHORT).show();
             }
         });
-
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // Navegar al Fragment deseado o realizar una acción personalizada
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
 
         return view;
     }

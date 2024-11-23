@@ -229,13 +229,7 @@ public class InformesFragment extends Fragment {
             lineChart = null;
 
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (lineChart != null) {
-            lineChart.invalidate();
-        }
-    }
+
     public Object getOnBackPressedDispatcher() {
         return requireActivity().getOnBackPressedDispatcher();
     }

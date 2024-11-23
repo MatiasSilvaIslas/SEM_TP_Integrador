@@ -1,3 +1,4 @@
+
 package frgp.utn.edu.com.conexion;
 
 import android.os.AsyncTask;
@@ -158,8 +159,6 @@ public class ElectrodomesticoDB {
 
     public interface CategoriaCallback {
         void onCategoriasObtenidas(ArrayList<Categoria> categorias);
-
-        void onElectroObtenidas(ArrayList<Electrodomestico> categorias);
     }
 
 }

@@ -2,6 +2,8 @@ package frgp.utn.edu.com.ui.proyeccion;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +41,7 @@ import frgp.utn.edu.com.ui.electrodomesticos.MisElectrodomesticosFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -75,7 +78,35 @@ public class ProyeccionFragment extends Fragment {
         txtResultado = view.findViewById(R.id.Resultadoc);
         recyclerView = view.findViewById(R.id.rvElectrodomesticoskwh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        etPotencia.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
 
+                String input = source.toString();
+
+
+                if (!input.matches("[0-9.]*")) {
+                    return "";
+                }
+
+
+                if (input.equals(".") && dest.toString().contains(".")) {
+                    return "";
+                }
+
+
+                String result = dest.subSequence(0, dstart) + input + dest.subSequence(dend, dest.length());
+                if (result.contains(".")) {
+                    int indexPoint = result.indexOf(".");
+                    int decimals = result.length() - indexPoint - 1;
+                    if (decimals > 2) {
+                        return "";
+                    }
+                }
+
+                return source;
+            }
+        }});
         listaElectrodomesticos = new ArrayList<>();
         adapter = new UsuarioElectrodomesticoProyeccionAdapter(listaElectrodomesticos);
         recyclerView.setAdapter(adapter);

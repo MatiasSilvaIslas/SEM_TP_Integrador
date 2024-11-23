@@ -53,13 +53,14 @@ android:textSize="18sp"
 android:textStyle="bold" />
 
 
-
+        <!--habilitar la coma-->
 <EditText
 android:id="@+id/etPotencia"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:hint="Precio del Kwh"
-android:inputType="number" />
+
+android:inputType="textFilter" />
 
 
         <!-- Table View-->

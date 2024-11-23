@@ -2,7 +2,7 @@ package frgp.utn.edu.com.conexion;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
+
 import frgp.utn.edu.com.entidad.Categoria;
 import frgp.utn.edu.com.entidad.Electrodomestico;
 
@@ -24,7 +24,7 @@ public class ElectroDB {
         new ObtenerElectrodomesticoPorIdTask(electrodomesticoId, callback).execute();
     }
 
-    // AsyncTask para obtener un electrodoméstico por ID
+
     private static class ObtenerElectrodomesticoPorIdTask extends AsyncTask<Void, Void, Electrodomestico> {
 
         private int electrodomesticoId;
@@ -39,19 +39,19 @@ public class ElectroDB {
         protected Electrodomestico doInBackground(Void... voids) {
             Electrodomestico electrodomestico = null;
             try {
-                // Cargar el driver JDBC
+
                 Class.forName("com.mysql.jdbc.Driver");
 
-                // Establecer conexión con la base de datos
+
                 Connection con = DriverManager.getConnection(DataDB.url, DataDB.user, DataDB.pass);
 
-                // Consulta SQL para obtener un electrodoméstico por ID
+
                 String query = "SELECT id_electrodomestico, nombre, potencia_promedio_watts, consumo_hora_wh, id_categoria FROM Electrodomestico WHERE id_electrodomestico = ?";
                 PreparedStatement pst = con.prepareStatement(query);
                 pst.setInt(1, electrodomesticoId);
                 ResultSet rs = pst.executeQuery();
 
-                // Procesar el resultado
+
                 if (rs.next()) {
                     int id_electrodomestico = rs.getInt("id_electrodomestico");
                     String nombre = rs.getString("nombre");
@@ -59,13 +59,13 @@ public class ElectroDB {
                     int consumoHoraWh = rs.getInt("consumo_hora_wh");
                     int categoriaId = rs.getInt("id_categoria");
 
-                    // Obtener la categoría asociada al ID
+
                     Categoria categoria = obtenerCategoriaPorId(categoriaId, con);
 
                     electrodomestico = new Electrodomestico(id_electrodomestico, nombre, potencia, consumoHoraWh, categoria);
                 }
 
-                // Cerrar recursos
+
                 rs.close();
                 pst.close();
                 con.close();
@@ -78,7 +78,7 @@ public class ElectroDB {
         @Override
         protected void onPostExecute(Electrodomestico electrodomestico) {
             super.onPostExecute(electrodomestico);
-            // Llamar al callback con el resultado
+
             if (electrodomestico != null) {
                 callback.onElectrodomesticoObtenido(electrodomestico);
             } else {
@@ -107,7 +107,7 @@ public class ElectroDB {
         }
     }
 
-    // Interfaz para manejar el resultado de la consulta
+
     public interface ElectrodomesticoCallback {
         void onElectrodomesticoObtenido(Electrodomestico electrodomestico);
         void onError(Exception e);

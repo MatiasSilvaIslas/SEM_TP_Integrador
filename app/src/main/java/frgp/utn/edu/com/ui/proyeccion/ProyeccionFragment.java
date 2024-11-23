@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
@@ -74,26 +75,11 @@ public class ProyeccionFragment extends Fragment {
 
         etPotencia = view.findViewById(R.id.etPotencia);
         txtResultado = view.findViewById(R.id.Resultadoc);
-        textInput = view.findViewById(R.id.searchInput);
+
 
         recyclerView = view.findViewById(R.id.rvElectrodomesticoskwh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        textInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filtrar(s.toString()); // Llamar al método filtrar del adaptador
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-
-        });
 
 
 
@@ -104,6 +90,24 @@ public class ProyeccionFragment extends Fragment {
         obtenerUsuarioId(idUsuario -> {
             usuarioId = idUsuario;
             cargarElectrodomesticos();
+            textInput = view.findViewById(R.id.searchInput);
+
+            textInput.addTextChangedListener(new TextWatcher() {
+                //numeros
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    cargarElectrodomesticosbyText(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+
+            });
         });
 
         configurarBotones(view);
@@ -254,6 +258,31 @@ public class ProyeccionFragment extends Fragment {
                     if (electrodomesticos != null) {
                         listaElectrodomesticos.clear();
                         listaElectrodomesticos.addAll(electrodomesticos);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), "No se encontraron electrodomésticos.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "Error al obtener el usuario.", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void cargarElectrodomesticosbyText(String text) {
+
+        if (usuarioId != -1&& !Objects.equals(text, "")) {
+            UsuarioElectrodomesticoDB db = new UsuarioElectrodomesticoDB(getActivity());
+            db.obtenerElectrodomesticosPorUsuario(usuarioId, new UsuarioElectrodomesticoDB.CallbackElectrodomesticos() {
+                @Override
+                public void onComplete(ArrayList<UsuarioElectrodomestico> electrodomesticos) {
+                    if (electrodomesticos != null) {
+
+                        List<UsuarioElectrodomestico> filtrados = electrodomesticos.stream()
+                                .filter(e -> e.getDias()==Integer.parseInt(text) || e.getHoras()==Integer.parseInt(text) || e.getCantidad()==Integer.parseInt(text))
+                                .collect(Collectors.toList());
+
+                        listaElectrodomesticos.clear();
+                        listaElectrodomesticos.addAll(filtrados);
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(getActivity(), "No se encontraron electrodomésticos.", Toast.LENGTH_SHORT).show();

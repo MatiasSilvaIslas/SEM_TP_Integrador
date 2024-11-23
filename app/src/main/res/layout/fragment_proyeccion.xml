@@ -100,19 +100,30 @@ android:text="Resultado:" />
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$:" />
+        <TextView
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:text="Filtro de búsqueda por hora | día | Cantidad de equipos"
+        />
         <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
                       >
+
             <EditText
                     android:id="@+id/searchInput"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="Consumo estimado de Kwh:" />
+                    android:layout_alignParentLeft="true"
+                    android:inputType="number"
+                    android:text="0" />
 
             <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="Buscar"
                     android:id="@+id/btnBuscar"
                     android:layout_marginLeft="16dp"
+                    android:layout_alignParentTop="true"
                     android:backgroundTint="?attr/colorPrimary"
                     android:icon="@android:drawable/ic_menu_search"/>
         </LinearLayout>

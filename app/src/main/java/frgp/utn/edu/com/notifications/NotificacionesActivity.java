@@ -37,6 +37,7 @@ public class NotificacionesActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_noti);
+        setSupportActionBar(findViewById(R.id.toolbar));
         //mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "test")
                 .setSmallIcon(R.drawable.ic_add)

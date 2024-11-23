@@ -43,13 +43,13 @@ import frgp.utn.edu.com.utils.SessionManager;
 
 public class InformesFragment extends Fragment {
 
-    private LineChart lineChart;
+    private LineChart lineChart=null;
     private PieChart pieChart;
     private EditText editLimiteConsumo;
     //private TextView consumoPromedioTextView;
     private GraficosHelper graficosHelper;
 
-    @SuppressLint("MissingInflatedId")
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -157,7 +157,7 @@ public class InformesFragment extends Fragment {
 
         pieChart.setData(data);
         pieChart.highlightValues(null);
-        pieChart.invalidate();
+
     }
 
     private void actualizarGraficoLinea(List<Entry> datosLinea) {
@@ -181,8 +181,34 @@ public class InformesFragment extends Fragment {
 
         LineData lineData = new LineData(dataSet);
         lineChart.setData(lineData);
+        lineChart.notifyDataSetChanged();
         lineChart.invalidate();
+
     }
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+
+            lineChart.clear(); // Limpia los datos y el estado del gráfico
+            lineChart.invalidate();
+            lineChart = null;
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (lineChart != null) {
+            lineChart.invalidate();
+        }
+    }
+    public Object getOnBackPressedDispatcher() {
+        return requireActivity().getOnBackPressedDispatcher();
+    }
+
 
 }
 

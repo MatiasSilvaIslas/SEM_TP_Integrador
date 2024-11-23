@@ -222,7 +222,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Cambiar al fragmento correspondiente
+
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         fragmentTransaction.replace(R.id.frgment_frame, newFragment);
         fragmentTransaction.commit();
 
@@ -267,4 +270,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
 }

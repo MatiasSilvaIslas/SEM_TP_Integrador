@@ -142,7 +142,12 @@ public class InformesFragment1 extends Fragment {
         pieChart.highlightValues(null);
         pieChart.invalidate();
     }
-
+    public  void onDetach() {
+        super.onDetach();
+        lineChart.notifyDataSetChanged();
+        lineChart.invalidate();
+        lineChart.destroyDrawingCache();
+    }
 
 }
 

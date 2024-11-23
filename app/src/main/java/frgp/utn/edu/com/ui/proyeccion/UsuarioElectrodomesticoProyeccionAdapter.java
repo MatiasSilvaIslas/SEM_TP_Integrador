@@ -48,10 +48,7 @@ public class UsuarioElectrodomesticoProyeccionAdapter extends RecyclerView.Adapt
         holder.txtHoras.setText("Horas: " + electrodomestico.getHoras());
         holder.txtDias.setText("Días: " + electrodomestico.getDias());
 
-/*        OnTotalChangeListener listener = totalChangeListener;
-        if (listener != null) {
-            listener.onTotalChange();
-        }*/
+
 
         new UsuarioElectrodomesticoDB(holder.itemView.getContext()).obtenerDetallesElectrodomestico(electrodomestico.getElectrodomesticoId(), new UsuarioElectrodomesticoDB.CallbackDetalles() {
             @Override

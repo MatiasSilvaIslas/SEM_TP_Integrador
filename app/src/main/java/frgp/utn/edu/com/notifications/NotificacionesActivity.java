@@ -51,6 +51,7 @@ public class NotificacionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_noti);
 
+        //  ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
 
         // Inicializa el Intent para el servicio de notificaciones
         mServiceIntent = new Intent(this, NotificationService.class);
@@ -122,7 +123,6 @@ public class NotificacionesActivity extends AppCompatActivity {
                         enviarNotificacionSiHabilitada(switches[5], "TV y Sistemas de Audio/Video", "Evita dejar los dispositivos en modo standby.");
                         enviarNotificacionSiHabilitada(switches[6], "Computadoras", "Apaga la computadora al terminar de usarla.");
                         enviarNotificacionSiHabilitada(switches[7], "Aire Acondicionado", "Configura el aire a 24°C en verano y limpia los filtros.");
-
                     }
                     // Volver al fragment_pantalla_principal.xml
                     Intent intent = new Intent(NotificacionesActivity.this, MainActivity.class);

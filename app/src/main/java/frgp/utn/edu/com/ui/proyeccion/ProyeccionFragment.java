@@ -42,6 +42,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
@@ -52,124 +53,176 @@ public class ProyeccionFragment extends Fragment {
     private RecyclerView recyclerView;
     private UsuarioElectrodomesticoProyeccionAdapter adapter;
     private ArrayList<UsuarioElectrodomestico> listaElectrodomesticos;
-    private int usuarioId=-1 ;
-    EditText etPotencia;
-    private float totalKwh =0;
-    TextView txtResultado;
-    ElectrodomesticoDB electrodomesticoDB ;
-
-
+    private int usuarioId = -1;
+    private EditText etPotencia;
+    private TextView txtResultado;
+    private ElectrodomesticoDB electrodomesticoDB;
+    private float consu;
     @Nullable
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         electrodomesticoDB = new ElectrodomesticoDB(getActivity());
-
-
-
     }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_proyeccion, container, false);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
 
         etPotencia = view.findViewById(R.id.etPotencia);
-         txtResultado = view.findViewById(R.id.Resultadoc);
+        txtResultado = view.findViewById(R.id.Resultadoc);
         recyclerView = view.findViewById(R.id.rvElectrodomesticoskwh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         listaElectrodomesticos = new ArrayList<>();
         adapter = new UsuarioElectrodomesticoProyeccionAdapter(listaElectrodomesticos);
-
-
         recyclerView.setAdapter(adapter);
+
         obtenerUsuarioId(idUsuario -> {
-            this.usuarioId = idUsuario;
-
+            usuarioId = idUsuario;
             cargarElectrodomesticos();
-            calculosConsumo();
-        });
-        Button btnborrar = view.findViewById(R.id.btnLimpiar);
-        btnborrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences preferences = Objects.requireNonNull(getActivity()).getSharedPreferences("consumo", 0);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putFloat("consumo", 0.0f);
-                editor.apply();
-                txtResultado.setText("El costo aproximado es: $0");
-            }
         });
 
-
+        configurarBotones(view);
         return view;
     }
 
-    private void calculosConsumo() {
+    private void configurarBotones(View view) {
+        Button btnCalcular = view.findViewById(R.id.btnCalcular);
+        Button btnLimpiar = view.findViewById(R.id.btnLimpiar);
 
+        btnCalcular.setOnClickListener(v -> calcularConsumoTotal(listaElectrodomesticos));
+        btnLimpiar.setOnClickListener(v -> limpiarConsumo());
+    }
 
-        if (usuarioId != -1) {
-
-        etPotencia = getView().findViewById(R.id.etPotencia);
-        Button btnCalcular = getView().findViewById(R.id.btnCalcular);
-        btnCalcular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean paso = false;
-                for (UsuarioElectrodomestico electrodomestico : listaElectrodomesticos) {
-
-                    int totalPendientes = listaElectrodomesticos.size();
-                    AtomicInteger pendientes = new AtomicInteger(totalPendientes); // Contador seguro para hilos
-
-                    if (electrodomestico != null) {
-
-                        ElectroDB electroDB = new ElectroDB();
-                        electroDB.getAllElectrodomesticos(new ElectroDB.ElectrodomesticosCallback() {
-                            @Override
-                            public void onSuccess(ArrayList<Electrodomestico> electrodomesticos) {
-                                for (Electrodomestico electrodomestico1 : electrodomesticos) {
-
-                                    if (electrodomestico1.getId_electrodomestico() == electrodomestico.getElectrodomesticoId()) {
-
-                                        setherra(((float) electrodomestico1.getConsumoHoraWh() /1000)*electrodomestico.getHoras()*electrodomestico.getDias()*electrodomestico.getCantidad());
-                                        System.out.println("sad "+((float) electrodomestico1.getConsumoHoraWh() /1000)*electrodomestico.getHoras()*electrodomestico.getDias()*electrodomestico.getCantidad());
-                                    }
-
-                                }
-
-
-                                if (pendientes.decrementAndGet() == 0) {
-                                    txtResultado.setText("El consumo total es: " + totalKwh + " Kwh");
-                                }
-                            }
-
-                            private void setherra(float totalKwh) {
-                                SharedPreferences preferences = Objects.requireNonNull(getActivity()).getSharedPreferences("consumo", 0);
-                                float tot=totalKwh + preferences.getFloat("consumo", 0.0f);
-                                System.out.println("Consumo total: " + tot);
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putFloat("consumo", tot);
-                                editor.apply();
-                            }
-
-
-                            @Override
-                            public void onError(Exception e) {
-                                Toast.makeText(getActivity(), "Error al obtener electrodomésticos.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-
-                    }
-                    SharedPreferences preferences = Objects.requireNonNull(getActivity()).getSharedPreferences("consumo", 0);
-                    float totalKwhx = preferences.getFloat("consumo", 0.00f);
-                    float potencia = Float.parseFloat(etPotencia.getText().toString());
-                    txtResultado.setText("El costo aproximado es: $" + String.format("%.2f",(totalKwhx*potencia)) + " ");
-                }
-            }
-            });
+    private void calcularConsumo() {
+        if (usuarioId == -1) {
+            Toast.makeText(getActivity(), "Usuario no encontrado.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
+        if (listaElectrodomesticos.isEmpty()) {
+            Toast.makeText(getActivity(), "No hay electrodomésticos registrados.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String potenciaStr = etPotencia.getText().toString().trim();
+        if (potenciaStr.isEmpty()) {
+            Toast.makeText(getActivity(), "Por favor, ingresa el costo por KWh.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        float potencia = Float.parseFloat(potenciaStr);
+        float consumoTotal = 0;
+
+        for (UsuarioElectrodomestico electrodomesticox: listaElectrodomesticos) {
+            ElectroDB electroDB = new ElectroDB(getActivity());
+
+              electroDB.obtenerElectrodomesticoPorIdAsync(electrodomesticox.getElectrodomesticoId(), new ElectroDB.ElectrodomesticoCallback() {
+                @Override
+                public void onElectrodomesticoObtenido(Electrodomestico electrodomestico) {
+                    // Mostrar los detalles del electrodoméstico
+                    /*System.out.println("Nombre: " + electrodomestico.getNombre());
+                    System.out.println("Potencia: " + electrodomestico.getPotenciaPromedioWatts());
+                    System.out.println("Consumo por hora: " + electrodomestico.getConsumoHoraWh());*/
+                    consu += (electrodomestico.getConsumoHoraWh()/1000 )* electrodomesticox.getCantidad() * electrodomesticox.getHoras() * electrodomesticox.getDias();
+                    //calcularConsumoTotal(electod);
+                    guardarConsumoEnPreferencias(consu);
+
+
+                }
+
+
+                @Override
+                public void onError(Exception e) {
+                    // Manejar errores
+                    e.printStackTrace();
+                    System.out.println("Error: " + e.getMessage());
+                }
+            });
+
+
+        }
+
+
+
+        guardarConsumoEnPreferencias(consumoTotal);
+
     }
+
+    public void calcularConsumoTotal(List<UsuarioElectrodomestico> listaElectrodomesticos) {
+        // Variable para rastrear el consumo total
+        final AtomicInteger consumoTotal = new AtomicInteger(0);
+        final CountDownLatch latch = new CountDownLatch(listaElectrodomesticos.size());
+
+        for (UsuarioElectrodomestico electrodomesticox : listaElectrodomesticos) {
+            ElectroDB electroDB = new ElectroDB(getActivity());
+
+            electroDB.obtenerElectrodomesticoPorIdAsync(electrodomesticox.getElectrodomesticoId(), new ElectroDB.ElectrodomesticoCallback() {
+                @Override
+                public void onElectrodomesticoObtenido(Electrodomestico electrodomestico) {
+                    // Actualizar el consumo total de forma segura
+                    int consumoCalculado = electrodomestico.getConsumoHoraWh() * electrodomesticox.getCantidad() * electrodomesticox.getHoras() * electrodomesticox.getDias();
+                    consumoTotal.addAndGet(consumoCalculado);
+
+                    latch.countDown();
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    // Manejar errores
+                    e.printStackTrace();
+                    System.out.println("Error: " + e.getMessage());
+
+                    // También disminuir el contador en caso de error
+                    latch.countDown();
+                }
+            });
+
+        }
+
+        // Esperar hasta que todas las tareas asíncronas hayan terminado
+        new Thread(() -> {
+            try {
+                latch.await(); // Bloquear hasta que todas las tareas terminen
+                getActivity().runOnUiThread(() -> {
+                    // Aquí puedes usar el valor final de consumoTotal
+                    System.out.println("Consumo total: " + consumoTotal.get());
+                    txtResultado.setText("El costo aproximado es: $" + (consumoTotal.get()/1000)*Float.parseFloat(etPotencia.getText().toString().trim()));
+                    // Actualizar la UI si es necesario
+                });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        String potenciaStr = etPotencia.getText().toString().trim();
+        if (potenciaStr.isEmpty()) {
+            Toast.makeText(getActivity(), "Por favor, ingresa el costo por KWh.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+    }
+
+    private void limpiarConsumo() {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("consumo", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putFloat("consumo", 0.0f);
+        editor.apply();
+        txtResultado.setText("El costo aproximado es: $0");
+    }
+
+    private void guardarConsumoEnPreferencias(float consumo) {
+        SharedPreferences preferences = requireActivity().getSharedPreferences("consumo", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        float consumoAnterior = preferences.getFloat("consumo", 0.0f) ;
+        float consumoTotal = consumoAnterior + consumo;
+        editor.putFloat("consumo", consumoTotal);
+        editor.apply();
+    }
+
     private void cargarElectrodomesticos() {
         if (usuarioId != -1) {
             UsuarioElectrodomesticoDB db = new UsuarioElectrodomesticoDB(getActivity());
@@ -190,10 +243,8 @@ public class ProyeccionFragment extends Fragment {
         }
     }
 
-
-    private void obtenerUsuarioId(MisElectrodomesticosFragment.CallbackUsuarioId callback) {
+    private void obtenerUsuarioId(CallbackUsuarioId callback) {
         String userEmail = SessionManager.getUserEmail(getActivity());
-
         DataUsuario dataUsuario = new DataUsuario(getActivity());
         dataUsuario.obtenerUsuarioPorEmail(userEmail, new DataUsuario.CallbackUsuario() {
             @Override
@@ -211,58 +262,3 @@ public class ProyeccionFragment extends Fragment {
         void onIdUsuarioObtenido(int idUsuario);
     }
 }
-
-
-
-
-/*extends Fragment {
-    Toolbar toolbar;
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_proyeccion,container,false);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
-        initViews(view);
-
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // Navegar al Fragment deseado o realizar una acción personalizada
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
-        return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private void initViews(View view) {
-        EditText TxtHorasUso = view.findViewById(R.id.etHorasUso);
-        EditText txtPotencia = view.findViewById(R.id.etPotencia);
-        EditText txtCosto = view.findViewById(R.id.etDiasUso);
-        TextView txtResultado = view.findViewById(R.id.Resultadoc);
-
-        Button btnCalcular = view.findViewById(R.id.btnCalcular);
-        btnCalcular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double horasUso = Double.parseDouble(TxtHorasUso.getText().toString());
-                double potencia = Double.parseDouble(txtPotencia.getText().toString());
-                double costo = Double.parseDouble(txtCosto.getText().toString());
-
-                double resultado = horasUso * potencia * costo;
-                txtResultado.setText("El costo de uso es: $" + resultado);
-            }
-        });
-
-    }
-}
-*/

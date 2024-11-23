@@ -94,5 +94,20 @@ public class UsuarioElectrodomesticoProyeccionAdapter extends RecyclerView.Adapt
         }
     }
 
+    public void filtrar(String texto) {
+        texto = texto.toLowerCase(); // Convertir a minúsculas para comparación
+        listaElectrodomesticos.clear();
+        if (texto.isEmpty()) {
+            listaElectrodomesticos.addAll(listaElectrodomesticos); // Mostrar todos los elementos si no hay filtro
+        } else {
+            for (UsuarioElectrodomestico item : listaElectrodomesticos) {
+                if (item.getHoras()==Integer.valueOf(texto)) { // Comparar nombre
+                    listaElectrodomesticos.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged(); // Actualizar la vista
+    }
+
 
 }

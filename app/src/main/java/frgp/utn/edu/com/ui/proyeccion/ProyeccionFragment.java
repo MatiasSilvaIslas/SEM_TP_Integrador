@@ -2,6 +2,8 @@ package frgp.utn.edu.com.ui.proyeccion;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,7 +56,7 @@ public class ProyeccionFragment extends Fragment {
     private UsuarioElectrodomesticoProyeccionAdapter adapter;
     private ArrayList<UsuarioElectrodomestico> listaElectrodomesticos;
     private int usuarioId = -1;
-    private EditText etPotencia;
+    private EditText etPotencia,textInput;
     private TextView txtResultado;
     private ElectrodomesticoDB electrodomesticoDB;
     private float consu;
@@ -72,8 +74,28 @@ public class ProyeccionFragment extends Fragment {
 
         etPotencia = view.findViewById(R.id.etPotencia);
         txtResultado = view.findViewById(R.id.Resultadoc);
+        textInput = view.findViewById(R.id.searchInput);
+
         recyclerView = view.findViewById(R.id.rvElectrodomesticoskwh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        textInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.filtrar(s.toString()); // Llamar al método filtrar del adaptador
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+        });
+
+
 
         listaElectrodomesticos = new ArrayList<>();
         adapter = new UsuarioElectrodomesticoProyeccionAdapter(listaElectrodomesticos);

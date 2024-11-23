@@ -84,6 +84,8 @@ public class ProyeccionFragment extends Fragment {
 
                 String input = source.toString();
 
+                if(input.length()>8)
+                    return "";
 
                 if (!input.matches("[0-9.]*")) {
                     return "";

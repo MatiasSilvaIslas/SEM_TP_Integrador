@@ -59,7 +59,7 @@ android:id="@+id/etPotencia"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:hint="Precio del Kwh"
-
+android:maxLength="8"
 android:inputType="textFilter" />
 
 
@@ -102,6 +102,8 @@ android:text="Resultado:" />
             android:layout_height="wrap_content"
             android:text="$:"
             android:textSize="14sp"
+
+
             android:textStyle="bold"
             android:maxLength="50"
     />

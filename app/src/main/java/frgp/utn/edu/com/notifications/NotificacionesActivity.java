@@ -51,6 +51,8 @@ public class NotificacionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_noti);
 
+        //  ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+
         // Inicializa el Intent para el servicio de notificaciones
         mServiceIntent = new Intent(this, NotificationService.class);
 

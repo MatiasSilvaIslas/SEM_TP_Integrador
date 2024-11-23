@@ -58,8 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
         NavigationView navigationView = findViewById(R.id.navigation_viewf);
+
         mDrawerLayout = findViewById(R.id.drawer_layoutmains);
         navigationView.setNavigationItemSelectedListener(this);
 

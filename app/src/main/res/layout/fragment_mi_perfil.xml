@@ -22,9 +22,35 @@ android:background="@android:color/white">
         android:text="Cerrar Sesion"
         android:textColor="@android:color/white" />
 
-    <include
-    android:id="@+id/toolbar_layout"
-    layout="@layout/toolbar_layout" />
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue"
+            app:titleTextColor="@android:color/white">
+
+        <!-- Icono de usuario a la izquierda -->
+        <ImageView
+                android:id="@+id/icon_user"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_user"
+                android:contentDescription="@string/user_icon"
+                android:padding="8dp"
+                android:layout_gravity="start"
+                app:tint="@android:color/white" />
+
+        <!-- Icono de notificación a la derecha -->
+        <ImageView
+                android:id="@+id/icon_notification"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:contentDescription="@string/notification_icon"
+                android:padding="8dp"
+                android:src="@drawable/ic_notify_off"
+                app:tint="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
 
 <!-- Texto de Bienvenida -->
 <TextView
@@ -35,7 +61,7 @@ android:background="@android:color/white">
     android:textSize="24sp"
     android:textStyle="bold"
     android:textColor="@android:color/black"
-    android:layout_below="@id/toolbar_layout"
+    android:layout_below="@id/toolbar"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="24dp"/>
 

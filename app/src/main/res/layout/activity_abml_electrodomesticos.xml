@@ -5,42 +5,33 @@
 
     <!-- Toolbar personalizada -->
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_blue"
-        android:paddingTop="26dp"
-        app:titleTextColor="@android:color/white">
-
-        <!-- Contenedor para los íconos -->
-        <RelativeLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@color/light_blue"
+            app:titleTextColor="@android:color/white">
 
-            <!-- Icono de usuario a la izquierda -->
-            <ImageView
+        <!-- Icono de usuario a la izquierda -->
+        <ImageView
                 android:id="@+id/icon_user"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_user"
-                android:contentDescription="User Icon"
+                android:contentDescription="@string/user_icon"
                 android:padding="8dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="start"
                 app:tint="@android:color/white" />
 
-            <!-- Icono de notificación a la derecha -->
-            <ImageView
+        <!-- Icono de notificación a la derecha -->
+        <ImageView
                 android:id="@+id/icon_notification"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_notification"
-                android:contentDescription="Notification Icon"
+                android:layout_gravity="end"
+                android:contentDescription="@string/notification_icon"
                 android:padding="8dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:src="@drawable/ic_notify_off"
                 app:tint="@android:color/white" />
-        </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Título del activity -->

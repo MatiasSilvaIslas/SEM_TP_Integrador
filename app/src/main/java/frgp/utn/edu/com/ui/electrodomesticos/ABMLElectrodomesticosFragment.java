@@ -33,6 +33,7 @@ import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
 import frgp.utn.edu.com.utils.SessionManager;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ABMLElectrodomesticosFragment extends Fragment {
 
@@ -49,7 +50,7 @@ public class ABMLElectrodomesticosFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_abml_electrodomesticos, container, false);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(view.findViewById(R.id.toolbar));
        // initViews(view);
         //view.setContentView(R.layout.fragment_abml_electrodomesticos);
 

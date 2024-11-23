@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.CategoriaDB;
 import frgp.utn.edu.com.conexion.DataUsuario;
@@ -42,8 +43,10 @@ public class ABMLElectrodomesticosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_abml_electrodomesticos);
         setSupportActionBar(findViewById(R.id.toolbar));
+        setContentView(R.layout.activity_abml_electrodomesticos);
+
+
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Gestión de Electrodomésticos");

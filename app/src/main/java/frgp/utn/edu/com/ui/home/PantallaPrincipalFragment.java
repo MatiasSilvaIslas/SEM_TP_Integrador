@@ -27,6 +27,7 @@ import frgp.utn.edu.com.ui.back.ABMLElectrodomesticosActivity;
 import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.informes.tabInformeFragment;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
+import frgp.utn.edu.com.ui.proyeccion.ProyeccionFragment;
 import frgp.utn.edu.com.ui.soporte.ContactoSoporteFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
@@ -159,6 +160,15 @@ public class PantallaPrincipalFragment extends Fragment {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new tabInformeFragment()
                 ).commit();
+            }
+        });
+
+        Button btnConsejos = view.findViewById(R.id.btnproyeccion);
+        btnConsejos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new ProyeccionFragment()).commit();
             }
         });
     }

@@ -2,24 +2,23 @@ package frgp.utn.edu.com.ui.electrodomesticos;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.CategoriaDB;
 import frgp.utn.edu.com.conexion.DataUsuario;
@@ -29,7 +28,7 @@ import frgp.utn.edu.com.entidad.Categoria;
 import frgp.utn.edu.com.entidad.Electrodomestico;
 import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
-import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -53,19 +52,6 @@ public class ABMLElectrodomesticosFragment extends Fragment {
        // initViews(view);
         //view.setContentView(R.layout.fragment_abml_electrodomesticos);
 
-        ImageView btnProfile = view.findViewById(R.id.icon_user);
-
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frgment_frame, new fragmentMiPerfil());
-                fragmentTransaction.commit();
-            }
-        });
         // Inicialización del RecyclerView
         recyclerCategorias = view.findViewById(R.id.recyclerCategorias);
 
@@ -75,8 +61,6 @@ public class ABMLElectrodomesticosFragment extends Fragment {
         // Inicialización de las clases de base de datos
         electrodomesticoDB = new ElectrodomesticoDB(getActivity());
         categoriaDB = new CategoriaDB(getActivity());
-
-
 
         obtenerUsuarioId(new CallbackUsuarioId() {
             @Override
@@ -103,10 +87,27 @@ public class ABMLElectrodomesticosFragment extends Fragment {
                 }
             }
         });
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
 
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     private void mostrarElectrodomesticosDialog(Categoria categoria) {
         // Inflar el layout del BottomSheet

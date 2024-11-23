@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
 public class tabInformeFragment  extends Fragment {
     ViewPager viewPager;
@@ -25,6 +28,8 @@ public class tabInformeFragment  extends Fragment {
 
         viewPager = view.findViewById(R.id.view_pager_intro);
         viewPager.setAdapter(viewPagerAdapter);
+
+
 
         return view;
     }

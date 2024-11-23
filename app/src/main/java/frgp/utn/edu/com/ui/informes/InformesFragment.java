@@ -4,14 +4,18 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,6 +39,7 @@ import java.util.List;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.GraficosHelper;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
 import frgp.utn.edu.com.entidad.Usuario;
 import frgp.utn.edu.com.ui.myaccount.fragmentMiPerfil;
@@ -54,7 +59,7 @@ public class InformesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_graficos_tres, container, false);
-
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         initializeViews(view);
 
         setupLineChart();
@@ -62,7 +67,32 @@ public class InformesFragment extends Fragment {
         graficosHelper = new GraficosHelper(requireContext());
         cargarDatosYActualizarGraficos();
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargarDatosYActualizarGraficos(); // Recarga los datos y gráficos
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void cargarDatosYActualizarGraficos() {
@@ -161,6 +191,7 @@ public class InformesFragment extends Fragment {
     }
 
     private void actualizarGraficoLinea(List<Entry> datosLinea) {
+        lineChart.clear();
         if (datosLinea.isEmpty()) {
             lineChart.setNoDataText("No hay datos disponibles");
             return;

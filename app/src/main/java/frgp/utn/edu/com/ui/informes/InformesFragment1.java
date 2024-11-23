@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,6 +26,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.GraficosHelper;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
 import java.util.List;
 
@@ -37,15 +43,39 @@ public class InformesFragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_graficos_dos, container, false);
-
+        ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         initializeViews(view);
         setupPieChart();
-
 
         graficosHelper = new GraficosHelper(requireContext());
         cargarDatosYActualizarGraficos();
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargarDatosYActualizarGraficos(); // Recarga los datos y gráficos
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void cargarDatosYActualizarGraficos() {
@@ -84,6 +114,7 @@ public class InformesFragment1 extends Fragment {
     private void setupPieChart() {
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
+
         pieChart.setExtraOffsets(5, 10, 5, 5);
         pieChart.setDrawEntryLabels(false);
         pieChart.setDragDecelerationFrictionCoef(0.95f);
@@ -121,6 +152,7 @@ public class InformesFragment1 extends Fragment {
     }
 
     private void actualizarGraficoTorta(List<PieEntry> datosTorta) {
+        pieChart.clear();
         if (datosTorta.isEmpty()) {
             pieChart.setNoDataText("No hay datos disponibles");
             return;

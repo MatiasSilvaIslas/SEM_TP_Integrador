@@ -42,6 +42,7 @@ import frgp.utn.edu.com.notifications.NotificationService;
 import frgp.utn.edu.com.ui.Login.LoginFragment;
 
 import frgp.utn.edu.com.ui.electrodomesticos.ConsejosFragment;
+import frgp.utn.edu.com.ui.informes.tabInformeFragment;
 import frgp.utn.edu.com.ui.myaccount.MyAccountFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.ui.notify.NotificacionWorker;
@@ -158,11 +159,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         Toast.makeText(this, "Item: " + item.toString(), Toast.LENGTH_SHORT).show();
 
-        if (item.toString().equals("Articulos")) {
+        if (item.toString().equals("Reportes")) {
             switchFragment(2);
-        } else if (item.toString().equals("Cuenta")) {
+        }
+        else if (item.toString().equals("Cuenta")) {
             switchFragment(3);
-        } else if (item.toString().equals("Principal")) {
+        }
+        else if (item.toString().equals("Principal")) {
             switchFragment(4);
         } else if (item.toString().equals("Cerrar sesion")) {
             showLogoutConfirmationDialog();
@@ -217,13 +220,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case 1: // Login
                     newFragment = new LoginFragment();
                     break;
-                case 2: // Mi Cuenta
-                case 3:
-                    newFragment = new MyAccountFragment();
+                case 2:
+                    newFragment = new tabInformeFragment();
+                    break;
+                case 3:// Mi Cuenta
+                    newFragment=new MyAccountFragment();
                     break;
                 case 4: // Pantalla Principal
-
-
                     newFragment = new PantallaPrincipalFragment();
                     break;
                 case 5: // Logout

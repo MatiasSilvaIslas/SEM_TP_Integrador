@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.entidad.Usuario;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 import frgp.utn.edu.com.ui.usuario.EditarPerfilFragment;
 import frgp.utn.edu.com.utils.InputFilterLetters;
 import frgp.utn.edu.com.repository.AuthAppRepository; // Asegúrate de que este import sea correcto
@@ -40,6 +42,18 @@ public class EditarPasswordFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cambiar_contrasenia, container, false);
         ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         initViews(view);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new fragmentMiPerfil())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         return view;
     }
 

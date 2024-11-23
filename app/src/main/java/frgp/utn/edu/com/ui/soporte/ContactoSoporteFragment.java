@@ -8,15 +8,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -28,12 +34,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.DataDB;
 import frgp.utn.edu.com.conexion.SoporteDB;
 import frgp.utn.edu.com.servicio.EmailService;
 import frgp.utn.edu.com.ui.back.PantallaPrincipalActivity;
+import frgp.utn.edu.com.ui.electrodomesticos.CalculoConsumoFragment;
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
+import frgp.utn.edu.com.ui.informes.tabInformeFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 public class ContactoSoporteFragment extends Fragment {
@@ -45,9 +54,44 @@ public class ContactoSoporteFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contacto_soporte, container, false);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+
+        // Configurar el MenuProvider
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.activity_main_menu_drawer, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == android.R.id.home) {
+                    // Navega a PantallaPrincipalFragment
+                    FragmentTransaction transaction = requireActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction();
+                    transaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
+                    transaction.commit();
+                    return true;
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner());
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -63,8 +107,27 @@ public class ContactoSoporteFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // Navega a PantallaPrincipalFragment
+            FragmentTransaction transaction = requireActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
+            transaction.commit();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initializeViews(View view) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         editCasoResumen = view.findViewById(R.id.editCasoResumen);
         editCasoDetalle = view.findViewById(R.id.editCasoDetalle);
         btnEnviarSoporte = view.findViewById(R.id.btnEnviarSoporte);
@@ -112,16 +175,13 @@ public class ContactoSoporteFragment extends Fragment {
         progressDialog.show();
         btnEnviarSoporte.setEnabled(false);
 
-        // Primero obtenemos el ID del usuario
         soporteDB.obtenerIdUsuario(email, new SoporteDB.IdUsuarioCallback() {
             @Override
             public void onIdUsuarioObtenido(int idUsuario) {
                 if (idUsuario != -1) {
-                    // Una vez que tenemos el ID, insertamos el caso
                     soporteDB.insertarCasoSoporte(idUsuario, resumen, detalle, new SoporteDB.OperacionCallback() {
                         @Override
                         public void onExito() {
-                            // Enviar notificación por email
                             EmailService.enviarNotificacionNuevoCaso(
                                     resumen,
                                     detalle,
@@ -134,7 +194,6 @@ public class ContactoSoporteFragment extends Fragment {
 
                                         @Override
                                         public void onError(String error) {
-                                            // El caso se guardó pero hubo error en el email
                                             Log.w("ContactoSoporte", "Caso guardado pero " + error);
                                             finalizarProceso("Caso registrado, pero hubo un problema al enviar la notificación");
                                         }
@@ -169,13 +228,13 @@ public class ContactoSoporteFragment extends Fragment {
         progressDialog.dismiss();
         btnEnviarSoporte.setEnabled(true);
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show();
-        getParentFragmentManager().popBackStack();
 
         FragmentTransaction transaction = requireActivity()
                 .getSupportFragmentManager()
                 .beginTransaction();
-
         transaction.replace(R.id.frgment_frame, new PantallaPrincipalFragment());
         transaction.commit();
     }
+
+
 }

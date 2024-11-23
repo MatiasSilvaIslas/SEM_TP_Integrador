@@ -3,11 +3,22 @@ package frgp.utn.edu.com.ui.proyeccion;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toolbar;
+
+import androidx.activity.OnBackPressedCallback;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import frgp.utn.edu.com.R;
+
 import frgp.utn.edu.com.conexion.DataUsuario;
 import frgp.utn.edu.com.conexion.ElectroDB;
 import frgp.utn.edu.com.conexion.ElectrodomesticoDB;
@@ -31,6 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
+
 
 public class ProyeccionFragment extends Fragment {
 
@@ -207,7 +222,26 @@ public class ProyeccionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_proyeccion,container,false);
         ((AppCompatActivity)getActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         initViews(view);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Navegar al Fragment deseado o realizar una acción personalizada
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frgment_frame, new PantallaPrincipalFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_main_menu_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void initViews(View view) {

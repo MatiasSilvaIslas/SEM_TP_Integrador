@@ -144,8 +144,8 @@ public class PantallaPrincipalFragment extends Fragment {
         });
 
         //Realizado a la antigua
-        Button btncontactanos = view.findViewById(R.id.btnContactanos);
-        btncontactanos.setOnClickListener(new View.OnClickListener() {
+      Button btn_notification = view.findViewById(R.id.btn_notification);
+        btn_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), NotificacionesActivity.class);
@@ -162,6 +162,7 @@ public class PantallaPrincipalFragment extends Fragment {
                 ).commit();
             }
         });
+
         Button btnProy = view.findViewById(R.id.btnproyeccion);
         btnProy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +170,7 @@ public class PantallaPrincipalFragment extends Fragment {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new ProyeccionFragment()
                 ).commit();
+
             }
         });
     }

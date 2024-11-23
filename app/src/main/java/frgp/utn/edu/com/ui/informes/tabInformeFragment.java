@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-import androidx.annotation.Nullable;
+
+
+import androidx.activity.OnBackPressedCallback;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import frgp.utn.edu.com.MainActivity;
 import frgp.utn.edu.com.R;
+import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
 public class tabInformeFragment  extends Fragment {
     ViewPager viewPager=null;
@@ -34,12 +37,14 @@ public class tabInformeFragment  extends Fragment {
 
 
 
+
             viewPager.setAdapter(viewPagerAdapter);
             tabLayout.setupWithViewPager(viewPager);
         }else {
             //this.getParentFragmentManager().beginTransaction().replace(R.id.frgment_frame, new tabInformeFragment()).commit();
             Toast.makeText(getContext(), "Error al cargar la vista", Toast.LENGTH_SHORT).show();
         }
+
         return view;
     }
 

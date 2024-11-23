@@ -163,12 +163,14 @@ public class PantallaPrincipalFragment extends Fragment {
             }
         });
 
-        Button btnConsejos = view.findViewById(R.id.btnproyeccion);
-        btnConsejos.setOnClickListener(new View.OnClickListener() {
+        Button btnProy = view.findViewById(R.id.btnproyeccion);
+        btnProy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity() ).setnavigateToMainMenu(true);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new ProyeccionFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgment_frame, new ProyeccionFragment()
+                ).commit();
+
             }
         });
     }

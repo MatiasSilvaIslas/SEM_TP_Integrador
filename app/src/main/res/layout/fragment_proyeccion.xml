@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         android:orientation="vertical"
@@ -8,48 +8,61 @@
         <include
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar_layout" />
+
+    <LinearLayout
+            android:id="@+id/container"
+            android:layout_below="@id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_background"
+            android:orientation="vertical"
+            android:padding="16dp">
 <TextView
 
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:text="Cálculo de Consumo Eléctrico"
-android:textSize="24sp"
+android:text="Cálculo estimativo de Consumo Eléctrico"
+android:textSize="18sp"
 android:textStyle="bold" />
 
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Electrodoméstico: Refrigerador" />
+
 
 <EditText
 android:id="@+id/etPotencia"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:hint="Potencia    (W)"
+android:hint="Precio del Kwh"
 android:inputType="number" />
 
-<EditText
-android:id="@+id/etHorasUso"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="Horas de uso al día"
-android:inputType="number" />
 
-<EditText
-android:id="@+id/etDiasUso"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="Días de uso al mes"
-android:inputType="number" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:background="@drawable/rounded_button"
-        android:id="@+id/btnCalcular"
+        <!-- Table View-->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+<Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calcular"   />
 
+        android:layout_margin="16dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:text="Limpiar"
+        android:id="@+id/btnLimpiar"
+        android:layout_alignParentLeft="true"
+        android:icon="@android:drawable/ic_delete"
+/>
+
+    <Button
+            android:id="@+id/btnCalcular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:layout_toEndOf="@id/btnLimpiar"
+        android:text="Calcular"   />
+        </LinearLayout>
 <TextView
 android:id="@+id/tvResultado"
 android:layout_width="wrap_content"
@@ -62,6 +75,13 @@ android:text="Resultado:" />
             android:layout_height="wrap_content"
             android:text="$:" />
 
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvElectrodomesticoskwh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
 
+        />
 
 </LinearLayout>
+</RelativeLayout>

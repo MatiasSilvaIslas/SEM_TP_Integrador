@@ -57,14 +57,7 @@ public class CalculoConsumoFragment extends Fragment {
         electrodomesticoDB = new ElectrodomesticoDB(getContext());
 
         // Paso 1: Cargar categorías en el spinner
-        electrodomesticoDB.obtenerCategoriasAsync(categorias -> {
-            listaCategorias = categorias;
 
-            // Configurar el adaptador del spinner de categorías
-            ArrayAdapter<Categoria> adapterCategoria = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categorias);
-            adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerCategoria.setAdapter(adapterCategoria);
-        });
 
         // Paso 2: Manejar selección de categoría
         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

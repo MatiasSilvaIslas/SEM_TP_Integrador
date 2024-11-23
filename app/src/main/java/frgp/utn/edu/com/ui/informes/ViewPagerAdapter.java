@@ -2,6 +2,7 @@ package frgp.utn.edu.com.ui.informes;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
@@ -10,17 +11,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentPagerAdapter;
+import org.jetbrains.annotations.NotNull;
+
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    public ViewPagerAdapter(Context context, FragmentManager fm) {
-        super(fm);
 
+    public ViewPagerAdapter(@NonNull @NotNull FragmentManager fm) {
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public @NotNull Fragment getItem(int position) {
 
-        Fragment fragment = null;
+        Fragment fragment;
         switch (position) {
             case 0:
 
@@ -32,12 +35,18 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 fragment = new InformesFragment1();
                 break;
             // you may add more cases for more fragments
-
+            default:
+                // default fragment
+                fragment = new InformesFragment();
+                break;
         }
-        assert fragment != null;
+
         return fragment;
     }
-
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE; // Forzar recreación del Fragment
+    }
 
     @Override
     public int getCount() {
@@ -50,11 +59,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
 
-            return "Fragment1";
+            return "Reporte 1";
         } else  {
-            return "Fragment2";
+            return "Reporte 2";
         }
-
 
     }
 }

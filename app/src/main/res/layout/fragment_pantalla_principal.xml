@@ -117,32 +117,34 @@
         app:tint="@color/black" />
 
     <!-- Botón proyeccion -->
+
+
     <Button
         android:id="@+id/btnproyeccion"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_notification"
-        android:layout_below="@id/btnCalculateConsumption"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnConsultReports"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="392dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="55dp"
         android:background="@drawable/rounded_button"
         android:text="@string/btn_contactanos" />
 
     <!-- Botón Notificaciones -->
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:id="@+id/btn_notification"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/btnproyeccion"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="459dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="346dp"
         android:background="@drawable/rounded_button"
         android:text="@string/btn_notification" />
 

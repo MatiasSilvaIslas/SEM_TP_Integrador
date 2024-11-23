@@ -43,7 +43,7 @@
         android:id="@+id/textWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido "
+        android:text="Bienvenido"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -131,17 +131,18 @@
 
     <!-- Botón Notificaciones -->
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:id="@+id/btn_notification"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnproyeccion"
+        android:layout_below="@+id/btnproyeccion"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="346dp"
         android:background="@drawable/rounded_button"
         android:text="@string/btn_notification" />
-
 
 </RelativeLayout>

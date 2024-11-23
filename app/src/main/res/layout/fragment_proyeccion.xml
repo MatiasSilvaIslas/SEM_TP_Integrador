@@ -53,14 +53,13 @@ android:textSize="18sp"
 android:textStyle="bold" />
 
 
-        <!--habilitar la coma-->
+
 <EditText
 android:id="@+id/etPotencia"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:hint="Precio del Kwh"
-android:maxLength="8"
-android:inputType="textFilter" />
+android:inputType="number" />
 
 
         <!-- Table View-->
@@ -92,22 +91,42 @@ android:inputType="textFilter" />
         </LinearLayout>
 <TextView
 android:id="@+id/tvResultado"
-android:layout_width="match_parent"
+android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Resultado:" />
 
     <TextView
             android:id="@+id/Resultadoc"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$:"
-            android:textSize="14sp"
+            android:text="$:" />
+        <TextView
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:text="Filtro de búsqueda por hora | día | Cantidad de equipos"
+        />
+        <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                      >
 
+            <EditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:inputType="number"
+                    android:text="0" />
 
-            android:textStyle="bold"
-            android:maxLength="50"
-    />
-
+            <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Buscar"
+                    android:id="@+id/btnBuscar"
+                    android:layout_marginLeft="16dp"
+                    android:layout_alignParentTop="true"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:icon="@android:drawable/ic_menu_search"/>
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvElectrodomesticoskwh"
                 android:layout_width="match_parent"

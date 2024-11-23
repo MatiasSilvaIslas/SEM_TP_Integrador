@@ -2,8 +2,8 @@ package frgp.utn.edu.com.ui.proyeccion;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,13 +41,12 @@ import frgp.utn.edu.com.ui.electrodomesticos.MisElectrodomesticosFragment;
 import frgp.utn.edu.com.utils.SessionManager;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import frgp.utn.edu.com.ui.home.PantallaPrincipalFragment;
 
@@ -58,7 +57,7 @@ public class ProyeccionFragment extends Fragment {
     private UsuarioElectrodomesticoProyeccionAdapter adapter;
     private ArrayList<UsuarioElectrodomestico> listaElectrodomesticos;
     private int usuarioId = -1;
-    private EditText etPotencia;
+    private EditText etPotencia,textInput;
     private TextView txtResultado;
     private ElectrodomesticoDB electrodomesticoDB;
     private float consu;
@@ -76,39 +75,14 @@ public class ProyeccionFragment extends Fragment {
 
         etPotencia = view.findViewById(R.id.etPotencia);
         txtResultado = view.findViewById(R.id.Resultadoc);
+
+
         recyclerView = view.findViewById(R.id.rvElectrodomesticoskwh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        etPotencia.setFilters(new InputFilter[]{new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-                String input = source.toString();
-
-                if(input.length()>8)
-                    return "";
-
-                if (!input.matches("[0-9.]*")) {
-                    return "";
-                }
 
 
-                if (input.equals(".") && dest.toString().contains(".")) {
-                    return "";
-                }
 
 
-                String result = dest.subSequence(0, dstart) + input + dest.subSequence(dend, dest.length());
-                if (result.contains(".")) {
-                    int indexPoint = result.indexOf(".");
-                    int decimals = result.length() - indexPoint - 1;
-                    if (decimals > 2) {
-                        return "";
-                    }
-                }
-
-                return source;
-            }
-        }});
         listaElectrodomesticos = new ArrayList<>();
         adapter = new UsuarioElectrodomesticoProyeccionAdapter(listaElectrodomesticos);
         recyclerView.setAdapter(adapter);
@@ -116,6 +90,24 @@ public class ProyeccionFragment extends Fragment {
         obtenerUsuarioId(idUsuario -> {
             usuarioId = idUsuario;
             cargarElectrodomesticos();
+            textInput = view.findViewById(R.id.searchInput);
+
+            textInput.addTextChangedListener(new TextWatcher() {
+                //numeros
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    cargarElectrodomesticosbyText(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+
+            });
         });
 
         configurarBotones(view);
@@ -187,7 +179,7 @@ public class ProyeccionFragment extends Fragment {
 
     public void calcularConsumoTotal(List<UsuarioElectrodomestico> listaElectrodomesticos) {
         // Variable para rastrear el consumo total
-        final AtomicLong consumoTotal = new AtomicLong(0);
+        final AtomicInteger consumoTotal = new AtomicInteger(0);
         final CountDownLatch latch = new CountDownLatch(listaElectrodomesticos.size());
 
         for (UsuarioElectrodomestico electrodomesticox : listaElectrodomesticos) {
@@ -197,7 +189,7 @@ public class ProyeccionFragment extends Fragment {
                 @Override
                 public void onElectrodomesticoObtenido(Electrodomestico electrodomestico) {
                     // Actualizar el consumo total de forma segura
-                    long consumoCalculado = electrodomestico.getConsumoHoraWh() * electrodomesticox.getCantidad() * electrodomesticox.getHoras() * electrodomesticox.getDias();
+                    int consumoCalculado = electrodomestico.getConsumoHoraWh() * electrodomesticox.getCantidad() * electrodomesticox.getHoras() * electrodomesticox.getDias();
                     consumoTotal.addAndGet(consumoCalculado);
 
                     latch.countDown();
@@ -266,6 +258,31 @@ public class ProyeccionFragment extends Fragment {
                     if (electrodomesticos != null) {
                         listaElectrodomesticos.clear();
                         listaElectrodomesticos.addAll(electrodomesticos);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), "No se encontraron electrodomésticos.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "Error al obtener el usuario.", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void cargarElectrodomesticosbyText(String text) {
+
+        if (usuarioId != -1&& !Objects.equals(text, "")) {
+            UsuarioElectrodomesticoDB db = new UsuarioElectrodomesticoDB(getActivity());
+            db.obtenerElectrodomesticosPorUsuario(usuarioId, new UsuarioElectrodomesticoDB.CallbackElectrodomesticos() {
+                @Override
+                public void onComplete(ArrayList<UsuarioElectrodomestico> electrodomesticos) {
+                    if (electrodomesticos != null) {
+
+                        List<UsuarioElectrodomestico> filtrados = electrodomesticos.stream()
+                                .filter(e -> e.getDias()==Integer.parseInt(text) || e.getHoras()==Integer.parseInt(text) || e.getCantidad()==Integer.parseInt(text))
+                                .collect(Collectors.toList());
+
+                        listaElectrodomesticos.clear();
+                        listaElectrodomesticos.addAll(filtrados);
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(getActivity(), "No se encontraron electrodomésticos.", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package frgp.utn.edu.com.ui.proyeccion;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import frgp.utn.edu.com.R;
 import frgp.utn.edu.com.conexion.UsuarioElectrodomesticoDB;
+import frgp.utn.edu.com.entidad.Electrodomestico;
 import frgp.utn.edu.com.entidad.UsuarioElectrodomestico;
 
 import java.util.ArrayList;
@@ -93,6 +95,14 @@ public class UsuarioElectrodomesticoProyeccionAdapter extends RecyclerView.Adapt
 
         }
     }
+
+/*    public void filtrar(String texto, List<Electrodomestico> listaElectrodomesticos, int Us) {
+         // Convertir a minúsculas para comparación
+
+        listaElectrodomesticos.stream().filter(electrodomestico -> electrodomestico.getNombre().toLowerCase().contains(texto.toLowerCase())).forEach(listaElectrodomesticos::add);
+
+        notifyDataSetChanged(); // Actualizar la vista
+    }*/
 
 
 }
